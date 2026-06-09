@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[REPLACE: Page title — Brand name + headline]</title>
+<meta name="description" content="[REPLACE: 150-char description]">
+
+<!-- Open Graph -->
+<meta property="og:title" content="[REPLACE: OG title]">
+<meta property="og:description" content="[REPLACE: OG description]">
+<meta property="og:image" content="[REPLACE: og-image.jpg URL]">
+
+<!-- Fonts — replace per color-systems.md font pairing -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   THEME VARIABLES — replace from color-systems.md palette
+   ========================================================= */
+:root {
+  /* Colors */
+  --bg: #0A0A0A;
+  --surface: #141414;
+  --text: #FFFFFF;
+  --text-muted: #A0A0A0;
+  --accent: #FF3B30;
+  --accent-soft: rgba(255, 59, 48, 0.15);
+  --border: rgba(255, 255, 255, 0.08);
+
+  /* Typography */
+  --font-h: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-b: 'Inter', system-ui, sans-serif;
+
+  /* Layout */
+  --max-w: 1100px;
+  --max-w-narrow: 720px;
+  --section-py: clamp(48px, 8vw, 96px);
+  --radius: 12px;
+}
+
+/* =========================================================
+   RESET + BASE
+   ========================================================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-b);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+h1, h2, h3, h4 { font-family: var(--font-h); line-height: 1.2; font-weight: 700; }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); }
+h3 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); }
+
+/* =========================================================
+   COMPONENTS
+   ========================================================= */
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+.container-narrow { max-width: var(--max-w-narrow); margin: 0 auto; padding: 0 24px; }
+.section { padding: var(--section-py) 0; }
+.section-alt { background: var(--surface); }
+
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 16px 32px;
+  background: var(--accent);
+  color: #FFFFFF;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 1.05rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-soft); }
+
+.btn-secondary {
+  display: inline-block;
+  padding: 16px 32px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 32px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+
+.text-muted { color: var(--text-muted); }
+.text-center { text-align: center; }
+.mt-4 { margin-top: 16px; } .mt-6 { margin-top: 24px; } .mt-8 { margin-top: 32px; }
+</style>
+</head>
+<body>
+
+<!-- ===================== HERO ===================== -->
+<section class="section" id="hero">
+  <div class="container text-center">
+    <span class="badge">[REPLACE: Badge — vd "Khoá học mới"]</span>
+    <h1 class="mt-6">[REPLACE: Headline 6-12 chữ]</h1>
+    <p class="mt-4 text-muted" style="font-size: 1.15rem; max-width: 640px; margin-left: auto; margin-right: auto;">
+      [REPLACE: Sub-headline 15-30 chữ]
+    </p>
+    <div class="mt-8">
+      <a href="#offer" class="btn-primary">[REPLACE: CTA text]</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROBLEM / PAIN ===================== -->
+<section class="section section-alt" id="pain">
+  <div class="container">
+    <h2 class="text-center">[REPLACE: Pain section heading]</h2>
+    <div class="grid-3 mt-8">
+      <div class="card">
+        <h3>[REPLACE: Pain 1]</h3>
+        <p class="mt-4 text-muted">[REPLACE: 1-2 câu mô tả]</p>
+      </div>
+      <div class="card">
+        <h3>[REPLACE: Pain 2]</h3>
+        <p class="mt-4 text-muted">[REPLACE: 1-2 câu mô tả]</p>
+      </div>
+      <div class="card">
+        <h3>[REPLACE: Pain 3]</h3>
+        <p class="mt-4 text-muted">[REPLACE: 1-2 câu mô tả]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOUNDER STORY ===================== -->
+<section class="section" id="story">
+  <div class="container-narrow">
+    <h2 class="text-center">[REPLACE: Story heading — vd "Tôi là ai"]</h2>
+    <p class="mt-8">[REPLACE: Đoạn 1 — context, hoàn cảnh]</p>
+    <p class="mt-4">[REPLACE: Đoạn 2 — turning point, lesson]</p>
+    <p class="mt-4">[REPLACE: Đoạn 3 — why this offering exists]</p>
+  </div>
+</section>
+
+<!-- ===================== SOLUTION ===================== -->
+<section class="section section-alt" id="solution">
+  <div class="container">
+    <h2 class="text-center">[REPLACE: Solution heading — vd "Bạn sẽ học gì"]</h2>
+    <div class="grid-3 mt-8">
+      <div class="card">
+        <h3>[REPLACE: Module/Outcome 1]</h3>
+        <p class="mt-4 text-muted">[REPLACE: Mô tả ngắn]</p>
+      </div>
+      <div class="card">
+        <h3>[REPLACE: Module/Outcome 2]</h3>
+        <p class="mt-4 text-muted">[REPLACE: Mô tả ngắn]</p>
+      </div>
+      <div class="card">
+        <h3>[REPLACE: Module/Outcome 3]</h3>
+        <p class="mt-4 text-muted">[REPLACE: Mô tả ngắn]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== OFFER BOX ===================== -->
+<section class="section" id="offer">
+  <div class="container-narrow">
+    <div class="card text-center" style="padding: 48px 32px;">
+      <span class="badge">[REPLACE: Offer badge — vd "Ưu đãi tháng này"]</span>
+      <h2 class="mt-6">[REPLACE: Tên gói]</h2>
+      <div class="mt-8" style="text-align: left;">
+        <p>✓ [REPLACE: Item 1]</p>
+        <p class="mt-4">✓ [REPLACE: Item 2]</p>
+        <p class="mt-4">✓ [REPLACE: Item 3]</p>
+        <p class="mt-4" style="color: var(--accent);">🎁 BONUS: [REPLACE: Bonus]</p>
+      </div>
+      <div class="mt-8">
+        <span class="text-muted" style="text-decoration: line-through;">[REPLACE: Giá gốc]đ</span>
+        <span style="font-size: 2.5rem; font-weight: 800; color: var(--accent); margin-left: 16px;">[REPLACE: Giá sale]đ</span>
+      </div>
+      <a href="dang-ky.html" class="btn-primary mt-8" style="font-size: 1.2rem;">[REPLACE: CTA]</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SOCIAL PROOF ===================== -->
+<section class="section section-alt" id="testimonial">
+  <div class="container">
+    <h2 class="text-center">[REPLACE: Testimonial heading — vd "Học viên nói gì"]</h2>
+    <div class="grid-3 mt-8">
+      <div class="card">
+        <p>"[REPLACE: Quote 1]"</p>
+        <p class="mt-4 text-muted"><strong>[REPLACE: Tên]</strong> — [REPLACE: Result]</p>
+      </div>
+      <div class="card">
+        <p>"[REPLACE: Quote 2]"</p>
+        <p class="mt-4 text-muted"><strong>[REPLACE: Tên]</strong> — [REPLACE: Result]</p>
+      </div>
+      <div class="card">
+        <p>"[REPLACE: Quote 3]"</p>
+        <p class="mt-4 text-muted"><strong>[REPLACE: Tên]</strong> — [REPLACE: Result]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GUARANTEE ===================== -->
+<section class="section" id="guarantee">
+  <div class="container-narrow text-center">
+    <span class="badge">[REPLACE: Guarantee badge — vd "Cam kết hoàn tiền"]</span>
+    <h2 class="mt-6">[REPLACE: Guarantee headline]</h2>
+    <p class="mt-4 text-muted">[REPLACE: 2-3 câu giải thích chính sách]</p>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="section section-alt" id="faq">
+  <div class="container-narrow">
+    <h2 class="text-center">[REPLACE: FAQ heading]</h2>
+    <div class="mt-8">
+      <details class="card" style="margin-bottom: 12px;">
+        <summary style="font-weight: 600; cursor: pointer;">[REPLACE: Q1]</summary>
+        <p class="mt-4 text-muted">[REPLACE: A1]</p>
+      </details>
+      <details class="card" style="margin-bottom: 12px;">
+        <summary style="font-weight: 600; cursor: pointer;">[REPLACE: Q2]</summary>
+        <p class="mt-4 text-muted">[REPLACE: A2]</p>
+      </details>
+      <details class="card" style="margin-bottom: 12px;">
+        <summary style="font-weight: 600; cursor: pointer;">[REPLACE: Q3]</summary>
+        <p class="mt-4 text-muted">[REPLACE: A3]</p>
+      </details>
+      <details class="card" style="margin-bottom: 12px;">
+        <summary style="font-weight: 600; cursor: pointer;">[REPLACE: Q4]</summary>
+        <p class="mt-4 text-muted">[REPLACE: A4]</p>
+      </details>
+      <details class="card">
+        <summary style="font-weight: 600; cursor: pointer;">[REPLACE: Q5]</summary>
+        <p class="mt-4 text-muted">[REPLACE: A5]</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FINAL CTA ===================== -->
+<section class="section text-center" id="final-cta" style="background: var(--accent); color: #FFFFFF;">
+  <div class="container-narrow">
+    <h2 style="color: #FFFFFF;">[REPLACE: Final CTA headline]</h2>
+    <p class="mt-4">[REPLACE: Urgency text — vd "Chỉ còn 12 slot tháng này"]</p>
+    <a href="dang-ky.html" class="mt-8" style="display: inline-block; padding: 18px 40px; background: #FFFFFF; color: var(--accent); border-radius: var(--radius); font-weight: 700; font-size: 1.1rem;">[REPLACE: Final CTA text]</a>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer style="padding: 32px 0; background: var(--bg); border-top: 1px solid var(--border);">
+  <div class="container text-center text-muted" style="font-size: 0.875rem;">
+    <p>© [REPLACE: Year] [REPLACE: Brand]. All rights reserved.</p>
+    <p class="mt-4">[REPLACE: Address] · Hotline: [REPLACE: Hotline]</p>
+  </div>
+</footer>
+
+</body>
+</html>
