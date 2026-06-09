@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOE — Xác nhận đăng ký thành công</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --wine:   #B84218;
+    --wine2:  #C4521A;
+    --gold:   #C4521A;
+    --gold2:  #E07A40;
+    --cream:  #FBF5EE;
+    --ivory:  #F5EAD8;
+    --parch:  #ECDAC8;
+    --ink:    #1E1010;
+    --warm:   #3D2010;
+    --muted:  #8A6A50;
+    --border: rgba(184,66,24,0.14);
+    --r:      10px;
+  }
+  body { font-family:'Cormorant Garamond',serif; background:var(--cream); color:var(--ink); line-height:1.75; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; }
+  .card { max-width:540px; width:100%; background:white; border:1px solid var(--border); border-radius:16px; padding:48px 40px; box-shadow:0 8px 32px rgba(184,66,24,0.08); text-align:center; }
+  .seal { width:72px; height:72px; background:var(--wine); color:white; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:34px; margin-bottom:20px; }
+  h1 { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:500; margin-bottom:10px; }
+  h1 em { color:var(--wine); font-style:italic; }
+  .lead { font-family:'Lora',serif; font-size:15px; color:var(--muted); margin-bottom:28px; font-style:italic; line-height:1.7; }
+  .divider { width:48px; height:2px; background:var(--gold); margin:0 auto 28px; }
+
+  /* Order info */
+  .info-box { background:var(--ivory); border:1px solid var(--border); border-radius:var(--r); padding:18px 22px; text-align:left; margin-bottom:28px; }
+  .info-row { display:flex; justify-content:space-between; align-items:center; padding:7px 0; font-size:14px; border-bottom:1px solid var(--border); }
+  .info-row:last-child { border-bottom:none; }
+  .info-row span { color:var(--muted); }
+  .info-row strong { font-family:'Lora',serif; color:var(--ink); font-size:15px; }
+
+  /* Steps */
+  .steps { text-align:left; margin-bottom:28px; }
+  .steps-title { font-family:'Lora',serif; font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
+  .step { display:flex; gap:14px; padding:14px 0; border-bottom:1px solid var(--border); }
+  .step:last-child { border-bottom:none; }
+  .step-num { background:var(--wine); color:white; min-width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Lora',serif; font-weight:700; font-size:13px; flex-shrink:0; }
+  .step-title { font-family:'Lora',serif; font-size:15px; font-weight:600; color:var(--ink); margin-bottom:3px; }
+  .step-desc { font-size:14px; color:var(--warm); line-height:1.65; }
+  .step-desc a { color:var(--wine); font-weight:600; text-decoration:none; }
+  .step-desc a:hover { text-decoration:underline; }
+
+  /* Note */
+  .note { font-family:'Lora',serif; font-size:14px; color:var(--muted); font-style:italic; line-height:1.7; }
+  footer { margin-top:28px; font-family:'Lora',serif; font-size:13px; color:var(--muted); }
+  footer a { color:var(--wine); text-decoration:none; font-weight:600; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="seal">✓</div>
+  <h1>Đăng ký<br><em>thành công!</em></h1>
+  <p class="lead">Cảm ơn bạn đã tin tưởng NOE.<br>Mình rất mong được gặp bạn tại workshop.</p>
+  <div class="divider"></div>
+
+  <!-- Order info -->
+  <div class="info-box">
+    <div class="info-row"><span>Mã đơn</span><strong id="orderId">—</strong></div>
+    <div class="info-row"><span>Họ và tên</span><strong id="orderName">—</strong></div>
+    <div class="info-row"><span>Email</span><strong id="orderEmail">—</strong></div>
+    <div class="info-row"><span>Số tiền</span><strong id="orderAmount">—</strong></div>
+  </div>
+
+  <!-- Next steps -->
+  <div class="steps">
+    <div class="steps-title">Bước tiếp theo</div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">Kiểm tra email</div>
+        <div class="step-desc">Email xác nhận + link Zoom đã được gửi đến hộp thư của bạn. Nếu không thấy, kiểm tra tab <em>Promotions</em> hoặc <em>Spam</em>.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">Tham gia Zalo group</div>
+        <div class="step-desc">Link nhóm Zalo có trong email xác nhận — nơi mình sẽ gửi tài liệu chuẩn bị và nhắc lịch trước workshop.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">Chuẩn bị cho buổi live</div>
+        <div class="step-desc">Tìm một góc yên tĩnh, chuẩn bị sổ ghi chép. Workshop là live 100% — bạn sẽ được hỏi đáp trực tiếp với NOE.</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note">Có câu hỏi? Nhắn tin trực tiếp cho NOE tại <a href="__CONTACT_URL__" style="color:var(--wine);font-weight:600;font-style:normal;">đây</a> — thường phản hồi trong 24h.</p>
+
+  <footer>© 2026 <strong>NOE</strong> · Nghệ Thuật Xác Lập Vị Thế</footer>
+</div>
+
+<script>
+  const order = JSON.parse(sessionStorage.getItem('order') || '{}');
+  if (order.orderId) {
+    document.getElementById('orderId').textContent = order.orderId;
+    document.getElementById('orderName').textContent = order.name || '—';
+    document.getElementById('orderEmail').textContent = order.email || '—';
+    const amt = Number(order.totalAmount || 0).toLocaleString('vi-VN');
+    document.getElementById('orderAmount').textContent = amt + 'đ';
+  }
+</script>
+</body>
+</html>

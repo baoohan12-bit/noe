@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOE — Thanh toán</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --wine:   #B84218;
+    --wine2:  #C4521A;
+    --gold:   #C4521A;
+    --gold2:  #E07A40;
+    --cream:  #FBF5EE;
+    --ivory:  #F5EAD8;
+    --parch:  #ECDAC8;
+    --ink:    #1E1010;
+    --warm:   #3D2010;
+    --muted:  #8A6A50;
+    --border: rgba(184,66,24,0.14);
+    --r:      10px;
+  }
+  body { font-family:'Cormorant Garamond',serif; background:var(--cream); color:var(--ink); line-height:1.75; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; }
+  .card { max-width:540px; width:100%; background:white; border:1px solid var(--border); border-radius:16px; padding:40px 36px; box-shadow:0 8px 32px rgba(184,66,24,0.08); }
+  .card-badge { font-family:'Lora',serif; font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--wine); border:1px solid var(--wine); padding:5px 14px; border-radius:20px; display:inline-block; margin-bottom:20px; }
+  h1 { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:500; margin-bottom:6px; }
+  .lead { font-family:'Lora',serif; font-size:14px; color:var(--muted); margin-bottom:28px; font-style:italic; }
+  .divider { width:40px; height:2px; background:var(--gold); margin:0 0 24px; }
+
+  /* Summary */
+  .summary { background:var(--ink); color:#FBF7F3; padding:20px 24px; border-radius:var(--r); margin-bottom:20px; }
+  .summary-row { display:flex; justify-content:space-between; padding:5px 0; font-size:14px; color:rgba(251,247,243,.75); }
+  .summary-total { font-family:'Lora',serif; font-size:26px; font-weight:600; color:var(--gold2); padding-top:14px; border-top:1px solid rgba(251,247,243,.15); margin-top:10px; display:flex; justify-content:space-between; align-items:center; }
+
+  /* Bumps */
+  .bumps { background:var(--ivory); border:1px solid var(--border); border-radius:var(--r); padding:16px 20px; margin-bottom:20px; }
+  .bump { display:flex; align-items:flex-start; padding:10px 0; cursor:pointer; gap:12px; }
+  .bump + .bump { border-top:1px solid var(--border); }
+  .bump input[type="checkbox"] { margin-top:4px; accent-color:var(--wine); width:16px; height:16px; flex-shrink:0; }
+  .bump-name { font-family:'Lora',serif; font-size:15px; font-weight:600; color:var(--ink); }
+  .bump-price { font-family:'Lora',serif; font-size:14px; font-weight:700; color:var(--wine); }
+  .bump-desc { font-size:13px; color:var(--muted); line-height:1.55; margin-top:2px; }
+
+  /* QR */
+  .qr-section { text-align:center; padding:24px 0 16px; }
+  .qr-section img { max-width:240px; border:3px solid var(--border); border-radius:var(--r); }
+  .qr-label { font-family:'Lora',serif; font-size:12px; color:var(--muted); margin-top:10px; font-style:italic; }
+
+  /* Info box */
+  .info-box { background:var(--ivory); border:1px solid var(--border); border-radius:var(--r); padding:16px 20px; margin-bottom:16px; }
+  .info-row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; font-size:14px; border-bottom:1px solid var(--border); }
+  .info-row:last-child { border-bottom:none; }
+  .info-row span { color:var(--muted); }
+  .info-row strong { font-family:'Lora',serif; font-size:15px; color:var(--ink); }
+
+  /* Status */
+  .status { padding:14px 18px; text-align:center; border-radius:var(--r); font-family:'Lora',serif; font-weight:600; font-size:15px; margin-top:16px; }
+  .status.pending { background:rgba(184,66,24,.07); color:var(--wine); border:1px solid var(--border); }
+  .status.paid { background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; }
+  .pulse { display:inline-block; width:9px; height:9px; border-radius:50%; background:currentColor; margin-right:8px; vertical-align:middle; animation:pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="card-badge">Bước 2 / 2 · Thanh toán</div>
+  <h1>Hoàn tất thanh toán</h1>
+  <p class="lead">Chuyển khoản theo thông tin dưới đây — đơn được xác nhận tự động trong vòng 30 giây.</p>
+  <div class="divider"></div>
+
+  <!-- Bumps (ẩn nếu không có) -->
+  <div class="bumps" id="bumpsSection" style="display:none">
+    <div class="bump" id="bumpItem1" style="display:none">
+      <input type="checkbox" id="bump1">
+      <div>
+        <div><span class="bump-name">__BUMP1_NAME__</span> · <span class="bump-price">+__BUMP1_DISPLAY__đ</span></div>
+        <div class="bump-desc">Tài liệu bổ sung — chỉ thêm vào đơn này</div>
+      </div>
+    </div>
+    <div class="bump" id="bumpItem2" style="display:none">
+      <input type="checkbox" id="bump2">
+      <div>
+        <div><span class="bump-name">__BUMP2_NAME__</span> · <span class="bump-price">+__BUMP2_DISPLAY__đ</span></div>
+        <div class="bump-desc">Tài liệu bổ sung — chỉ thêm vào đơn này</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary">
+    <div class="summary-row"><span>Workshop Nghệ Thuật Xác Lập Vị Thế</span><span id="base">97.000đ</span></div>
+    <div class="summary-row" id="bump1Row" style="display:none"><span>__BUMP1_NAME__</span><span>+__BUMP1_DISPLAY__đ</span></div>
+    <div class="summary-row" id="bump2Row" style="display:none"><span>__BUMP2_NAME__</span><span>+__BUMP2_DISPLAY__đ</span></div>
+    <div class="summary-total"><span>Tổng cộng</span><span id="total">97.000đ</span></div>
+  </div>
+
+  <!-- QR -->
+  <div class="qr-section">
+    <img id="qrImg" alt="QR thanh toán SePay">
+    <p class="qr-label">Quét mã QR bằng app ngân hàng bất kỳ</p>
+  </div>
+
+  <!-- Bank info -->
+  <div class="info-box">
+    <div class="info-row"><span>Ngân hàng</span><strong>__BANK_NAME__</strong></div>
+    <div class="info-row"><span>Số tài khoản</span><strong>__ACCOUNT_NUMBER__</strong></div>
+    <div class="info-row"><span>Chủ tài khoản</span><strong>__ACCOUNT_HOLDER__</strong></div>
+    <div class="info-row"><span>Nội dung CK</span><strong id="ckContent">—</strong></div>
+    <div class="info-row"><span>Số tiền</span><strong id="amount">—</strong></div>
+  </div>
+
+  <div class="status pending" id="statusBox">
+    <span class="pulse"></span><span id="statusText">Đang chờ giao dịch...</span>
+  </div>
+</div>
+
+<script>
+  const GAS_URL = '__GAS_URL__';
+  const BASE_PRICE = 97000;
+  const BUMP1_PRICE = __BUMP1_PRICE__;
+  const BUMP2_PRICE = __BUMP2_PRICE__;
+
+  const order = JSON.parse(sessionStorage.getItem('order') || '{}');
+  if (!order.orderId) { window.location.href = '/dang-ky'; }
+
+  if (BUMP1_PRICE > 0) { document.getElementById('bumpItem1').style.display = 'flex'; document.getElementById('bumpsSection').style.display = 'block'; }
+  if (BUMP2_PRICE > 0) { document.getElementById('bumpItem2').style.display = 'flex'; document.getElementById('bumpsSection').style.display = 'block'; }
+
+  document.getElementById('ckContent').textContent = order.ckContent || '—';
+
+  function formatVnd(n) { return Number(n).toLocaleString('vi-VN') + 'đ'; }
+
+  function calcTotal() {
+    let total = BASE_PRICE;
+    const b1 = document.getElementById('bump1') && document.getElementById('bump1').checked;
+    const b2 = document.getElementById('bump2') && document.getElementById('bump2').checked;
+    if (b1) total += BUMP1_PRICE;
+    if (b2) total += BUMP2_PRICE;
+    return { total, b1: !!b1, b2: !!b2 };
+  }
+
+  function updateQR(amount) {
+    const url = 'https://qr.sepay.vn/img?acc=__ACCOUNT_NUMBER__&bank=__BANK__&amount=' + amount + '&des=' + encodeURIComponent(order.ckContent || '');
+    document.getElementById('qrImg').src = url;
+    document.getElementById('amount').textContent = formatVnd(amount);
+    document.getElementById('total').textContent = formatVnd(amount);
+  }
+
+  async function updateOrderAPI(b1, b2, total) {
+    try {
+      await fetch(GAS_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'updateOrder', orderId: order.orderId, data: { bump1: b1, bump2: b2, totalAmount: total } })
+      });
+    } catch (err) { console.error('updateOrder failed', err); }
+  }
+
+  ['bump1','bump2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('change', () => {
+      const { total, b1, b2 } = calcTotal();
+      document.getElementById('bump1Row').style.display = b1 ? 'flex' : 'none';
+      document.getElementById('bump2Row').style.display = b2 ? 'flex' : 'none';
+      updateQR(total);
+      updateOrderAPI(b1, b2, total);
+    });
+  });
+
+  updateQR(BASE_PRICE);
+
+  async function pollStatus() {
+    try {
+      const res = await fetch(GAS_URL + '?action=getStatus&orderId=' + encodeURIComponent(order.orderId));
+      const json = await res.json();
+      if (json.status === 'PAID') {
+        const box = document.getElementById('statusBox');
+        box.className = 'status paid';
+        document.getElementById('statusText').textContent = '✓ Đã nhận giao dịch · Đang chuyển trang...';
+        setTimeout(() => { window.location.href = '/xac-nhan'; }, 1500);
+        return;
+      }
+    } catch (err) { console.error('poll failed', err); }
+    setTimeout(pollStatus, 5000);
+  }
+  pollStatus();
+</script>
+</body>
+</html>
