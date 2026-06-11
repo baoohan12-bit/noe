@@ -12,15 +12,15 @@
 
 <style>
 :root {
-  --bg: #0D0808;
-  --surface: #1C0F0F;
-  --surface-2: #231414;
-  --text: #F5E6D3;
-  --text-muted: #C4A090;
-  --accent: #D4521C;
-  --accent-soft: rgba(212, 82, 28, 0.15);
-  --accent-deep: #7A2E0A;
-  --border: rgba(212, 82, 28, 0.18);
+  --bg: #EDE5D8;
+  --surface: #F8F2EA;
+  --surface-2: #E8DFCF;
+  --text: #2A1A0A;
+  --text-muted: #7A5C40;
+  --accent: #C4762A;
+  --accent-soft: rgba(196, 118, 42, 0.15);
+  --accent-deep: #7A3A0A;
+  --border: rgba(196, 118, 42, 0.25);
   --font-h: 'Lora', Georgia, serif;
   --font-b: 'Inter', system-ui, sans-serif;
   --radius: 14px;
@@ -52,7 +52,7 @@ h1, h2, h3 { font-family: var(--font-h); line-height: 1.25; font-weight: 700; co
   border-radius: var(--radius);
   padding: 48px 40px;
   width: 100%; max-width: 560px;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.10);
 }
 @media (max-width: 600px) { .form-card { padding: 32px 24px; } }
 
@@ -104,14 +104,14 @@ h1, h2, h3 { font-family: var(--font-h); line-height: 1.25; font-weight: 700; co
 
 .btn-submit {
   display: block; width: 100%; padding: 18px;
-  background: linear-gradient(135deg, var(--accent) 0%, #C84010 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #7A3A0A 100%);
   color: #1a0808; border-radius: var(--radius);
   font-weight: 700; font-size: 1.1rem; font-family: var(--font-h);
   border: none; cursor: pointer;
   transition: all 0.2s; box-shadow: 0 4px 20px var(--accent-soft);
   margin-top: 8px;
 }
-.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(212,82,28,0.35); }
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(196,118,42,0.35); }
 
 .form-guarantee {
   text-align: center; margin-top: 16px;
