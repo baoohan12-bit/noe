@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng Ký — NOE Workshop Nghệ Thuật Xác Lập Vị Thế</title>
+<meta name="description" content="Đăng ký tham gia Workshop Nghệ Thuật Xác Lập Vị Thế của NOE. 2 buổi Live Zoom · 99.000đ · Hoàn tiền 100%.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0D0808;
+  --surface: #1C0F0F;
+  --surface-2: #231414;
+  --text: #F5E6D3;
+  --text-muted: #C4A090;
+  --accent: #E8A89C;
+  --accent-soft: rgba(232, 168, 156, 0.15);
+  --accent-deep: #5C1A1B;
+  --border: rgba(232, 168, 156, 0.18);
+  --font-h: 'Lora', Georgia, serif;
+  --font-b: 'Inter', system-ui, sans-serif;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-b);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+a { color: inherit; text-decoration: none; }
+h1, h2, h3 { font-family: var(--font-h); line-height: 1.25; font-weight: 700; color: var(--text); }
+
+.page-wrap {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 48px 24px;
+}
+
+.form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 48px 40px;
+  width: 100%; max-width: 560px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+}
+@media (max-width: 600px) { .form-card { padding: 32px 24px; } }
+
+.form-logo {
+  font-family: var(--font-h); font-size: 1.3rem; font-weight: 700;
+  color: var(--accent); margin-bottom: 8px; letter-spacing: 0.05em;
+}
+.form-card h1 { font-size: clamp(1.4rem, 3.5vw, 1.8rem); margin-bottom: 8px; }
+.form-card .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 32px; }
+
+.summary-box {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 20px 24px; margin-bottom: 32px;
+}
+.summary-box .price-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.summary-box .price-name {
+  font-family: var(--font-h); font-weight: 600; color: var(--text); font-size: 1rem;
+}
+.summary-box .price-amount {
+  font-family: var(--font-h); font-weight: 800; color: var(--accent); font-size: 1.5rem;
+}
+.summary-box .price-original {
+  font-size: 0.82rem; color: var(--text-muted); text-decoration: line-through;
+}
+.summary-box ul { list-style: none; padding: 0; }
+.summary-box ul li {
+  font-size: 0.88rem; color: var(--text-muted); padding: 5px 0 5px 20px; position: relative;
+}
+.summary-box ul li::before { content: "✦"; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; }
+
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block; font-size: 0.88rem; font-weight: 600;
+  color: var(--text-muted); margin-bottom: 8px; letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.form-group input, .form-group select {
+  width: 100%; padding: 14px 16px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); font-family: var(--font-b);
+  font-size: 1rem; outline: none; transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group select:focus { border-color: var(--accent); }
+.form-group input::placeholder { color: var(--text-muted); opacity: 0.7; }
+.form-group select option { background: var(--surface-2); }
+
+.btn-submit {
+  display: block; width: 100%; padding: 18px;
+  background: linear-gradient(135deg, var(--accent) 0%, #c97b6e 100%);
+  color: #1a0808; border-radius: var(--radius);
+  font-weight: 700; font-size: 1.1rem; font-family: var(--font-h);
+  border: none; cursor: pointer;
+  transition: all 0.2s; box-shadow: 0 4px 20px var(--accent-soft);
+  margin-top: 8px;
+}
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(232,168,156,0.35); }
+
+.form-guarantee {
+  text-align: center; margin-top: 16px;
+  font-size: 0.82rem; color: var(--text-muted);
+}
+
+.form-back {
+  text-align: center; margin-top: 20px; font-size: 0.88rem; color: var(--text-muted);
+}
+.form-back a { color: var(--accent); text-decoration: underline; }
+
+footer {
+  padding: 24px; text-align: center;
+  color: var(--text-muted); font-size: 0.82rem; border-top: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="form-card">
+    <div class="form-logo">NOE</div>
+    <h1>Giữ chỗ Workshop</h1>
+    <p class="subtitle">Nghệ Thuật Xác Lập Vị Thế · 2 buổi Live Zoom</p>
+
+    <div class="summary-box">
+      <div class="price-row">
+        <div>
+          <div class="price-name">Workshop NOE</div>
+          <div class="price-original">Giá trị thực: 2.000.000đ</div>
+        </div>
+        <div class="price-amount">99.000đ</div>
+      </div>
+      <ul>
+        <li>2 buổi Live Zoom · 90 phút/buổi · NOE dẫn trực tiếp</li>
+        <li>Bộ câu hỏi Chẩn Đoán Vị Thế</li>
+        <li>Bộ bài tập thực hành Tự Tri</li>
+        <li>Video record gửi trong 48h</li>
+        <li>Nhóm đồng hành sau Workshop</li>
+      </ul>
+    </div>
+
+    <form action="__GAS_URL__" method="POST" id="reg-form">
+      <input type="hidden" name="product" value="NOE Workshop Nghệ Thuật Xác Lập Vị Thế">
+      <input type="hidden" name="price" value="99000">
+      <input type="hidden" name="redirect" value="checkout.html">
+
+      <div class="form-group">
+        <label for="name">Họ và tên</label>
+        <input type="text" id="name" name="name" placeholder="Nguyễn Thị Hoa" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="email@gmail.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Số điện thoại</label>
+        <input type="tel" id="phone" name="phone" placeholder="09xxxxxxxx" required>
+      </div>
+
+      <button type="submit" class="btn-submit">Đăng Ký &amp; Tiến hành thanh toán →</button>
+    </form>
+
+    <p class="form-guarantee">🔒 Bảo mật tuyệt đối · ✦ Hoàn tiền 100% nếu không hài lòng</p>
+
+    <div class="form-back">
+      <a href="index.html">← Quay lại trang giới thiệu</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 NOE · Nghệ Thuật Xác Lập Vị Thế</p>
+</footer>
+
+</body>
+</html>

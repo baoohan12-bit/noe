@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thanh Toán — NOE Workshop</title>
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0D0808;
+  --surface: #1C0F0F;
+  --surface-2: #231414;
+  --text: #F5E6D3;
+  --text-muted: #C4A090;
+  --accent: #E8A89C;
+  --accent-soft: rgba(232, 168, 156, 0.15);
+  --accent-deep: #5C1A1B;
+  --border: rgba(232, 168, 156, 0.18);
+  --font-h: 'Lora', Georgia, serif;
+  --font-b: 'Inter', system-ui, sans-serif;
+  --radius: 14px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-b); background: var(--bg); color: var(--text);
+  line-height: 1.7; -webkit-font-smoothing: antialiased;
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+a { color: inherit; text-decoration: none; }
+h1, h2, h3 { font-family: var(--font-h); line-height: 1.25; font-weight: 700; color: var(--text); }
+
+.page-wrap {
+  flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 24px;
+}
+.checkout-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 48px 40px;
+  width: 100%; max-width: 560px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+}
+@media (max-width: 600px) { .checkout-card { padding: 32px 24px; } }
+
+.form-logo { font-family: var(--font-h); font-size: 1.3rem; font-weight: 700; color: var(--accent); margin-bottom: 8px; letter-spacing: 0.05em; }
+.checkout-card h1 { font-size: clamp(1.4rem, 3vw, 1.8rem); margin-bottom: 8px; }
+.checkout-card .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 32px; }
+
+.step-indicator {
+  display: flex; gap: 0; margin-bottom: 32px;
+  border: 1px solid var(--border); border-radius: 999px; overflow: hidden;
+}
+.step { flex: 1; padding: 10px; text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+.step.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+
+.qr-section { text-align: center; margin: 28px 0; }
+.qr-section .qr-placeholder {
+  width: 200px; height: 200px; margin: 0 auto 16px;
+  background: var(--surface-2); border: 2px dashed var(--border);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); font-size: 0.85rem; text-align: center; padding: 20px;
+  flex-direction: column; gap: 8px;
+}
+.qr-section .qr-placeholder .qr-icon { font-size: 2rem; }
+
+.bank-info {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 20px 24px; margin: 20px 0;
+}
+.bank-info .bank-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+}
+.bank-info .bank-row:last-child { border-bottom: none; }
+.bank-info .bank-label { font-size: 0.85rem; color: var(--text-muted); }
+.bank-info .bank-value { font-weight: 600; color: var(--text); font-size: 0.95rem; }
+.bank-info .bank-value.highlight { color: var(--accent); font-size: 1.1rem; font-family: var(--font-h); }
+
+.copy-btn {
+  background: var(--accent-soft); border: 1px solid var(--border);
+  color: var(--accent); padding: 4px 10px; border-radius: 6px;
+  font-size: 0.78rem; cursor: pointer; font-family: var(--font-b);
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: var(--accent); color: #1a0808; }
+
+.transfer-note {
+  background: linear-gradient(135deg, rgba(232,168,156,0.1) 0%, rgba(92,26,27,0.2) 100%);
+  border: 1px solid var(--accent); border-radius: 10px;
+  padding: 16px 20px; margin: 20px 0; font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.transfer-note strong { color: var(--accent); }
+
+.btn-confirm {
+  display: block; width: 100%; padding: 18px;
+  background: linear-gradient(135deg, var(--accent) 0%, #c97b6e 100%);
+  color: #1a0808; border-radius: var(--radius);
+  font-weight: 700; font-size: 1.05rem; font-family: var(--font-h);
+  border: none; cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 4px 20px var(--accent-soft); margin-top: 8px;
+  text-align: center; text-decoration: none;
+}
+.btn-confirm:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(232,168,156,0.35); }
+
+.checkout-note { text-align: center; margin-top: 16px; font-size: 0.82rem; color: var(--text-muted); }
+
+footer { padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.82rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="checkout-card">
+    <div class="form-logo">NOE</div>
+    <h1>Thanh Toán</h1>
+    <p class="subtitle">Bước cuối cùng để giữ chỗ của bạn</p>
+
+    <div class="step-indicator">
+      <div class="step">1. Đăng ký</div>
+      <div class="step active">2. Thanh toán</div>
+      <div class="step">3. Xác nhận</div>
+    </div>
+
+    <!-- QR Code placeholder — sepay-funnel sẽ inject QR thật -->
+    <div class="qr-section">
+      <div class="qr-placeholder" id="qr-container">
+        <div class="qr-icon">📱</div>
+        <div>QR Code thanh toán<br><span style="font-size:0.75rem;opacity:0.6;">(Sẽ hiển thị sau khi cấu hình thanh toán)</span></div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--text-muted);">Quét mã QR bằng ứng dụng ngân hàng để thanh toán</p>
+    </div>
+
+    <!-- Bank info — sepay-funnel sẽ inject thông tin thật -->
+    <div class="bank-info">
+      <div class="bank-row">
+        <span class="bank-label">Ngân hàng</span>
+        <span class="bank-value">__BANK_NAME__</span>
+      </div>
+      <div class="bank-row">
+        <span class="bank-label">Số tài khoản</span>
+        <span class="bank-value">
+          <span id="acc-number">__ACCOUNT_NUMBER__</span>
+          <button class="copy-btn" onclick="copyText('acc-number')">Copy</button>
+        </span>
+      </div>
+      <div class="bank-row">
+        <span class="bank-label">Chủ tài khoản</span>
+        <span class="bank-value">__ACCOUNT_NAME__</span>
+      </div>
+      <div class="bank-row">
+        <span class="bank-label">Số tiền</span>
+        <span class="bank-value highlight">99.000đ</span>
+      </div>
+      <div class="bank-row">
+        <span class="bank-label">Nội dung chuyển khoản</span>
+        <span class="bank-value">
+          <span id="transfer-content">__TRANSFER_CONTENT__</span>
+          <button class="copy-btn" onclick="copyText('transfer-content')">Copy</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="transfer-note">
+      ⚠️ Vui lòng chuyển <strong>đúng nội dung</strong> để hệ thống tự động xác nhận và gửi thông tin tham gia đến email của bạn trong vòng 5–15 phút.
+    </div>
+
+    <a href="xac-nhan.html" class="btn-confirm">Tôi đã chuyển khoản xong →</a>
+    <p class="checkout-note">🔒 Giao dịch bảo mật · ✦ Hoàn tiền 100% nếu không hài lòng</p>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 NOE · Nghệ Thuật Xác Lập Vị Thế</p>
+</footer>
+
+<script>
+function copyText(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.innerText).then(() => {
+    const btn = el.nextElementSibling;
+    if (btn) { btn.innerText = 'Đã copy!'; setTimeout(() => { btn.innerText = 'Copy'; }, 2000); }
+  });
+}
+</script>
+</body>
+</html>
