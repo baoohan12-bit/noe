@@ -19,15 +19,17 @@
    THEME — NOE Dark Warm Rose Gold (Hybrid DNA-04 + DNA-08)
    ===================================================== */
 :root {
-  --bg: #EDE5D8;
-  --surface: #F8F2EA;
-  --surface-2: #E8DFCF;
-  --text: #2A1A0A;
-  --text-muted: #7A5C40;
-  --accent: #C4762A;
-  --accent-soft: rgba(196, 118, 42, 0.15);
-  --accent-deep: #7A3A0A;
-  --border: rgba(196, 118, 42, 0.25);
+  --bg: #FBF7F3;
+  --surface: #F5EFE8;
+  --surface-2: #F5EFE8;
+  --text: #2C1810;
+  --text-muted: #8B6B5A;
+  --accent: #B84218;
+  --accent-soft: rgba(184, 66, 24, 0.12);
+  --accent-deep: #4A3728;
+  --border: #E8DDD5;
+  --text-body: #5C3D2E;
+  --gold: #C4973B;
   --font-h: 'Lora', Georgia, serif;
   --font-b: 'Inter', system-ui, sans-serif;
   --max-w: 1100px;
@@ -55,7 +57,7 @@ h1, h2, h3, h4 { font-family: var(--font-h); line-height: 1.25; font-weight: 700
 h1 { font-size: clamp(2rem, 5.5vw, 3.4rem); letter-spacing: -0.01em; }
 h2 { font-size: clamp(1.6rem, 3.8vw, 2.4rem); letter-spacing: -0.01em; }
 h3 { font-size: clamp(1.15rem, 2.2vw, 1.45rem); }
-p { color: var(--text-muted); line-height: 1.8; }
+p { color: var(--text-body); line-height: 1.8; }
 ul { list-style: none; padding: 0; }
 
 /* =====================================================
@@ -94,13 +96,13 @@ ul { list-style: none; padding: 0; }
 
 .btn-primary {
   display: inline-block; padding: 18px 40px;
-  background: linear-gradient(135deg, var(--accent) 0%, #7A3A0A 100%);
-  color: #1a0808; border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--accent) 0%, #8B2A0A 100%);
+  color: #FBF7F3; border-radius: var(--radius);
   font-weight: 700; font-size: 1.05rem; font-family: var(--font-h);
   transition: all 0.2s; box-shadow: 0 4px 20px var(--accent-soft);
   letter-spacing: 0.01em;
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(196,118,42,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(184,66,24,0.3); }
 
 .btn-ghost {
   display: inline-block; padding: 14px 28px;
@@ -115,8 +117,8 @@ ul { list-style: none; padding: 0; }
    ===================================================== */
 .hero {
   padding: clamp(72px, 10vw, 120px) 0 var(--section-py);
-  background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(196,118,42,0.15) 0%, var(--bg) 65%),
-              radial-gradient(ellipse 50% 40% at 20% 70%, rgba(196,118,42,0.08) 0%, transparent 60%);
+  background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(184,66,24,0.12) 0%, var(--bg) 65%),
+              radial-gradient(ellipse 50% 40% at 20% 70%, rgba(184,66,24,0.06) 0%, transparent 60%);
   overflow: hidden;
 }
 .hero-grid {
@@ -166,13 +168,13 @@ ul { list-style: none; padding: 0; }
 .hero-portrait-outer::before {
   content: '';
   position: absolute; inset: -20px;
-  background: radial-gradient(circle, rgba(196,118,42,0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(184,66,24,0.15) 0%, transparent 70%);
   border-radius: 50%;
 }
 .hero-portrait-inner {
   border-radius: 50%; overflow: hidden;
   border: 3px solid var(--accent);
-  box-shadow: 0 16px 56px rgba(196,118,42,0.25), 0 0 0 8px rgba(196,118,42,0.08);
+  box-shadow: 0 16px 56px rgba(184,66,24,0.2), 0 0 0 8px rgba(184,66,24,0.06);
   aspect-ratio: 1;
 }
 .hero-portrait-inner img { width: 100%; height: 100%; object-fit: cover; }
@@ -236,7 +238,7 @@ ul { list-style: none; padding: 0; }
   color: var(--text); margin: 48px 0 24px; letter-spacing: -0.01em;
 }
 .noe-brand-box {
-  background: linear-gradient(135deg, var(--accent-deep) 0%, #2a1010 100%);
+  background: var(--accent-deep);
   border: 1px solid var(--border); border-radius: var(--radius);
   padding: 40px; margin: 48px 0;
 }
@@ -262,7 +264,7 @@ ul { list-style: none; padding: 0; }
 }
 .pillar-num {
   position: absolute; top: -16px; left: 32px;
-  background: var(--accent); color: #1a0808;
+  background: var(--gold); color: #2C1810;
   padding: 6px 18px; border-radius: 999px;
   font-family: var(--font-b); font-weight: 700; font-size: 0.8rem;
   letter-spacing: 0.1em; text-transform: uppercase;
@@ -297,7 +299,7 @@ ul { list-style: none; padding: 0; }
   width: 80px; height: 80px; border-radius: 50%;
   margin: 0 auto 20px; overflow: hidden;
   border: 2px solid var(--accent);
-  box-shadow: 0 4px 16px rgba(196,118,42,0.2);
+  box-shadow: 0 4px 16px rgba(184,66,24,0.15);
 }
 .testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .avatar-placeholder-letter {
@@ -305,7 +307,7 @@ ul { list-style: none; padding: 0; }
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-h); font-size: 2rem; font-weight: 700;
-  color: #1a0808; margin: 0 auto 20px;
+  color: #FBF7F3; margin: 0 auto 20px;
   border: 2px solid var(--accent);
 }
 .testimonial-name { font-family: var(--font-h); font-weight: 700; color: var(--text); }
@@ -347,7 +349,7 @@ ul { list-style: none; padding: 0; }
 .session-num {
   display: inline-flex; align-items: center; justify-content: center;
   width: 56px; height: 56px;
-  background: var(--accent); color: #1a0808;
+  background: var(--accent); color: #FBF7F3;
   border-radius: 50%;
   font-family: var(--font-h); font-weight: 800; font-size: 1.5rem;
   margin-bottom: 24px;
@@ -391,12 +393,12 @@ ul { list-style: none; padding: 0; }
    OFFER BOX
    ===================================================== */
 .offer-box {
-  background: linear-gradient(135deg, var(--accent-deep) 0%, #2A1010 60%, var(--surface) 100%);
+  background: var(--accent-deep);
   border: 2px solid var(--accent);
   border-radius: var(--radius);
   padding: 56px 40px;
   text-align: center;
-  box-shadow: 0 24px 64px rgba(196,118,42,0.2), 0 0 0 1px rgba(196,118,42,0.1);
+  box-shadow: 0 24px 64px rgba(184,66,24,0.15), 0 0 0 1px rgba(184,66,24,0.08);
 }
 @media (max-width: 600px) { .offer-box { padding: 40px 24px; } }
 .offer-title { font-family: var(--font-h); font-size: 1.6rem; font-weight: 700; color: var(--text); margin: 20px 0 8px; }
@@ -405,7 +407,7 @@ ul { list-style: none; padding: 0; }
 .offer-list li {
   padding: 14px 16px 14px 46px; position: relative;
   color: var(--text); font-size: 0.98rem; line-height: 1.65;
-  background: rgba(255,255,255,0.04); border-radius: 8px; border: 1px solid var(--border);
+  background: #FBF7F3; border-radius: 8px; border: 1px solid var(--border);
 }
 .offer-list li::before {
   content: "✦"; position: absolute; left: 16px; top: 15px;
@@ -440,7 +442,7 @@ ul { list-style: none; padding: 0; }
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-h); font-size: 1rem; font-weight: 800;
-  color: #1a0808; margin: 0 auto 24px;
+  color: #FBF7F3; margin: 0 auto 24px;
   box-shadow: 0 8px 24px var(--accent-soft);
   flex-direction: column; line-height: 1.2; text-align: center;
 }
@@ -470,7 +472,7 @@ ul { list-style: none; padding: 0; }
    FINAL CTA
    ===================================================== */
 .final-cta {
-  background: linear-gradient(180deg, var(--surface) 0%, var(--accent-deep) 100%);
+  background: linear-gradient(180deg, var(--surface) 0%, #D4C4B4 100%);
   border-top: 1px solid var(--border);
 }
 .final-cta h2 { color: var(--text); }

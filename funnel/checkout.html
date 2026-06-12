@@ -12,15 +12,17 @@
 
 <style>
 :root {
-  --bg: #EDE5D8;
-  --surface: #F8F2EA;
-  --surface-2: #E8DFCF;
-  --text: #2A1A0A;
-  --text-muted: #7A5C40;
-  --accent: #C4762A;
-  --accent-soft: rgba(196, 118, 42, 0.15);
-  --accent-deep: #7A3A0A;
-  --border: rgba(196, 118, 42, 0.25);
+  --bg: #FBF7F3;
+  --surface: #F5EFE8;
+  --surface-2: #F5EFE8;
+  --text: #2C1810;
+  --text-muted: #8B6B5A;
+  --accent: #B84218;
+  --accent-soft: rgba(184, 66, 24, 0.12);
+  --accent-deep: #4A3728;
+  --text-body: #5C3D2E;
+  --gold: #C4973B;
+  --border: #E8DDD5;
   --font-h: 'Lora', Georgia, serif;
   --font-b: 'Inter', system-ui, sans-serif;
   --radius: 14px;
@@ -85,10 +87,10 @@ h1, h2, h3 { font-family: var(--font-h); line-height: 1.25; font-weight: 700; co
   font-size: 0.78rem; cursor: pointer; font-family: var(--font-b);
   transition: all 0.2s;
 }
-.copy-btn:hover { background: var(--accent); color: #1a0808; }
+.copy-btn:hover { background: var(--accent); color: #FBF7F3; }
 
 .transfer-note {
-  background: linear-gradient(135deg, rgba(196,118,42,0.1) 0%, rgba(196,118,42,0.1) 100%);
+  background: linear-gradient(135deg, rgba(184,66,24,0.08) 0%, rgba(184,66,24,0.08) 100%);
   border: 1px solid var(--accent); border-radius: 10px;
   padding: 16px 20px; margin: 20px 0; font-size: 0.9rem;
   color: var(--text-muted);
@@ -98,13 +100,13 @@ h1, h2, h3 { font-family: var(--font-h); line-height: 1.25; font-weight: 700; co
 .btn-confirm {
   display: block; width: 100%; padding: 18px;
   background: linear-gradient(135deg, var(--accent) 0%, #7A3A0A 100%);
-  color: #1a0808; border-radius: var(--radius);
+  color: #FBF7F3; border-radius: var(--radius);
   font-weight: 700; font-size: 1.05rem; font-family: var(--font-h);
   border: none; cursor: pointer; transition: all 0.2s;
   box-shadow: 0 4px 20px var(--accent-soft); margin-top: 8px;
   text-align: center; text-decoration: none;
 }
-.btn-confirm:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(196,118,42,0.35); }
+.btn-confirm:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(184,66,24,0.3); }
 
 .checkout-note { text-align: center; margin-top: 16px; font-size: 0.82rem; color: var(--text-muted); }
 
