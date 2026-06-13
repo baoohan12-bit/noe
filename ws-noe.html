@@ -377,8 +377,8 @@
   .secrets-intro { text-align: left; max-width: 860px; margin: 0 auto 80px; }
   .secrets-intro p { font-size: 15.5px; line-height: 1.85; color: var(--bark-mid); margin-top: 22px; text-align: left; }
 
-  .secret-item { display: grid; grid-template-columns: 72px 1fr; gap: 0 40px; margin-bottom: 52px; align-items: start; }
-  .secret-num-wrap { text-align: right; padding-top: 4px; }
+  .secret-item { display: block; margin-bottom: 72px; text-align: center; }
+  .secret-num-wrap { text-align: center; padding-top: 4px; margin-bottom: 16px; }
   .secret-num {
     font-family: 'Cormorant Garamond', serif; font-size: 54px; font-weight: 300;
     background: linear-gradient(135deg, var(--terra-light) 0%, var(--terra-deep) 100%);
@@ -386,13 +386,13 @@
     opacity: 0.45; line-height: 1; display: block;
   }
   .secret-num-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bark-soft); display: block; margin-top: 4px; }
-  .secret-content { border-left: 1px solid var(--border-warm); padding-left: 40px; }
+  .secret-content { border-top: 1px solid var(--border-warm); padding-top: 28px; }
   .secret-title {
     font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 4vw, 42px); font-weight: 400;
     color: var(--bark); margin-bottom: 6px; line-height: 1.12;
   }
-  .secret-subtitle { font-size: 12px; color: var(--terra); opacity: 0.85; margin-bottom: 18px; font-style: italic; letter-spacing: 0.02em; }
-  .secret-body { font-size: 15px; line-height: 1.85; color: var(--bark-mid); }
+  .secret-subtitle { font-size: 13px; color: var(--terra); opacity: 0.85; margin-bottom: 0; font-style: italic; letter-spacing: 0.02em; }
+  .secret-body { font-size: 15px; line-height: 1.85; color: var(--bark-mid); text-align: left; margin-top: 24px; }
   .secret-body p { margin-bottom: 14px; }
 
   /* ══════════════════════════════
@@ -680,9 +680,9 @@
   @media (max-width: 700px) {
     section { padding: 72px 0; }
     .persona-grid, .transformation-grid, .testimonials-grid, .choice-grid { grid-template-columns: 1fr; }
-    .secret-item { grid-template-columns: 1fr; }
-    .secret-num-wrap { text-align: left; }
-    .secret-content { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 22px; }
+    .secret-item { display: block; }
+    .secret-num-wrap { text-align: center; }
+    .secret-content { padding-top: 22px; }
     .session-item { grid-template-columns: 1fr; }
     .session-content { border-left: none; padding-left: 0; }
     .guarantee-block { grid-template-columns: 1fr; }
@@ -1059,7 +1059,7 @@
     </div>
     <div class="bridge-question reveal" style="margin-top:28px;font-size:clamp(15px,2vw,18px);">Có phải bạn cũng đang nhìn thấy hình bóng của chính mình trong câu chuyện mà tôi vừa kể?<br>Sâu thẳm bên trong tâm hồn, có phải bạn cũng đang khát khao được cởi bỏ lớp áo giáp nặng nề để sống là chính mình, được yêu thương trong sự trân trọng và bước ra xã hội bằng một tâm thế ung dung, tự chủ không?</div>
     <div class="bridge-intro reveal">
-      <h3 class="bridge-obstacle-title">Vậy Điều Gì Đang Thực Sự Ngăn Cản Bạn Đạt Được Mong Muốn Đó?</h3>
+      <h3 class="bridge-obstacle-title">Vậy Điều Gì Đang Thực Sự Ngăn Cản Bạn ?</h3>
       <p>Chúng ta thường có xu hướng đổ lỗi cho hoàn cảnh bên ngoài: đổ cho người đàn ông bên cạnh vô tâm, cho áp lực công việc đè nặng, hay cho những đứa con bướng bỉnh khó bảo.</p>
       <p>Nhưng sự thật trần trụi là: Điều ngăn cản bạn không nằm ở thế giới ngoài kia, mà nó chính là sự kiệt quệ về năng lượng, sự nhạy cảm quá mức về cảm xúc và những phản ứng hoàn toàn bằng bản năng cũ kỹ bên trong bạn.</p>
       <p>Bạn bị trói chân bởi nỗi sợ bị phán xét nên luôn phải gồng mình lên để tỏ ra hoàn hảo. Bạn tích tụ những ấm ức, áp lực ngoài xã hội rồi vô tình mang về "xả" lên những người thân yêu nhất bằng sự cằn nhằn, đổ lỗi, hoặc chọn cách im lặng để trừng phạt lẫn nhau.</p>
