@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nghệ Thuật Xác Lập Vị Thế — NOE Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --terra-deep:  #7A3015;
+    --terra:       #B84E24;
+    --terra-warm:  #C9612E;
+    --terra-light: #D4795A;
+    --terra-pale:  #E8B49A;
+    --sand:        #F7F0E8;
+    --sand-mid:    #F2E9DE;
+    --sand-deep:   #EBE0D3;
+    --linen:       #FBF7F2;
+    --bark:        #3D2010;
+    --bark-mid:    #6B3E28;
+    --bark-soft:   #9A6A52;
+    --border:      rgba(139,58,26,0.13);
+    --border-warm: rgba(139,58,26,0.22);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--sand);
+    color: var(--bark);
+    font-family: 'Lora', serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .display        { font-family: 'Cormorant Garamond', serif; font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
+  .display-italic { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; line-height: 1.15; }
+
+  .container      { max-width: 720px;  margin: 0 auto; padding: 0 24px; }
+  .container-wide { max-width: 960px;  margin: 0 auto; padding: 0 24px; }
+  section         { padding: 96px 0; }
+
+  .eyebrow {
+    font-family: 'Lora', serif;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--terra); opacity: 0.85;
+  }
+
+  .divider { width: 36px; height: 1px; background: var(--terra); opacity: 0.3; margin: 0 auto; }
+
+  /* ── CTA buttons ── */
+  .btn-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--terra-warm) 0%, var(--terra-deep) 100%);
+    color: var(--linen);
+    font-family: 'Lora', serif;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 44px;
+    transition: opacity 0.25s ease, transform 0.2s ease;
+    border: none; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(139,58,26,0.22);
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-light {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(247,240,232,0.9) 100%);
+    color: var(--terra-deep);
+    font-family: 'Lora', serif;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 44px;
+    transition: opacity 0.25s ease, transform 0.2s ease;
+    border: none; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  .btn-light:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* ── Scroll reveal ── */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.32s; }
+  .reveal-delay-4 { transition-delay: 0.46s; }
+
+  /* ══════════════════════════════
+     TOPBAR
+  ══════════════════════════════ */
+  .topbar {
+    padding: 18px 24px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--linen);
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 300;
+    color: var(--terra-deep); letter-spacing: 0.25em;
+  }
+
+  /* ══════════════════════════════
+     HERO — gradient ombre background
+  ══════════════════════════════ */
+  #hero {
+    background: linear-gradient(
+      180deg,
+      var(--linen) 0%,
+      var(--sand) 40%,
+      var(--sand-mid) 100%
+    );
+    padding: 80px 0 40px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  /* Warm radial glow, logo-inspired */
+  #hero::before {
+    content: '';
+    position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 500px;
+    background: radial-gradient(ellipse at 50% 30%,
+      rgba(201,97,46,0.09) 0%,
+      rgba(184,78,36,0.04) 40%,
+      transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-logo-mark {
+    width: 76px; height: 76px;
+    margin: 0 auto 40px; opacity: 0.9;
+    position: relative; z-index: 1;
+  }
+  .hero-logo-mark img { width: 100%; height: 100%; object-fit: contain; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid var(--border-warm);
+    padding: 8px 18px; margin-bottom: 44px;
+    background: rgba(255,255,255,0.55);
+    position: relative; z-index: 1;
+  }
+  .hero-badge span { font-size: 11px; letter-spacing: 0.14em; color: var(--bark-soft); text-transform: uppercase; }
+  .hero-badge .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--terra); opacity: 0.7; }
+
+  .hero-title {
+    font-size: clamp(40px, 6.5vw, 78px);
+    color: var(--bark);
+    max-width: 640px; margin: 0 auto 20px;
+    position: relative; z-index: 1;
+  }
+  .hero-title .accent {
+    background: linear-gradient(135deg, var(--terra-warm) 0%, var(--terra-deep) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(18px, 2.5vw, 22px);
+    color: var(--bark-soft);
+    max-width: 440px; margin: 0 auto 52px;
+    line-height: 1.65; position: relative; z-index: 1;
+  }
+
+  .hero-meta {
+    display: flex; justify-content: center; gap: 0; margin-bottom: 52px; flex-wrap: wrap;
+    position: relative; z-index: 1;
+  }
+  .hero-meta-item {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 0 28px; border-right: 1px solid var(--border);
+  }
+  .hero-meta-item:last-child { border-right: none; }
+  .hero-meta-value { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--bark); }
+  .hero-meta-label { font-size: 10px; color: var(--bark-soft); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .hero-cta-wrap { position: relative; z-index: 1; }
+  .hero-guarantee { font-size: 12px; color: var(--bark-soft); margin-top: 14px; letter-spacing: 0.04em; }
+  .hero-guarantee span { color: var(--terra); }
+
+  /* ══════════════════════════════
+     PAIN
+  ══════════════════════════════ */
+  #pain {
+    background: linear-gradient(180deg, var(--sand-mid) 0%, var(--sand-deep) 100%);
+  }
+  .section-header { text-align: center; margin-bottom: 40px; }
+  .section-title {
+    font-size: clamp(28px, 4.5vw, 52px);
+    color: var(--bark); margin-top: 14px; line-height: 1.12;
+  }
+
+  .pain-intro {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(17px, 2.2vw, 21px);
+    color: var(--bark-mid); text-align: center;
+    max-width: 540px; margin: 0 auto 56px;
+    line-height: 1.6;
+  }
+
+  .persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 72px; }
+  .persona-card {
+    background: linear-gradient(160deg, var(--linen) 0%, var(--sand) 100%);
+    border: 1px solid var(--border);
+    padding: 44px 36px; position: relative;
+  }
+  .persona-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 96px; font-weight: 300;
+    color: var(--terra); opacity: 0.07;
+    position: absolute; top: 10px; right: 22px; line-height: 1;
+  }
+  .persona-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terra); opacity: 0.75; margin-bottom: 18px; display: block; }
+  .persona-type { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--bark); margin-bottom: 18px; line-height: 1.3; }
+  .persona-desc { font-size: 14.5px; line-height: 1.82; color: var(--bark-mid); }
+
+  .pain-bridge { text-align: center; max-width: 580px; margin: 0 auto; }
+  .pain-bridge p { font-size: 15.5px; line-height: 1.85; color: var(--bark-mid); margin-bottom: 18px; }
+  .pain-hook {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(20px, 3vw, 28px); color: var(--terra-deep);
+    line-height: 1.45; margin-top: 20px;
+  }
+
+  /* ══════════════════════════════
+     STORY
+  ══════════════════════════════ */
+  #story {
+    background: linear-gradient(180deg, var(--sand-deep) 0%, var(--linen) 60%, var(--sand) 100%);
+  }
+  .story-body { max-width: 640px; margin: 0 auto; }
+  .story-body p { font-size: 15.5px; line-height: 1.9; color: var(--bark-mid); margin-bottom: 18px; }
+
+  /* Typewriter quote — SIGNATURE ELEMENT */
+  .quote-typewriter {
+    position: relative; margin: 52px 0;
+    padding: 32px 40px 32px 44px;
+    border-left: 2px solid var(--terra);
+    background: linear-gradient(135deg, rgba(184,78,36,0.05) 0%, rgba(201,97,46,0.02) 100%);
+  }
+  .quote-typewriter::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 110px; color: var(--terra); opacity: 0.09;
+    position: absolute; top: -16px; left: 14px; line-height: 1;
+  }
+  .quote-typewriter .qt-text {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(16px, 2.2vw, 21px); line-height: 1.7; color: var(--bark);
+    min-height: 72px;
+  }
+  .qt-cursor {
+    display: inline-block; width: 2px; height: 1em;
+    background: var(--terra); margin-left: 2px;
+    vertical-align: middle; opacity: 0;
+    animation: blink 0.85s step-end infinite;
+  }
+  .qt-cursor.active { opacity: 1; }
+  @keyframes blink { 50% { opacity: 0; } 0%,100% { opacity: 1; } }
+
+
+  .story-quote-inline {
+    position: relative; margin: 36px 0;
+    padding: 20px 28px 20px 40px;
+    border-left: 2px solid var(--terra);
+    background: linear-gradient(135deg, rgba(184,78,36,0.04) 0%, rgba(201,97,46,0.01) 100%);
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(16px, 2.2vw, 20px); color: var(--bark); line-height: 1.7;
+  }
+  .story-quote-inline::before {
+    content: '"'; font-family: 'Cormorant Garamond', serif;
+    font-size: 72px; color: var(--terra); opacity: 0.1;
+    position: absolute; top: -6px; left: 10px; line-height: 1;
+  }
+  .story-pullquote {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(18px, 2.8vw, 26px); font-weight: 300;
+    color: var(--terra-deep); text-align: center;
+    line-height: 1.6; max-width: 560px; margin: 36px auto;
+    padding: 28px 24px;
+    border-top: 1px solid var(--border-warm);
+    border-bottom: 1px solid var(--border-warm);
+  }
+
+  .story-section-break {
+    text-align: center; margin: 56px 0 40px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .story-section-break::before,
+  .story-section-break::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .story-section-label {
+    font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--bark-soft);
+    white-space: nowrap;
+  }
+
+  /* ══════════════════════════════
+     NOE MEANING — terracotta ombre
+  ══════════════════════════════ */
+  #noe-meaning {
+    background: linear-gradient(
+      160deg,
+      var(--terra-warm) 0%,
+      var(--terra) 40%,
+      var(--terra-deep) 100%
+    );
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  #noe-meaning::before {
+    content: 'NOE';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(160px, 28vw, 300px); font-weight: 300;
+    color: rgba(255,255,255,0.05);
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    letter-spacing: 0.25em; white-space: nowrap;
+    pointer-events: none;
+  }
+  .noe-inner { position: relative; z-index: 1; }
+  .noe-mark { width: 68px; height: 68px; margin: 0 auto 32px; filter: brightness(0) invert(1); opacity: 0.9; }
+  .noe-mark img { width: 100%; height: 100%; object-fit: contain; }
+  .noe-tagline {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(18px, 2.8vw, 27px); color: rgba(255,255,255,0.93);
+    margin-bottom: 24px; line-height: 1.4;
+  }
+  .noe-divider { width: 36px; height: 1px; background: rgba(255,255,255,0.3); margin: 0 auto 32px; }
+  .noe-desc {
+    font-size: 15.5px; line-height: 1.9;
+    color: rgba(255,255,255,0.72);
+    max-width: 580px; margin: 0 auto;
+  }
+  .noe-pillars {
+    display: flex; justify-content: center; gap: 12px; margin-top: 52px; flex-wrap: wrap;
+  }
+  .noe-pillar {
+    border: 1px solid rgba(255,255,255,0.22);
+    padding: 9px 22px;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* ══════════════════════════════
+     3 BÍ MẬT
+  ══════════════════════════════ */
+  #secrets {
+    background: linear-gradient(180deg, var(--sand) 0%, var(--linen) 100%);
+  }
+  .secrets-intro { text-align: center; max-width: 560px; margin: 0 auto 80px; }
+  .secrets-intro p { font-size: 15.5px; line-height: 1.85; color: var(--bark-mid); margin-top: 22px; }
+
+  .secret-item { display: grid; grid-template-columns: 72px 1fr; gap: 0 40px; margin-bottom: 52px; align-items: start; }
+  .secret-num-wrap { text-align: right; padding-top: 4px; }
+  .secret-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 54px; font-weight: 300;
+    background: linear-gradient(135deg, var(--terra-light) 0%, var(--terra-deep) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    opacity: 0.45; line-height: 1; display: block;
+  }
+  .secret-num-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bark-soft); display: block; margin-top: 4px; }
+  .secret-content { border-left: 1px solid var(--border-warm); padding-left: 40px; }
+  .secret-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 4vw, 42px); font-weight: 400;
+    color: var(--bark); margin-bottom: 6px; line-height: 1.12;
+  }
+  .secret-subtitle { font-size: 12px; color: var(--terra); opacity: 0.85; margin-bottom: 18px; font-style: italic; letter-spacing: 0.02em; }
+  .secret-body { font-size: 15px; line-height: 1.85; color: var(--bark-mid); }
+  .secret-body p { margin-bottom: 14px; }
+
+  /* ══════════════════════════════
+     TRANSFORMATION
+  ══════════════════════════════ */
+  #transformation {
+    background: linear-gradient(160deg, var(--sand-deep) 0%, var(--sand-mid) 100%);
+  }
+  .transformation-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .transformation-card {
+    background: linear-gradient(160deg, var(--linen) 0%, var(--sand) 100%);
+    border: 1px solid var(--border); padding: 40px 32px;
+  }
+  .transformation-icon { font-size: 22px; margin-bottom: 18px; display: block; }
+  .transformation-area { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terra); opacity: 0.75; margin-bottom: 14px; display: block; }
+  .transformation-headline { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--bark); margin-bottom: 14px; line-height: 1.35; }
+  .transformation-desc { font-size: 14px; line-height: 1.8; color: var(--bark-mid); }
+
+  /* ══════════════════════════════
+     TESTIMONIALS
+  ══════════════════════════════ */
+  #testimonials {
+    background: linear-gradient(180deg, var(--sand-mid) 0%, var(--sand) 100%);
+  }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .testimonial-card {
+    border: 1px solid var(--border);
+    background: linear-gradient(160deg, rgba(255,255,255,0.7) 0%, var(--sand) 100%);
+    padding: 32px 28px;
+  }
+  .testimonial-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--terra-light) 0%, var(--terra-deep) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 16px;
+    color: rgba(255,255,255,0.9); margin-bottom: 20px;
+  }
+  .testimonial-quote { font-size: 14px; line-height: 1.8; color: var(--bark-mid); font-style: italic; margin-bottom: 20px; }
+  .testimonial-name { font-size: 12px; font-weight: 500; color: var(--bark); letter-spacing: 0.04em; }
+  .testimonial-role { font-size: 11px; color: var(--bark-soft); margin-top: 2px; }
+
+  /* ══════════════════════════════
+     CTA BRIDGE (4.1 + 4.2 + 4.3)
+  ══════════════════════════════ */
+  #cta-bridge {
+    background: linear-gradient(180deg, var(--sand) 0%, var(--linen) 100%);
+  }
+  .bridge-intro { max-width: 600px; margin: 0 auto; }
+  .bridge-intro p { font-size: 15.5px; line-height: 1.9; color: var(--bark-mid); margin-bottom: 20px; }
+  .bridge-question {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(20px, 3vw, 28px); color: var(--terra-deep);
+    text-align: center; margin: 0 auto 52px;
+    max-width: 560px; line-height: 1.5;
+    padding: 28px 24px;
+    border-top: 1px solid var(--border-warm);
+    border-bottom: 1px solid var(--border-warm);
+  }
+  .bridge-obstacle-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 3.5vw, 38px);
+    color: var(--bark); margin-bottom: 28px; line-height: 1.2;
+  }
+  .bridge-action-title {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 3.5vw, 38px);
+    color: var(--bark); margin-bottom: 28px; margin-top: 56px; line-height: 1.2;
+  }
+  .bridge-pullquote {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(16px, 2.3vw, 22px); color: var(--terra-deep);
+    padding: 28px 36px; margin: 40px 0;
+    border-left: 2px solid var(--terra);
+    background: linear-gradient(135deg, rgba(184,78,36,0.05) 0%, transparent 100%);
+    line-height: 1.65;
+  }
+
+  /* ══════════════════════════════
+     CHOICE (2 lựa chọn)
+  ══════════════════════════════ */
+  #choices {
+    background: linear-gradient(180deg, var(--linen) 0%, var(--sand-mid) 100%);
+  }
+  .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .choice-card {
+    background: linear-gradient(160deg, var(--sand) 0%, var(--sand-deep) 100%);
+    border: 1px solid var(--border); padding: 44px 36px;
+  }
+  .choice-card.recommended {
+    background: linear-gradient(160deg, rgba(184,78,36,0.05) 0%, rgba(122,48,21,0.04) 100%);
+    border-color: var(--terra);
+  }
+  .choice-tag { display: inline-block; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; padding: 5px 12px; margin-bottom: 22px; }
+  .choice-card:not(.recommended) .choice-tag { background: var(--sand-deep); color: var(--bark-soft); border: 1px solid var(--border); }
+  .choice-card.recommended .choice-tag {
+    background: linear-gradient(135deg, var(--terra-warm) 0%, var(--terra-deep) 100%);
+    color: var(--linen);
+  }
+  .choice-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--bark); margin-bottom: 14px; line-height: 1.3; }
+  .choice-desc { font-size: 14.5px; line-height: 1.8; color: var(--bark-mid); }
+  .choice-closing {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(17px, 2.5vw, 22px); color: var(--terra-deep);
+    text-align: center; margin-top: 52px; line-height: 1.55;
+  }
+
+  /* ══════════════════════════════
+     WORKSHOP DETAILS
+  ══════════════════════════════ */
+  #workshop {
+    background: linear-gradient(180deg, var(--sand-mid) 0%, var(--linen) 100%);
+  }
+  .workshop-logistics {
+    display: flex; justify-content: center; gap: 0; margin-bottom: 72px; flex-wrap: wrap;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--linen) 0%, var(--sand) 100%);
+    padding: 28px 0;
+  }
+  .workshop-logistic { text-align: center; padding: 0 32px; border-right: 1px solid var(--border); }
+  .workshop-logistic:last-child { border-right: none; }
+  .workshop-logistic-icon { font-size: 18px; margin-bottom: 8px; }
+  .workshop-logistic-value { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--bark); display: block; margin-bottom: 4px; }
+  .workshop-logistic-label { font-size: 10px; color: var(--bark-soft); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .session-list { max-width: 680px; margin: 0 auto; }
+  .session-item { display: grid; grid-template-columns: 52px 1fr; gap: 32px; margin-bottom: 52px; align-items: start; }
+  .session-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300;
+    background: linear-gradient(135deg, var(--terra-light) 0%, var(--terra-deep) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    opacity: 0.45; text-align: center; line-height: 1;
+  }
+  .session-content { border-left: 1px solid var(--border-warm); padding-left: 32px; }
+  .session-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--bark); margin-bottom: 4px; }
+  .session-subtitle { font-size: 13px; color: var(--bark-soft); margin-bottom: 6px; font-style: italic; }
+  .session-hook { font-size: 13px; color: var(--terra); opacity: 0.85; font-style: italic; margin-bottom: 16px; }
+  .session-outcomes { list-style: none; }
+  .session-outcomes li {
+    font-size: 14px; color: var(--bark-mid);
+    padding: 7px 0 7px 20px; position: relative;
+    border-bottom: 1px solid var(--border); line-height: 1.6;
+  }
+  .session-outcomes li::before { content: '—'; position: absolute; left: 0; color: var(--terra); opacity: 0.5; font-size: 12px; }
+  .session-outcome-summary {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 15.5px; color: var(--terra-deep);
+    margin-top: 20px; padding: 14px 20px;
+    background: linear-gradient(135deg, rgba(184,78,36,0.07) 0%, rgba(201,97,46,0.03) 100%);
+    border-left: 2px solid rgba(184,78,36,0.4); line-height: 1.55;
+  }
+
+  /* ══════════════════════════════
+     PRICING
+  ══════════════════════════════ */
+  #pricing {
+    background: linear-gradient(180deg, var(--linen) 0%, var(--sand-deep) 100%);
+  }
+  .pricing-card {
+    max-width: 580px; margin: 0 auto;
+    background: linear-gradient(160deg, var(--linen) 0%, var(--sand) 100%);
+    border: 1px solid var(--border-warm); padding: 56px 52px; text-align: center;
+    box-shadow: 0 8px 40px rgba(139,58,26,0.08);
+  }
+  .pricing-tag { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terra); opacity: 0.85; margin-bottom: 28px; display: block; }
+  .pricing-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(18px, 2.8vw, 26px); color: var(--bark); font-weight: 400; line-height: 1.35; margin-bottom: 40px; }
+  .pricing-inclusions { list-style: none; text-align: left; margin-bottom: 40px; }
+  .pricing-inclusions li { display: flex; gap: 14px; font-size: 14.5px; color: var(--bark-mid); padding: 13px 0; border-bottom: 1px solid var(--border); line-height: 1.5; align-items: flex-start; }
+  .pricing-inclusions li .incl-icon { color: var(--terra); opacity: 0.65; flex-shrink: 0; margin-top: 2px; }
+  .pricing-inclusions li .incl-name { color: var(--bark); font-weight: 400; }
+  .pricing-inclusions li .incl-desc { color: var(--bark-soft); font-size: 13px; }
+  .pricing-incl-inner { display: flex; flex-direction: column; gap: 2px; }
+  .pricing-original { font-size: 13px; color: var(--bark-soft); text-decoration: line-through; margin-bottom: 6px; }
+  .pricing-price {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(52px, 9vw, 88px); font-weight: 300;
+    background: linear-gradient(135deg, var(--terra-warm) 0%, var(--terra-deep) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    line-height: 1; margin-bottom: 4px;
+  }
+  .pricing-context { font-size: 13px; color: var(--bark-soft); font-style: italic; margin-bottom: 36px; line-height: 1.65; }
+  .pricing-cta-wrap { margin-bottom: 22px; }
+  .pricing-guarantee-note { font-size: 12px; color: var(--bark-soft); letter-spacing: 0.04em; }
+  .pricing-guarantee-note span { color: var(--terra); }
+
+  /* Guarantee block */
+  .guarantee-block { max-width: 580px; margin: 52px auto 0; display: grid; grid-template-columns: 60px 1fr; gap: 24px; align-items: start; }
+  .guarantee-seal {
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, rgba(184,78,36,0.08) 0%, rgba(122,48,21,0.06) 100%);
+    border: 1px solid var(--border-warm); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 10px;
+    color: var(--terra); text-align: center; line-height: 1.3;
+    letter-spacing: 0.04em; flex-shrink: 0;
+  }
+  .guarantee-text h4 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; color: var(--bark); margin-bottom: 8px; }
+  .guarantee-text p { font-size: 13.5px; line-height: 1.75; color: var(--bark-mid); }
+
+  /* ══════════════════════════════
+     FAQ
+  ══════════════════════════════ */
+  #faq { background: linear-gradient(180deg, var(--sand-deep) 0%, var(--sand) 100%); }
+  .faq-list { max-width: 640px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-question {
+    width: 100%; background: transparent; border: none;
+    color: var(--bark); font-family: 'Lora', serif;
+    font-size: 15px; font-weight: 400; text-align: left;
+    padding: 22px 0; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    line-height: 1.5; transition: color 0.2s;
+  }
+  .faq-question:hover { color: var(--terra-deep); }
+  .faq-icon {
+    flex-shrink: 0; width: 22px; height: 22px;
+    border: 1px solid var(--border-warm); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--terra);
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.38s ease; }
+  .faq-answer-inner { padding: 0 0 24px; font-size: 14.5px; line-height: 1.82; color: var(--bark-mid); }
+
+  /* ══════════════════════════════
+     CLOSING CTA — deep terracotta ombre
+  ══════════════════════════════ */
+  #closing {
+    background: linear-gradient(
+      160deg,
+      var(--terra-warm) 0%,
+      var(--terra) 35%,
+      var(--terra-deep) 80%,
+      #5A2410 100%
+    );
+    text-align: center; position: relative; overflow: hidden;
+  }
+  #closing::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.07) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .closing-inner { position: relative; z-index: 1; }
+  .closing-title {
+    font-size: clamp(32px, 5.5vw, 64px); max-width: 520px; margin: 0 auto 14px;
+    color: rgba(255,255,255,0.96); line-height: 1.08;
+  }
+  .closing-sub {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(16px, 2.5vw, 23px); color: rgba(255,255,255,0.72);
+    margin-bottom: 52px; line-height: 1.5;
+  }
+  .closing-guarantee { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 16px; letter-spacing: 0.04em; }
+  .closing-guarantee span { color: rgba(255,255,255,0.82); }
+  .closing-desc {
+    font-size: 14.5px; line-height: 1.85; color: rgba(255,255,255,0.65);
+    max-width: 460px; margin: 0 auto 48px;
+  }
+  .closing-divider { width: 36px; height: 1px; background: rgba(255,255,255,0.25); margin: 0 auto 80px; }
+  .closing-note {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(15px, 2.2vw, 20px); color: rgba(255,255,255,0.6);
+    max-width: 480px; margin: 44px auto 0; line-height: 1.75;
+  }
+  .closing-sig { font-size: 13px; color: rgba(255,255,255,0.38); letter-spacing: 0.22em; margin-top: 20px; }
+
+  /* ══════════════════════════════
+     FOOTER
+  ══════════════════════════════ */
+  footer {
+    padding: 48px 24px; text-align: center;
+    background: linear-gradient(180deg, var(--bark) 0%, #2A1008 100%);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  footer .footer-logo {
+    font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300;
+    color: rgba(255,255,255,0.45); letter-spacing: 0.28em; margin-bottom: 14px;
+  }
+  footer p { font-size: 12px; color: rgba(255,255,255,0.28); line-height: 1.8; }
+  footer a { color: rgba(201,97,46,0.7); text-decoration: none; }
+
+  /* ══════════════════════════════
+     STICKY CTA
+  ══════════════════════════════ */
+  .sticky-cta {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(135deg, rgba(247,240,232,0.97) 0%, rgba(235,224,211,0.97) 100%);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--border-warm);
+    padding: 14px 24px; z-index: 100;
+    transform: translateY(100%); transition: transform 0.35s ease;
+    display: flex; align-items: center; justify-content: center; gap: 24px;
+  }
+  .sticky-cta.visible { transform: translateY(0); }
+  .sticky-cta-text {
+    font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic;
+    color: var(--bark); display: none;
+  }
+  @media (min-width: 640px) { .sticky-cta-text { display: block; } }
+
+  /* ══════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════ */
+  @media (max-width: 700px) {
+    section { padding: 72px 0; }
+    .persona-grid, .transformation-grid, .testimonials-grid, .choice-grid { grid-template-columns: 1fr; }
+    .secret-item { grid-template-columns: 1fr; }
+    .secret-num-wrap { text-align: left; }
+    .secret-content { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 22px; }
+    .session-item { grid-template-columns: 1fr; }
+    .session-content { border-left: none; padding-left: 0; }
+    .guarantee-block { grid-template-columns: 1fr; }
+    .pricing-card { padding: 36px 24px; }
+    .hero-meta-item { padding: 0 14px; }
+    .workshop-logistic { padding: 16px; border-right: none; border-bottom: 1px solid var(--border); }
+    .workshop-logistic:last-child { border-bottom: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .qt-cursor { animation: none; opacity: 1; }
+  }
+
+  /* ── LOGO IMAGE ── */
+  .hero-logo-img {
+    width: 88px; height: 88px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 36px;
+    display: block;
+    position: relative; z-index: 1;
+  }
+
+  /* ── TESTIMONIAL SCREENSHOTS ── */
+  .testi-screenshot {
+    width: 100%; border-radius: 4px;
+    margin-bottom: 20px; display: block;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .testi-card p { font-size: 14px; line-height: 1.8; color: var(--bark-mid); margin-bottom: 10px; font-style: italic; }
+  .testi-card p:last-child { margin-bottom: 0; }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 16px; padding: 16px 24px; background: transparent;
+  }
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1; max-width: 120px;
+    height: 1px; background: var(--border-warm);
+  }
+  .section-divider span { color: var(--terra); font-size: 12px; letter-spacing: 0.2em; opacity: 0.55; }
+
+  /* ── GUARANTEE STANDALONE ── */
+  .guarantee-standalone {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: 20px; max-width: 600px; margin: 0 auto;
+  }
+  .guarantee-badge-lg {
+    width: 76px; height: 76px;
+    background: linear-gradient(135deg, rgba(184,78,36,0.1) 0%, rgba(122,48,21,0.08) 100%);
+    border: 1px solid var(--border-warm); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 11px;
+    color: var(--terra); text-align: center; line-height: 1.3;
+    letter-spacing: 0.04em; flex-shrink: 0;
+  }
+
+  /* ── BRIDGE H3 ── */
+  .bridge-h3, .obstacle-block h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 3.5vw, 34px); font-weight: 400;
+    color: var(--bark); margin-bottom: 24px; line-height: 1.2;
+  }
+
+  /* ── QUOTE CLASS ── */
+  .q { font-style: italic; color: var(--bark-mid); }
+
+  /* ── TESTI CARD ── */
+  .testi-card {
+    border: 1px solid var(--border);
+    background: linear-gradient(160deg, rgba(255,255,255,0.7) 0%, var(--sand) 100%);
+    padding: 28px 24px;
+  }
+  .testi-name {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--terra); opacity: 0.85; margin-bottom: 16px;
+  }
+
+  /* ── STORY QUOTE (current version uses .story-quote) ── */
+  .story-quote {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(17px, 2.3vw, 21px); font-weight: 300;
+    color: var(--terra-deep); text-align: center;
+    line-height: 1.5; max-width: 560px; margin: 44px auto;
+    padding: 24px;
+    border-top: 1px solid var(--border-warm);
+    border-bottom: 1px solid var(--border-warm);
+  }
+
+  /* ── PAIN CARDS (current uses .pain-card not .persona-card) ── */
+  .pain-card {
+    background: linear-gradient(160deg, var(--linen) 0%, var(--sand) 100%);
+    border: 1px solid var(--border); padding: 40px 32px; position: relative;
+  }
+  .pain-card-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--terra); opacity: 0.75; margin-bottom: 14px; display: block;
+  }
+  .pain-card p { font-size: 14.5px; line-height: 1.82; color: var(--bark-mid); }
+  .pain-cards { display: grid; gap: 16px; margin-bottom: 36px; }
+  @media(min-width:640px){ .pain-cards { grid-template-columns: 1fr 1fr; } }
+
+  /* ── FRAMED QUOTE ── */
+  .framed-quote {
+    border: 1px solid var(--border-warm); padding: 32px 36px;
+    margin-bottom: 28px; position: relative;
+    background: linear-gradient(135deg, rgba(184,78,36,0.04) 0%, transparent 100%);
+  }
+  .framed-quote::before {
+    content: '"'; font-family: 'Cormorant Garamond', serif;
+    font-size: 80px; color: var(--terra); opacity: 0.12;
+    position: absolute; top: -4px; left: 16px; line-height: 1;
+  }
+  .framed-quote p { font-size: 15.5px; font-style: italic; line-height: 1.82; padding-left: 12px; }
+
+  /* ── PAIN BRIDGE ── */
+  .pain-bridge { text-align: center; font-size: 15.5px; line-height: 1.85; color: var(--bark-mid); margin-top: 8px; }
+  .pain-bridge p { margin-bottom: 6px; }
+
+  /* ── SECRET BLOCK (current uses .secret-block not .secret-item) ── */
+  .secret-block { margin-bottom: 56px; }
+  .secret-block:last-child { margin-bottom: 0; }
+  .secret-number {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    background: linear-gradient(135deg, var(--terra-light) 0%, var(--terra-deep) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 6px;
+  }
+  .secret-block h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 4vw, 40px); font-weight: 400; color: var(--bark); margin-bottom: 4px; line-height: 1.12; }
+  .secret-block .secret-sub { font-size: 13px; color: var(--terra); opacity: 0.85; font-style: italic; margin-bottom: 20px; }
+  .secret-block p { font-size: 15px; line-height: 1.85; color: var(--bark-mid); margin-bottom: 12px; }
+  .secrets-intro { text-align: center; max-width: 660px; margin: 0 auto 56px; }
+  .secrets-intro p { font-size: 15.5px; line-height: 1.85; color: var(--bark-mid); margin-top: 18px; }
+
+  /* ── TRANSFORM CARD (current uses .transform-card) ── */
+  .transform-cards { display: grid; gap: 16px; }
+  @media(min-width:640px){ .transform-cards { grid-template-columns: repeat(3,1fr); } }
+  .transform-card {
+    background: linear-gradient(160deg, var(--linen) 0%, var(--sand) 100%);
+    border: 1px solid var(--border); padding: 36px 28px;
+  }
+  .transform-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--terra-deep); margin-bottom: 14px; line-height: 1.3; }
+  .transform-card p { font-size: 14px; line-height: 1.8; color: var(--bark-mid); }
+
+  /* ── TESTIMONIALS GRID (current class) ── */
+  .testi-grid { display: grid; gap: 16px; }
+  @media(min-width:860px){ .testi-grid { grid-template-columns: repeat(3,1fr); } }
+
+  /* ── CHOICE CARD (current uses .choice-card.featured) ── */
+  .choice-card.featured {
+    background: linear-gradient(160deg, rgba(184,78,36,0.05) 0%, rgba(122,48,21,0.04) 100%);
+    border-color: var(--terra);
+  }
+  .choice-card.featured h3, .choice-card.featured p { color: var(--bark); opacity: 1; }
+  .choices-grid { display: grid; gap: 16px; }
+  @media(min-width:640px){ .choices-grid { grid-template-columns: 1fr 1fr; } }
+
+  /* ── WORKSHOP (current uses session-cards / session-card) ── */
+  .workshop-meta-bar {
+    display: flex; flex-wrap: wrap; gap: 12px 32px;
+    background: var(--bark); color: #fff;
+    padding: 20px 28px; margin-bottom: 48px;
+  }
+  .workshop-meta-bar span { font-size: 13px; display: flex; align-items: center; gap: 6px; }
+  .workshop-meta-bar span::before { content: '✦'; color: var(--terra-warm); font-size: 10px; }
+  .session-cards { display: grid; gap: 24px; }
+  @media(min-width:640px){ .session-cards { grid-template-columns: 1fr 1fr; } }
+  .session-card {
+    background: linear-gradient(160deg, var(--linen) 0%, var(--sand) 100%);
+    border: 1px solid var(--border); padding: 36px 28px;
+  }
+  .session-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--bark); margin-bottom: 4px; }
+  .session-card .session-sub { font-size: 13px; color: var(--bark-soft); font-style: italic; margin-bottom: 18px; }
+  .session-card p { font-size: 14.5px; line-height: 1.8; color: var(--bark-mid); margin-bottom: 12px; }
+  .session-card ul { padding-left: 20px; margin-top: 12px; }
+  .session-card ul li { font-size: 14px; line-height: 1.8; color: var(--bark-mid); margin-bottom: 10px; }
+  .session-result { margin-top: 20px; padding: 14px 18px; background: linear-gradient(135deg, rgba(184,78,36,0.07) 0%, transparent 100%); border-left: 2px solid rgba(184,78,36,0.4); font-size: 14px; font-style: italic; color: var(--terra-deep); line-height: 1.6; }
+
+  /* ── PRICING (current uses .pricing-box / .bonus-list) ── */
+  .pricing-box {
+    max-width: 580px; margin: 0 auto;
+    background: linear-gradient(160deg, var(--linen) 0%, var(--sand) 100%);
+    border: 1px solid var(--border-warm); padding: 56px 48px; text-align: center;
+    box-shadow: 0 8px 40px rgba(139,58,26,0.08);
+  }
+  .pricing-box h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(20px, 3vw, 28px); font-weight: 400; color: var(--bark); margin-bottom: 32px; }
+  .bonus-list { list-style: none; text-align: left; margin-bottom: 36px; }
+  .bonus-list li { display: flex; gap: 14px; font-size: 14.5px; color: var(--bark-mid); padding: 12px 0; border-bottom: 1px solid var(--border); line-height: 1.55; align-items: flex-start; }
+  .bonus-list li:last-child { border-bottom: none; }
+  .bonus-list .bonus-emoji { font-size: 17px; flex-shrink: 0; }
+  .bonus-list .bonus-title { color: var(--bark); font-weight: 400; display: block; margin-bottom: 2px; }
+  .bonus-list .bonus-title + span, .bonus-list .incl-desc { color: var(--bark-soft); font-size: 12.5px; }
+  .pricing-incl-inner { display: flex; flex-direction: column; }
+  .price-strike { font-size: 13px; color: var(--bark-soft); text-decoration: line-through; margin-bottom: 4px; }
+  .price-main {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(52px, 9vw, 88px); font-weight: 300;
+    background: linear-gradient(135deg, var(--terra-warm) 0%, var(--terra-deep) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    line-height: 1; margin-bottom: 6px;
+  }
+  .price-label { font-size: 13px; color: var(--bark-soft); font-style: italic; margin-bottom: 32px; line-height: 1.65; }
+
+  /* ── SECTION/FAQ CURRENT CLASSES ── */
+  .section { padding: 64px 0; }
+  .section-alt { background: var(--sand); }
+  .story-section { padding: 64px 0; background: linear-gradient(180deg, var(--sand-deep) 0%, var(--linen) 60%, var(--sand) 100%); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 4.5vw, 48px); font-weight: 400; color: var(--bark); text-align: center; margin-bottom: 36px; line-height: 1.1; }
+  .faq-list { max-width: 640px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-q { width: 100%; background: transparent; border: none; color: var(--bark); font-family: 'Lora', serif; font-size: 15px; font-weight: 400; text-align: left; padding: 22px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; line-height: 1.5; transition: color 0.2s; }
+  .faq-q:hover { color: var(--terra-deep); }
+  .faq-icon { flex-shrink: 0; width: 22px; height: 22px; border: 1px solid var(--border-warm); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--terra); transition: transform 0.25s ease; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a { display: none; padding: 0 0 24px; font-size: 14.5px; line-height: 1.82; color: var(--bark-mid); }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── STICKY BAR (current uses .sticky-bar) ── */
+  .sticky-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(135deg, rgba(247,240,232,0.97) 0%, rgba(235,224,211,0.97) 100%);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--border-warm);
+    padding: 14px 24px; z-index: 100;
+    transform: translateY(100%); transition: transform 0.35s ease;
+    display: flex; align-items: center; justify-content: center; gap: 24px;
+  }
+  .sticky-bar.visible { transform: translateY(0); }
+  .sticky-bar-text { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic; color: var(--bark); display: none; }
+  @media(min-width:640px){ .sticky-bar-text { display: block; } }
+  .sticky-bar .btn-primary { padding: 10px 28px; font-size: 11px; }
+
+  /* ── CLOSING (current) ── */
+  .closing {
+    background: linear-gradient(160deg, var(--terra-warm) 0%, var(--terra) 35%, var(--terra-deep) 80%, #5A2410 100%);
+    padding: 72px 0; text-align: center; color: #fff; position: relative; overflow: hidden;
+  }
+  .closing::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.07) 0%, transparent 55%); pointer-events: none; }
+  .closing h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 5.5vw, 60px); font-weight: 400; margin-bottom: 20px; color: rgba(255,255,255,0.96); line-height: 1.1; }
+  .closing p { font-size: 17px; opacity: 0.9; max-width: 480px; margin: 0 auto 40px; }
+  .closing p.small { font-size: 13px; opacity: 0.6; margin-top: 14px; }
+  .btn-light { display: inline-block; background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(247,240,232,0.9) 100%); color: var(--terra-deep); font-family: 'Lora', serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; padding: 16px 44px; transition: opacity 0.25s ease, transform 0.2s ease; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+  .btn-light:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* ── TOPBAR (current) ── */
+  .topbar { padding: 18px 24px; display: flex; align-items: center; justify-content: center; background: var(--linen); border-bottom: 1px solid var(--border); }
+  .topbar-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--terra-deep); letter-spacing: 0.25em; }
+
+  /* ── HERO (current uses .hero not #hero) ── */
+  .hero {
+    background: linear-gradient(180deg, var(--linen) 0%, var(--sand) 40%, var(--sand-mid) 100%);
+    padding: 96px 0 72px; text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 500px;
+    background: radial-gradient(ellipse at 50% 30%, rgba(201,97,46,0.09) 0%, rgba(184,78,36,0.04) 40%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(28px, 5vw, 52px); color: var(--bark); line-height: 1.2; position: relative; z-index: 1; margin-bottom: 20px; white-space: nowrap; }
+  @media(max-width:680px){ .hero h1 { white-space: normal; font-size: 26px; } }
+  .hero h1 .accent {
+    background: linear-gradient(135deg, var(--terra-warm) 0%, var(--terra-deep) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(15px, 2vw, 18px); color: var(--bark-soft); max-width: 440px; margin: 0 auto 32px; line-height: 1.65; position: relative; z-index: 1; }
+  .hero-meta { display: flex; justify-content: center; gap: 0; margin-bottom: 48px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .hero-meta-item { display: flex; align-items: center; gap: 6px; padding: 0 20px; border-right: 1px solid var(--border); font-size: 13px; color: var(--bark-mid); letter-spacing: 0.04em; }
+  .hero-meta-item::before { content: '✦'; color: var(--terra); font-size: 9px; opacity: 0.7; }
+  .hero-meta-item:last-child { border-right: none; }
+  .hero-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto 24px; max-width: 300px; }
+  .hero-divider::before, .hero-divider::after { content: ''; flex: 1; height: 1px; background: var(--border-warm); }
+  .hero-divider span { color: var(--terra); font-size: 13px; opacity: 0.6; }
+  .pain-intro { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(16px, 2.2vw, 20px); color: var(--bark-mid); text-align: center; max-width: 560px; margin: 0 auto 48px; line-height: 1.65; }
+  .pullquote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(16px, 2.3vw, 21px); color: var(--terra-deep); padding: 24px 32px; margin: 36px 0; border-left: 2px solid var(--terra); background: linear-gradient(135deg, rgba(184,78,36,0.05) 0%, transparent 100%); line-height: 1.65; }
+  .obstacle-block { margin: 36px 0; }
+
+  /* ── NOE SECTION (current uses .noe-section not #noe-meaning) ── */
+  .noe-section {
+    background: linear-gradient(160deg, var(--terra-warm) 0%, var(--terra) 40%, var(--terra-deep) 100%);
+    padding: 80px 0; color: #fff; text-align: center; position: relative; overflow: hidden;
+  }
+  .noe-section::before {
+    content: 'NOE'; font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(160px, 28vw, 300px); font-weight: 300;
+    color: rgba(255,255,255,0.05); position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); letter-spacing: 0.25em; white-space: nowrap; pointer-events: none;
+  }
+  .noe-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; margin-bottom: 32px; position: relative; z-index: 1; }
+  .noe-section p { font-size: 15.5px; line-height: 1.9; margin-bottom: 1.2em; max-width: 620px; margin-left: auto; margin-right: auto; opacity: 0.9; position: relative; z-index: 1; }
+  .noe-slogan { font-family: 'Cormorant Garamond', serif; font-size: 20px; letter-spacing: 0.1em; margin: 36px auto 0; position: relative; z-index: 1; color: rgba(255,255,255,0.85); }
+  .noe-section-logo { width: 72px; height: 72px; object-fit: cover; border-radius: 50%; margin: 0 auto 28px; display: block; position: relative; z-index: 1; }
+
+  @media(max-width:700px){
+    .choices-grid, .transform-cards, .testi-grid, .pain-cards { grid-template-columns: 1fr; }
+    .session-cards { grid-template-columns: 1fr; }
+    .pricing-box { padding: 36px 24px; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar"><div class="topbar-logo">NOE</div></div>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-logo-mark reveal">
+      <img src="/mnt/user-data/uploads/IMG_2627.jpeg" alt="NOE" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="hero-badge"><div class="dot"></div><span>Workshop · 2 buổi Live · NOE</span><div class="dot"></div></div>
+    </div>
+    <h1 class="display hero-title reveal reveal-delay-2">Cách để trở thành <span class="accent">người phụ nữ</span> mà <span class="accent">đàn ông tôn trọng,</span> <span class="accent">phụ nữ ngưỡng mộ</span> và <span class="accent">không ai dám coi thường</span></h1>
+    <p class="hero-subtitle reveal reveal-delay-3">Ngay cả khi bạn không phải người xinh nhất, giỏi nhất hay giàu nhất</p>
+    <div class="hero-meta reveal reveal-delay-3">
+      <div class="hero-meta-item"><span class="hero-meta-value display">2 buổi Live</span><span class="hero-meta-label">90 phút mỗi buổi</span></div>
+      <div class="hero-meta-item"><span class="hero-meta-value display">Có record</span><span class="hero-meta-label">Xem lại</span></div>
+    </div>
+    <div class="hero-cta-wrap reveal reveal-delay-4">
+      <a href="#pricing" class="btn-primary">Giữ chỗ của tôi — 97.000đ</a>
+      <p class="hero-guarantee">✦ <span>Hoàn tiền 100%</span> nếu không nhận được giá trị</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PAIN ══ -->
+<section id="pain" style="padding-top:40px;">
+  <div class="container-wide">
+    <div class="hero-divider reveal" style="max-width:300px;margin:0 auto 32px;"><span>✦</span></div>
+    <p class="pain-intro reveal">Bạn thân mến, hãy thử thành thật với chính mình một lần.<br>Bạn có nhìn thấy hình bóng của mình trong hai người phụ nữ dưới đây?</p>
+    <div class="persona-grid reveal">
+      <div class="persona-card">
+        <span class="persona-number">1</span>
+        <span class="persona-label">Người thứ nhất</span>
+        <div class="persona-type">Dịu dàng, ấm áp, luôn sống vì người khác</div>
+        <p class="persona-desc">Dịu dàng, ấm áp, luôn sống vì người khác nhưng mang một nỗi tự ti ngầm. Ở một góc khuất nào đó, bạn luôn cảm thấy mình chưa đủ xinh đẹp, giỏi giang, hay chưa đủ giàu có và thành công để giữ lại được điều gì trọn vẹn. Vì nỗi sợ "không đủ" ấy, bạn chọn cách hy sinh, nhẫn nhịn và cam chịu mọi điều chỉ để không làm mất lòng đối phương. Bạn liên tục gồng mình lên để níu giữ mối quan hệ. Để rồi sau tất cả, bạn cay đắng nhận ra mình làm quá nhiều, cho đi quá nhiều nhưng lại không được trân trọng, không được đền đáp xứng đáng.</p>
+      </div>
+      <div class="persona-card">
+        <span class="persona-number">2</span>
+        <span class="persona-label">Người thứ hai</span>
+        <div class="persona-type">Mạnh mẽ, sắc sảo, gai góc và độc lập</div>
+        <p class="persona-desc">Mạnh mẽ, sắc sảo, gai góc và độc lập. Bạn lý trí, có địa vị, luôn nhạy bén và cảnh giác, vì đó là bản năng giúp bạn trụ vững được như hôm nay. Bạn không thích sự phiền phức, sợ những gì vượt quá khả năng kiểm soát của mình. Bạn nghĩ đó là cách tạo ra sự an toàn, nhưng thực ra là bạn đang né tránh. Bên ngoài nhìn vào thấy bạn được tôn trọng, được ngưỡng mộ, không ai dám coi thường... nhưng đồng thời, cũng không ai dám đến gần bạn. Bạn tưởng mình rất ổn với chiếc áo giáp hoàn hảo đó, nhưng giả sử, có ngày, những chiếc áo giáp vật chất và địa vị bên ngoài rời đi, liệu bạn thực sự còn lại gì, bạn sẽ thế nào?</p>
+      </div>
+    </div>
+    <div class="framed-quote reveal">
+      <p>Dù bạn đang là người phụ nữ thứ nhất hay thứ hai, thì từ sâu thẳm tâm hồn, bạn vẫn luôn khao khát được yêu thương và tôn trọng một cách thuần khiết. Bạn không hề yếu đuối đến mức phải chịu đựng, và bạn cũng không hề lạnh lùng sắt đá như những gì bạn đang thể hiện ra bên ngoài.</p>
+    </div>
+    <div class="pain-bridge reveal">
+      <p><em>Bạn có biết vì sao tôi lại hiểu rõ những góc khuất, những giọt nước mắt thầm lặng và cả sự kiệt sức của hai người phụ nữ đó đến vậy không?</em></p>
+      <div class="pain-hook" style="color:var(--terra);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,3vw,26px);margin-top:12px;"><em>Bởi vì... tôi đã từng là cả hai người họ.</em></div>
+    </div>
+  </div>
+</section>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;"><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.55;">✦</span><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span></div>
+
+<!-- ══ STORY ══ -->
+<section id="story">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Câu chuyện người sáng lập</span>
+      <h2 class="display section-title">NOE</h2>
+      <p style="font-size:13px;color:var(--bark-soft);letter-spacing:0.1em;text-transform:uppercase;margin-top:8px;">Người Sáng Lập · Nghệ Thuật Xác Lập Vị Thế</p>
+    </div>
+    <div class="story-body">
+      <p class="reveal">Cuộc đời tôi từ khi sinh ra đã là một chuỗi những cuộc đại dịch chuyển. Tôi lớn lên ở nước ngoài, 5 tuổi về Việt Nam đi học, rồi đến tuổi mới lớn lại tiếp tục xách vali rời quê hương đi du học. Do đặc thù công việc của gia đình, suốt những năm tháng tuổi thơ, tôi liên tục phải di chuyển, thay đổi trường học và môi trường sống. Vì vậy, việc thích nghi nhanh với hoàn cảnh gần như đã trở thành bản năng sinh tồn ngấm vào máu tôi từ nhỏ. Tôi có thể ném mình vào bất cứ đâu và sống tốt.</p>
+      <p class="reveal">Nhưng, thế giới bên ngoài biến động bao nhiêu, thì thế giới bên trong của tôi lại là một bộ khung kỷ luật cứng rắn bấy nhiêu. Tôi lớn lên trong gia phong của một gia đình truyền thống phương Đông cực kỳ nghiêm khắc. Gia đình tôi không nuông chiều, họ rèn giũa con cháu nghiêm cẩn từ đạo đức, lễ nghi, tác phong cho đến tư duy đối nhân xử thế.</p>
+      <p class="reveal">Lúc đó, nhận thức non nớt của một đứa trẻ như tôi lại dịch nghĩa sự nghiêm khắc ấy thành một áp lực vô hình. Tôi tự mặc định rằng chỉ khi được khen ngợi, làm vừa lòng mọi người thì mình mới đang làm đúng, và giá trị của mình như nào là do người khác công nhận.</p>
+
+      <div class="quote-typewriter reveal" id="typewriter-quote">
+        <p class="qt-text" id="qt-text"></p><span class="qt-cursor" id="qt-cursor">|</span>
+      </div>
+
+      <p class="reveal">Nhưng tôi đâu biết, mình đang tự nguyện bước vào một chiếc lồng kính và đánh mất chính mình.</p>
+
+      <p class="reveal">Sự ngây thơ đó đã ráng cho tôi một cú "thức tỉnh" khi tôi bắt đầu chập chững bước chân ra ngoài xã hội. Sự nhẫn nhịn, biết điều mà tôi cho là "kim bài miễn tử" ấy không những không bảo vệ được tôi, trái lại, nó biến tôi thành "thỏi nam châm" thu hút những sự tổn thương.</p>
+      <p class="reveal">Nhưng thực tế cuộc sống lại khốc liệt đến trơ trọi:<br><em>lòng tốt bị lợi dụng, sự chân thành đổi lấy những gáo nước lạnh phũ phàng, và mọi cố gắng, nỗ lực của tôi chỉ để làm bàn đạp cho người khác bước lên.</em></p>
+      <p class="reveal">Điều cay đắng nhất không phải là việc mình thất bại, mà là sau mọi chuyện, thế gian chỉ ném lại cho tôi những lời giải thích lạnh lùng đến hiển nhiên:</p>
+      <div class="story-pullquote reveal">"Cuộc sống này vốn là một cuộc sàng lọc khốc liệt và công bằng là thứ xa xỉ, không chịu nổi nhiệt thì cũng buộc phải học cách làm quen và chấp nhận. Những tổn thương bạn nhận về hôm nay, đừng trách người vô tâm, hãy trách mình đã tự nguyện cam chịu ngay từ đầu."</div>
+      <p class="reveal">Những lời phũ phàng ấy giáng xuống, khiến thế giới quan mà tôi hằng tôn thờ hoàn toàn sụp đổ, và hệ niềm tin cốt lõi bên trong cũng tan tành vỡ vụn. Tôi rơi vào trạng thái khủng hoảng tột độ khi nhận ra: mình đã áp dụng tất cả những gì tốt đẹp nhất được gia đình, thầy cô nuôi dưỡng, để rồi thứ nhận về lại là những vết thương sâu hoắm từ chính những điều ấy. Giữa những đổ vỡ đó, tôi bắt đầu hoài nghi tất cả những gì mình từng được giáo dục.</p>
+      <div style="display:flex;align-items:center;gap:16px;margin:36px 0;"><span style="flex:1;height:1px;background:rgba(184,78,36,0.2);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.6;">✦</span><span style="flex:1;height:1px;background:rgba(184,78,36,0.2);display:block;"></span></div>
+      <p class="reveal">Từ bước ngoặt này, tôi thay đổi. Tôi không còn ngây thơ, không dễ mở lòng, không dễ tin người và quyết không để ai có thể làm tổn thương mình thêm một lần nào nữa.</p>
+      <div class="story-quote-inline reveal">"Tôi khoác lên mình lớp áo giáp của người phụ nữ thứ hai: mạnh mẽ hơn, sắc sảo hơn, lạnh lùng và dùng lý trí cứng nhắc để kiểm soát mọi thứ."</div>
+      <p class="reveal">Để tự bảo vệ mình, tôi chọn cách lao vào guồng quay chinh phục những tiêu chuẩn mà xã hội gọi là "thành công". Tôi lấy tiền tài, địa vị làm cây thước đo để cố chứng minh giá trị của bản thân. Suốt những năm tháng đó, tôi gần như gồng mình lên để học hỏi, linh hoạt dấn thân và tích lũy kinh nghiệm qua hàng loạt lĩnh vực môi trường khốc liệt khác nhau: từ cơ quan Nhà nước, doanh nghiệp tư nhân cho đến các tổ chức nước ngoài.</p>
+      <p class="reveal">Nhìn từ bên ngoài, cuộc sống của tôi lúc ấy may mắn có được những gam màu mà số đông dễ ngưỡng mộ: một vẻ ngoài chỉn chu, một công việc tạm gọi là ổn định, tài chính vừa vặn, một mái ấm bình yên và những chuyến đi đây đi đó để mở mang tầm mắt. Tôi vô tình trở thành một "hình mẫu ổn định" trong mắt người đời.</p>
+      <p class="reveal">Nhưng có một sự thật mà những ánh nhìn ngưỡng mộ ngoài kia không bao giờ thấy được: cái giá mà tôi phải trả cho sự "ổn định" đó là những áp lực tâm lý khủng khiếp để tự thân sinh tồn trong vô thức. Cuộc đời tiếp tục mỉm cười trao cho tôi những cơ hội thăng tiến mới mà nhiều người mơ ước, nhưng đồng thời, những áp lực gồng gánh cũng tăng lên rất nhiều lần.</p>
+      <div class="story-pullquote reveal">"Tại sao khi càng có nhiều thứ, bên trong lại càng trống rỗng, hụt hẫng đến vậy?"</div>
+      <p class="reveal">Tôi nhìn về phía trước và tự hỏi, nếu cứ tiếp tục theo đà này thì mình sẽ đi về đâu? Càng thăng tiến, tôi sẽ càng phải đánh đổi nhiều, áp lực đè nặng mỗi ngày một lớn, liệu mình có còn đủ bản lĩnh để giữ lại bản chất chân thật của bản thân hay không?</p>
+      <div class="story-pullquote reveal">"Nếu bây giờ mất hết đi những vỏ bọc này, mình còn lại giá trị gì? Nếu không có những lớp áo giáp này khoác lên người, tôi sẽ phải đối diện với ánh mắt đánh giá của người đời ra sao?"</div>
+      <p class="reveal">Tôi thấy mình kẹt cứng trong sự mâu thuẫn tột cùng:<br><em>Một bên là sự kiệt sức vì phải cam chịu đóng vai hoàn hảo, một bên là sự cô độc đến lạnh người sau lớp mặt nạ kiên cường.</em></p>
+      <p class="reveal">Tôi cay đắng nhận ra một nghịch lý của chính mình:</p>
+      <div class="story-pullquote reveal">"Một con người thân thiện, ấm áp, "biết điều" trước đây không đủ vững vàng để tồn tại trong xã hội khốc liệt này.<br>Một con người độc lập, bản lĩnh, giỏi giang mà tôi cố nhào nặn ra hôm nay cũng chẳng thể nào có được cái gọi là tự do, tự tại hay hạnh phúc chân thật."</div>
+      <p class="reveal">Tuy nhiên, dù cuộc đời đã nhào nặn tôi từ một cô gái ngây thơ đơn thuần trở nên lý trí và sắc sảo, có một thứ tôi chưa bao giờ đánh mất:<br><em>những giới hạn đạo đức và nguyên tắc làm người của chính mình.</em></p>
+      <p class="reveal">Thế nhưng, sức chịu đựng của ai cũng đều có hạn, và tôi cũng vậy. Bước ngoặt xảy đến khi một cơ hội thăng tiến lớn được trao vào tay tôi, đi kèm với điều kiện: Tôi phải thỏa hiệp và bước qua lằn ranh nguyên tắc sống của bản thân.</p>
+      <p class="reveal">Đứng trước sự giằng xé ấy, tôi đã đưa ra một quyết định mà những người xung quanh tôi gọi là điên rồ và xốc nổi:<br><br><em>Tôi đã buông bỏ tất cả, nộp đơn nghỉ việc, vứt bỏ mọi mặt nạ, mặc kệ những lời phán xét xung quanh và chọn cách bước vào trạng thái "thất nghiệp".</em></p>
+
+
+
+      <p class="reveal">Lúc mới buông tay, tôi cảm thấy một sự nhẹ nhõm và thoải mái vô cùng tận. Nhưng sự thảnh thơi ấy chẳng kéo dài được bao lâu.</p>
+      <p class="reveal">Chỉ một thời gian ngắn sau, khoảng trống của những ngày không danh xưng bắt đầu bủa vây, tôi rơi vào trạng thái sốt ruột và lo lắng tột độ. Theo phản xạ tự nhiên của một người đang hoang mang, tôi cuống cuồng lao đi tìm câu trả lời từ bên ngoài qua những lời bói toán, tâm linh. Nhưng đúng là "lắm thầy nhiều ma", những lời khuyên mơ hồ, mang tính phán xét ấy chỉ khiến tâm trí tôi thêm rối bời và kiệt quệ.</p>
+      <p class="reveal">Nhận ra sự vô ích của việc hướng ra ngoài, tôi quyết định gạt bỏ tất cả, chọn cách lùi lại và dành thời gian một mình để nội tâm được lắng xuống.</p>
+      <div class="story-quote-inline reveal">"Tôi không còn cố gắng làm bất cứ điều gì cả, thôi suy diễn, thả trôi và lần đầu tiên trong đời học cách ngồi lại đối diện với chính mình. Và chính ngay tại thời điểm đứng yên này, tôi đã thực sự chạm được vào câu trả lời."</div>
+      <p class="reveal">Tôi bàng hoàng nhận ra bấy lâu này mình đã lao đi quá nhanh, quá lâu trong vô thức mà chưa từng một lần dừng lại để hỏi xem:</p>
+      <div class="story-pullquote reveal">Bản thân mình thực sự cần và mong muốn gì?</div>
+      <p class="reveal">Được dẫn dắt bởi sự tĩnh lặng, tôi bắt đầu dũng cảm nhìn thẳng vào bóng tối bên trong:<br><br><em>những nỗi sợ hãi, những vết thương sâu và cả những niềm tin hạn hẹp mà mình đã mang vác bấy lâu.</em></p>
+      <p class="reveal">Hành trình đi xuyên qua những góc khuất nội tâm đó đau đớn, nhức nhối hơn bất kỳ thất bại hay sự từ chối nào ở thế giới bên ngoài.<br><br>Nhưng lần này, tôi không cho phép mình né tránh hay chạy trốn nữa.</p>
+      <div class="story-quote-inline reveal">Tôi chọn ở lại, quan sát và đối diện.<br>Và nhờ sự kiên định ấy, tôi bắt đầu nhìn nhận thông suốt được mọi quy luật đang vận hành trong cuộc đời mình.</div>
+      
+      <p class="reveal">Trong suốt những tháng ngày tôi chọn đứng yên, từ bỏ tiền tài và danh vọng, một điều kỳ diệu đã xảy ra: mọi người xung quanh không một ai nhìn tôi bằng ánh mắt phán xét hay thương hại. Họ vẫn đối xử với tôi như bình thường, bằng sự trân trọng, chân thành và quan tâm thực sự.</p>
+      <p class="reveal">Thật bất ngờ khi những đối tác, khách hàng hay đồng nghiệp cũ vẫn giữ liên lạc và tìm đến tôi ngay cả khi giữa chúng tôi chẳng còn bất kỳ sự ràng buộc nào. Rồi từ những người lớn tuổi cho đến các bạn trẻ, họ đều thích ở gần tôi, tìm đến tôi để trút bầu tâm sự, để xin lời khuyên và để cảm nhận nguồn năng lượng tỏa ra từ tôi.</p>
+      <div class="story-pullquote reveal">"Hóa ra, vị thế và sự trân trọng đích thực mà người khác dành cho bạn không đến từ những chiếc mặt nạ hào nhoáng bạn cố gồng lên để sở hữu, mà nó tỏa ra từ chính cốt cách làm người, từ sự thật tâm và một tấm lòng tử tế xuất phát từ sâu tận tâm mình.
+Nền tảng giáo dục về nề nếp, đạo đức mà gia đình xây dựng cho tôi từ nhỏ chưa bao giờ là gánh nặng, nó chính là cốt cách đã ăn sâu vào xương tủy."</div>
+      <p class="reveal">Nhờ chiếc neo vững chắc ấy, dù ở trong hoàn cảnh nào, tôi cũng luôn giữ sự thật tâm, chân thành, luôn nỗ lực, biết giới hạn ở đâu và dành sự tôn trọng tối đa cho mọi người. Tôi nhận ra mình không bao giờ chấp nhận đánh đổi giá trị làm người, hay chà đạp lên người khác chỉ để thu vén những lợi ích ích kỷ.</p>
+      <p class="reveal">Nhìn lại tất cả, tôi bừng tỉnh và chiêm nghiệm ra một điều: Mọi sự hoàn hảo hào nhoáng bên ngoài mà không có nội lực bên trong đều khó mà vững bền. Cách chúng ta nhìn thế giới, thực chất là cách nội tâm chúng ta đang vận hành. Vốn dĩ chẳng có ai phán xét tôi hết, chỉ là do cái tôi bên trong luôn lo được lo mất và tự tạo áp lực kìm hãm chính mình.</p>
+      <div class="story-quote-inline reveal">"Con người mà tôi đang trở lại thực ra chưa bao giờ là một phiên bản xa lạ nào mới, đó vốn dĩ chính là tôi của trước đây: nguyên bản, trong trẻo và tự do, chỉ là tôi đã từng lỡ bước bỏ quên mất chính mình trên đường đời."</div>
+      <p class="reveal">Và những giá trị cốt lõi đó, không phải là thứ bẩm sinh sinh ra đã có sẵn, cũng không phải cứ xinh đẹp, giàu có hay thành công thì bạn mới sở hữu được. Nó là thứ hoàn toàn có thể trau dồi, rèn luyện, và tôi tin rằng bất kỳ ai cũng đều có thể đạt được. Từ những vấp ngã, thức tỉnh và mong muốn được sẻ chia, tôi đã dành trọn tâm huyết để xây dựng NOE.</p>
+    </div>
+  </div>
+</section>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;"><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.55;">✦</span><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span></div>
+
+<!-- ══ NOE MEANING ══ -->
+<section id="noe-meaning">
+  <div class="container">
+    <div class="noe-inner reveal">
+      <div class="noe-mark"><img src="/mnt/user-data/uploads/IMG_2627.jpeg" alt="NOE mark"></div>
+      <p class="noe-tagline">Nest of Essence — Tổ Ấm Của Bản Thể</p>
+      <div class="noe-divider"></div>
+      <p class="noe-desc">NOE được lấy cảm hứng từ chữ "Nôi" trong tiếng Việt. Chiếc nôi là biểu tượng của tình yêu thương thuần khiết, nguyên bản nhất, nơi một đứa trẻ không cần phải cố gắng làm bất cứ điều gì để chứng minh mình xứng đáng được yêu. Đứa trẻ ấy không cần phải giỏi nhất, không cần phải xinh nhất, không cần phải gồng mình ngoan ngoãn để đổi lấy sự công nhận. Chỉ cần bạn hiện diện, tình yêu của NOE vẫn luôn ở đó, trọn vẹn, bao dung và không bao giờ lay chuyển.</p>
+      <p class="noe-desc" style="margin-top:20px;">Chiếc nôi ấy cũng chính là một điểm tựa an toàn tuyệt đối. Nó không tạo ra sự phụ thuộc hay yếu đuối, mà là cái tổ yên bình để bạn trở về trú ngụ sau những giông bão, để rũ bỏ mệt mỏi, tích lũy nội lực và từng bước trưởng thành.</p>
+      <p class="noe-desc" style="margin-top:20px;">Bạn có để ý chuyển động đung đưa nhịp nhàng của chiếc nôi không? Nó chuyển động nhưng không bao giờ phá vỡ sự thăng bằng. Nó là lời nhắc nhở sâu sắc rằng: Dù cuộc đời ngoài kia có không ngừng dao động, chỉ cần bạn giữ được cái tâm trung tâm vững chãi, đó mới là trạng thái bình an thật sự.</p>
+      <p class="noe-desc" style="margin-top:20px;">NOE còn là viết tắt của Nest of Essence — Tổ ấm của Bản thể. Một không gian thuần khiết, nơi bạn có thể an lòng đặt xuống tất cả những hành lý nặng nề đã mang theo suốt bao năm qua. Nơi bạn lột bỏ lớp áo giáp gai góc, cởi chiếc mặt nạ hoàn hảo để gặp lại con người thật của mình.</p>
+      <p class="noe-desc" style="margin-top:20px;">NOE là nơi để trở về, nơi để luyện tâm và nuôi dưỡng bản thân từ gốc rễ con người mình. Và điều tuyệt vời nhất là, NOE không giữ chân bạn lại trong sự an phận. NOE vun bồi cho bạn một bệ phóng để từ đó, bạn trở nên vững vàng, tự tin bước ra thế giới, làm chủ cuộc đời bằng chính con người thật của mình.</p>
+      <div class="noe-pillars">
+        <div class="noe-pillar">Không Gồng</div>
+        <div class="noe-pillar">Không Diễn</div>
+        <div class="noe-pillar">Không Cần Chờ Đợi Sự Công Nhận</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;"><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.55;">✦</span><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span></div>
+
+<!-- ══ 3 BÍ MẬT ══ -->
+<section id="secrets">
+  <div class="container">
+    <div class="secrets-intro reveal">
+      <span class="eyebrow">Chìa khoá thực sự</span>
+      <h2 class="display section-title">3 Bí Mật Dịch Chuyển<br><span class="display-italic" style="color:var(--terra);">Nhận Thức Cốt Lõi</span></h2>
+      <p>Chúng ta đang sống trong một xã hội phát triển quá nhanh, nơi con người rất dễ bị thu hút, phân biệt và đánh giá nhau qua những thứ bề nổi: ngoại hình, vật chất, địa vị, hay những hình ảnh lấp lánh. Nhưng có bao giờ bạn tự hỏi, những thứ lấp lánh bề ngoài đó, chẳng phải đều có thể dễ dàng đi mượn hoặc làm giả được hay sao?</p>
+      <p>Đó là lý do vì sao nhiều người phụ nữ dù cố trau chuốt cho vẻ ngoài thật rực rỡ, nhưng bước ra đời vẫn cảm thấy bất an và mơ hồ đến lạ. Thứ vũ khí thực sự mang lại sự mãn nguyện và vị thế vững vàng cho người phụ nữ không nằm ở chiếc áo họ mặc, khuôn mặt họ tô vẽ, hay khối tài sản họ phô diễn. Nó nằm ở việc rèn luyện, vun bồi và nuôi dưỡng cái "Tâm" của chính mình.</p>
+      <p>Khi bạn biết sống chậm lại, cảm nhận cuộc sống một cách sâu lắng hơn và tập trung nuôi dưỡng bên trong mình đủ đầy, vững chắc, một quy luật tự nhiên tuyệt đẹp sẽ tự động vận hành: <em>"Tâm sinh tướng"</em>. Khi ấy, vẻ đẹp và khí chất <em>"Tự Tại"</em> bên ngoài sẽ tự động toả ra mà bạn không cần phải cố gồng hay ám ảnh vì nó từng phút từng giây nữa.</p>
+      <p>Đó chính là lý do vì sao tôi xây dựng nên: <em>Nghệ thuật xác lập vị thế</em>. Một phương pháp giúp bạn đánh thức <em>"Vị thế tự thân"</em> và mở ra nguồn nội lực vững chãi, thứ mà thế giới này không một ai có quyền ban phát, và cũng chẳng một ai có thể tước đoạt được của bạn.</p>
+      <p>Bản chất của cả hành trình này thực ra chỉ gói gọn trong hai việc: <em>Đầu tiên là phải thấu hiểu chính mình, và sau đó là can đảm sống là chính mình.</em></p>
+      <p>Nhưng để có thể tự do sống chân thật với bản thể giữa một thế giới đầy biến động và cám dỗ, bạn không thể chỉ dựa vào bản năng cũ kỹ hay sự cam chịu gượng ép. Bạn cần trang bị cho mình một chiếc kiềng ba chân bất khả xâm phạm, thông qua 3 bí mật dịch chuyển nhận thức cốt lõi dưới đây:</p>
+    </div>
+
+    <div class="secret-item reveal">
+      <div class="secret-num-wrap"><span class="secret-num">01</span><span class="secret-num-label">Nền móng</span></div>
+      <div class="secret-content">
+        <h3 class="secret-title">Bí Mật 1 | "Tự Tri"</h3>
+        <p class="secret-subtitle">Tự biết mình là ai trước khi để thế giới định nghĩa bạn</p>
+        <div class="secret-body">
+          <p>Đây là viên gạch nền móng của toàn bộ hành trình. Không phải là những lý thuyết triết học trừu tượng, "Tự Tri" bắt đầu từ những câu hỏi rất trần trụi trong đời sống hàng ngày:</p>
+          <p class="q">Bạn thực sự là ai? Bạn đang có gì? Bạn coi trọng giá trị nào nhất? Và đâu là lằn ranh đỏ không ai được phép bước qua?</p>
+          <p>Hãy thử thành thật nhìn lại hành trình đã qua, có phải đã rất nhiều lần trước khi mặc một bộ quần áo, đưa ra một quyết định, hay thậm chí là chọn người để yêu, bạn luôn vô thức tự hỏi:</p>
+          <p class="q">"Người ta sẽ nhìn mình thế nào? Họ có đánh giá mình không?"</p>
+          <p>Nhiều người trong chúng ta bước đi trong đời mà chưa từng một lần ngồi lại để trả lời những câu hỏi cho riêng mình. Bạn quá bận rộn sống theo một kịch bản được viết bởi kỳ vọng của cha mẹ, của chồng, hay của định kiến xã hội. Khi bên trong bạn là một khoảng trống mờ mịt, bạn sẽ giống như mặt nước hồ ngày giông bão: ai khen một câu thì gợn sóng vui mừng, ai chê một lời liền dậy sóng dằn vặt, tự ti. Bạn liên tục bị hoàn cảnh xô đẩy và đưa ra quyết định dựa trên nỗi sợ hãi, chứ không phải sự lựa chọn chủ động.</p>
+          <p>"Tự Tri" chính là ngọn đèn soi rọi giúp bạn thấu hiểu chính mình một cách chân thật nhất:</p>
+          <p class="q">Biết rõ điểm mạnh ở đâu để phát huy, nhận ra điểm yếu chỗ nào để chuyển hóa.</p>
+          <p>Hãy tưởng tượng một ngày, bạn bước đi với một sự định vị nội tâm kiên định. Bạn không cần những món vật chất hào nhoáng, đắt đỏ mượn ngoài để cố chứng tỏ mình sang trọng; bạn cũng chẳng cần một lời khen hay sự ban phát tình cảm từ đàn ông để thấy mình có giá trị. Khi bên trong đã có sự rõ ràng tuyệt đối, bạn tự làm chủ cuộc đời mình mà không cần chờ bất kỳ ai đóng dấu xác nhận.</p>
+          <p class="q">Bạn không tự cao, cũng chẳng tự ti, cứ thế ung dung hoàn thiện bản thân mỗi ngày.</p>
+          <p>Việc quay vào trong nhìn thẳng vào bóng tối đòi hỏi một lòng dũng cảm rất lớn, nhưng đó là cái giá duy nhất để bạn đòi lại chủ quyền tối cao cho cuộc đời mình.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="secret-item reveal">
+      <div class="secret-num-wrap"><span class="secret-num">02</span><span class="secret-num-label">Nội lực</span></div>
+      <div class="secret-content">
+        <h3 class="secret-title">Bí Mật 2 | "Tự Lực"</h3>
+        <p class="secret-subtitle">Tự mình nỗ lực thay đổi, vun trồng chiếc kiềng năng lượng bất khả xâm phạm</p>
+        <div class="secret-body">
+          <p>Sau khi đã thấu hiểu bản thân ở bước <em>"Tự Tri"</em>, nấc thang tiếp theo để bạn đứng vững giữa cuộc đời chính là <em>"Tự Lực"</em>. Đây là ý thức chủ động quay về gánh vác, tự chịu trách nhiệm cho số phận mình, tự mài giũa để sở hữu một trí tuệ sắc bén và một thế giới cảm xúc ổn định.</p>
+          <p>Đã bao lần bạn chọn cách nhắm mắt làm ngơ, chấp nhận chịu đựng một môi trường độc hại hay một mối quan hệ tồi tệ chỉ vì sợ hãi rằng nếu rời đi, mình sẽ mất đi điểm tựa? Đã bao lần bạn bao biện cho những tổn thương của mình bằng câu nói: "Số phận tôi sinh ra đã vậy rồi, tôi không thể thay đổi được"?</p>
+          <p>Nhiều người phụ nữ lầm tưởng mình độc lập vì có tài chính, nhưng thực chất bên trong họ vẫn đang "khát khao sự công nhận", luôn cần một ai đó hoặc một hoàn cảnh nào đó chống đỡ mới cảm thấy ổn. Để rồi khi giông bão ập đến, họ lập tức hoảng loạn, sụp đổ, hoặc gồng lên xù lông nhím để che giấu sự bất an.</p>
+          <p>Người phụ nữ <em>"Tự Lực"</em> hiểu rằng không có lợi thế nào là vĩnh viễn nếu chúng ta lười biếng và bỏ bê.</p>
+          <p class="q">Khi bạn chủ động trang bị cho mình một tư duy logic, một sự hiểu biết thực tế và sâu sắc, bạn sẽ tự xây cho mình một màng lọc để không một ai có thể lừa lọc hay thao túng được bạn nữa. Sự tỉnh táo đó, khi được dẫn dắt bởi một cái tâm thiện lành và một bản lĩnh bình tâm biết nhìn thẳng vào sai sót để sửa chữa, sẽ tạo nên một chiếc kiềng ba chân vững chãi. Bạn "biết mình biết người", đứng yên trước áp lực mà không sụp đổ, chọn cách phản ứng dựa trên sự tỉnh thức chứ không trốn chạy.</p>
+          <p>Cái vững từ nội lực trau dồi đó là thứ tài sản mà không ai có thể lấy đi được, vì nó giúp bạn <em>"Tự Lực"</em> đứng trên đôi chân của chính mình.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="secret-item reveal">
+      <div class="secret-num-wrap"><span class="secret-num">03</span><span class="secret-num-label">Quả ngọt</span></div>
+      <div class="secret-content">
+        <h3 class="secret-title">Bí Mật 3 | "Tự Tại"</h3>
+        <p class="secret-subtitle"><em>Tâm thế ung dung sống hài hòa với bản thân và thế giới</em></p>
+        <div class="secret-body">
+          <p><em>"Tự Tại"</em> là quả ngọt xuất hiện một cách hoàn toàn tự nhiên khi sự <em>"Tự Tri" và "Tự Lực"</em> bên trong bạn đã đủ chín muồi.</p>
+          <p class="q">Đây chính là trạng thái đỉnh cao của một người phụ nữ sở hữu một tâm thế lớn và một lối xử thế viên dung.</p>
+          <p>Bạn có nhận ra sự mệt mỏi cùng cực khi phải liên tục đóng vai một "nữ cường nhân" sắc sảo để phòng thủ trước cuộc đời, hoặc ngược lại, phải hạ mình nhẫn nhịn để dĩ hòa vi quý? Bạn nhận ra mọi sự cố gắng "tỏ ra hoàn hảo" trước đây chỉ là một lớp mặt nạ làm kiệt quệ tâm hồn. Bạn khao khát được lắng nghe, được trân trọng nhưng những gì bạn nhận về lại là sự hờ hững, vì bạn đang dùng kỹ năng bề nổi để đối đãi thay vì cái tâm chân thành.</p>
+          <p>Xử thế viên dung ở người <em>"Tự Tại"</em> nghĩa là bạn biết cư xử hòa ái, mang lại cảm giác dễ chịu cho người đối diện từ cái tâm thuần khiết, không vụ lợi. Bạn không cần phải to tiếng hay dùng quyền lực để được lắng nghe, bởi ở bạn luôn tỏa ra một nguồn năng lượng dịu dàng, sâu lắng, khiến người khác tự khắc dành cho mình thái độ trân quý và nể phục.</p>
+          <p>Nhưng nét đặc biệt nhất của người phụ nữ <em>"Tự Tại"</em> là: Bạn dịu dàng nhưng bạn có giới hạn, viên dung nhưng mang đầy bản lĩnh. Sự hòa ái của bạn không bao giờ là sự nhu nhược hay cam chịu. Cái "gai tính" ở bạn không phải là xù lông để tấn công, mà là cái uy ngầm của một người phụ nữ có nguyên tắc sống. Bạn biết cách đặt ra ranh giới rõ ràng để bảo vệ mình và người khác tự khắc sẽ tôn trọng ranh giới đó.</p>
+          <p>Tự tại không có nghĩa là cuộc đời bạn vắng bóng khó khăn, mà là bạn đi qua giông bão một cách ung dung hơn, vì bạn không còn phải chiến đấu với chính mình nữa. Bạn được là chính mình một cách tự do nhất: Không gượng gạo, không gồng gánh, không phải diễn để được chấp nhận.</p>
+          <p class="q">Khi bạn biết dịu dàng với chính mình và có giới hạn với thế giới, cuộc đời tự khắc sẽ dịu dàng với bạn. Đó chính là vị thế tự thân tối cao và bền vững nhất mà mọi người phụ nữ đều mơ ước hướng đến.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;"><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.55;">✦</span><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span></div>
+
+<!-- ══ TRANSFORMATION ══ -->
+<section id="transformation">
+  <div class="container-wide">
+    <div class="section-header reveal">
+      <span class="eyebrow">Cuộc sống của tôi trước và sau</span>
+      <h2 class="display section-title">Giờ đây, khi ngồi nhìn lại<br><span class="display-italic" style="color:var(--terra);">chặng đường đã qua</span></h2>
+      <p style="font-size:15px;color:var(--bark-mid);max-width:580px;margin:20px auto 0;line-height:1.8;font-style:italic;">Tôi thấm thía sâu sắc sự khác biệt vô giá giữa hai nửa cuộc đời mình, trước và sau khi nhận thức được những điều này.</p>
+      <p style="font-size:15px;color:var(--bark-mid);max-width:580px;margin:14px auto 0;line-height:1.8;font-style:italic;">Những gì tôi chia sẻ dưới đây không phải là những lý thuyết sáo rỗng trong sách vở, mà là hành trình đổi thay và những quả ngọt có thật của chính tôi sau khi tìm thấy và ứng dụng "Nghệ thuật xác lập vị thế" vào đời sống thực tế.</p>
+    </div>
+    <div class="transformation-grid reveal">
+      <div class="transformation-card">
+        <span class="transformation-area">Vị thế trong Tình cảm và Gia đình</span>
+        <p class="transformation-desc">Khi nội lực bên trong tôi đã vững vàng, tôi bước đi trong tình yêu với một tâm thế hoàn toàn tự chủ. Tôi thấu hiểu giá trị của mình, làm chủ được cảm xúc, trở nên kiên nhẫn hơn, cân bằng hơn và có đủ dũng khí để nói ra tiếng nói chân thật của bản thân.</p>
+        <p class="transformation-desc">Chính vì hiểu rõ con người mình, tôi biết cách phát huy những điểm tốt, đồng thời học cách bao dung để tự sửa đổi những góc chưa hoàn thiện. Tôi đối xử với những người thân yêu bằng sự khiêm nhường và thấu hiểu sâu sắc. Tôi chọn cách đồng hành và tôn trọng, tuyệt đối không áp đặt hay can thiệp vào cuộc sống của bất cứ ai. Tôi không còn đổ lỗi, không "giận cá chém thớt" hay trút những năng lượng độc hại lên gia đình, cũng không bao giờ coi ngôi nhà là nơi để xả lại mọi bực dọc, bộn bề sau một ngày dài mỏi mệt.</p>
+        <p class="transformation-desc">Và một hiệu quả kỳ diệu đã xảy ra: Khi tôi học được cách buông bỏ sự kiểm soát gượng ép để quay về làm chủ chính mình, người đàn ông và gia đình bên cạnh lại tự khắc xoay trục và kết nối chân thành hơn. Họ nhìn tôi bằng một sự trân trọng sâu sắc, tự giác tôn trọng ranh giới của tôi mà tôi không cần phải tốn một chút năng lượng nào để gồng gánh hay quản thúc nữa.</p>
+      </div>
+      <div class="transformation-card">
+        <span class="transformation-area">Vị thế trong Công việc và Xã hội</span>
+        <p class="transformation-desc">Tôi của bây giờ không còn lao đi như một cỗ máy trong vô thức vì nỗi sợ bị đánh giá hay áp lực phải chứng minh năng lực với thế giới bên ngoài.</p>
+        <p class="transformation-desc">Thay vào đó, tôi bước ra xã hội và đón nhận các mối quan hệ bằng một sự khiêm nhường, tôn trọng. Không dùng cậy thế để áp đặt, tôi chọn dùng cái lý và sự thấu hiểu để thu phục lòng người. Tôi luôn biết cách cư xử hoà ái, mang lại cảm giác dễ chịu cho người đối diện. Vì tôi chọn trao đi sự chân thành một cách tự nhiên mà không vì mục đích vụ lợi, người khác tự khắc sẽ dành cho tôi thái độ trân quý và nể phục.</p>
+        <p class="transformation-desc">Chính nguồn năng lượng bình thản và cốt cách thật sự tỏa ra từ bên trong đã giúp tôi có được tiếng nói uy tín trước đồng nghiệp lẫn đối tác. Công việc và sự nghiệp nhờ vậy cũng tự động thuận dòng, thuận lợi và gặt hái kết quả tốt hơn trước rất nhiều mà tôi không còn bị kiệt quệ.</p>
+      </div>
+      <div class="transformation-card">
+        <span class="transformation-area">Phần thưởng lớn nhất</span>
+        <p class="transformation-desc">Hiệu quả lớn nhất mà hành trình này mang lại cho tôi chính là: <em>sự "Tự Tại" trong mọi hoàn cảnh.</em> Ngay cả trong giai đoạn tôi buông xuôi tất cả và trở thành người "vô danh", tôi vẫn không hề đánh mất đi giá trị của mình. Những người xung quanh nhìn vào không một ai coi thường tôi; mọi người xung quanh dù lạ hay quen họ vẫn trân quý, tìm đến và kết nối với tôi bằng tình cảm thuần khiết nhất.</p>
+        <p class="transformation-desc">Tôi nhìn mọi thứ dịu dàng hơn, và cuộc đời cũng tự nhiên trở nên dịu dàng với tôi hơn rất nhiều. Mỗi buổi sáng thức dậy, tôi bình yên vì biết rằng: Kể cả khi lột bỏ tất cả những chiếc áo giáp vật chất hay danh xưng địa vị bên ngoài, tôi vẫn sở hữu một vị thế bền vững nhất:</p>
+        <p class="transformation-desc"><em>Vị thế được tôn trọng vì chính cốt cách con người thật của mình.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;"><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.55;">✦</span><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span></div>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section id="testimonials">
+  <div class="container-wide">
+    <div class="section-header reveal">
+      <span class="eyebrow">Những người đã đồng hành cùng NOE</span>
+      <h2 class="display section-title">Họ đã thay đổi<br><span class="display-italic" style="color:var(--terra);">như thế nào</span></h2>
+    </div>
+    <div class="testimonials-grid reveal">
+      <div class="testi-card reveal">
+        <img src="/mnt/user-data/uploads/IMG_5330.jpeg" alt="Feedback Chị H" class="testi-screenshot">
+        <div class="testi-name">Chị H — Khách hàng 1:1</div>
+        <p>Em mang một năng lượng điềm tĩnh lắm, kiểu lành ý, mà nó khiến bản thân chị gặp em xong tự dưng thấy mình bình tâm đến lạ. Trước lúc đến gặp em chị đang rất bức xúc bí bách, cảm thấy lost về định hướng cuộc đời, góc nhìn cũng khá tiêu cực. Nhưng sau khi gặp em, chị đã cảm thấy cảm xúc của chị cũng được lắng xuống theo, theo hướng dễ chịu và điềm tĩnh hơn.</p>
+        <p>Mỗi lần gặp em có 2 tiếng thôi nhưng chị thấy chất lượng và có động lực làm nhiều thứ hơn hẳn. Bản chất chị là người rất cứng đầu và không nghe ai, nhưng nếu ai biết cách thì chị sẽ rất lắng nghe và thực sự tiếp thu — và em chính là người có sức ảnh hưởng tới chị như vậy.</p>
+        <p>NOE ơi, chị càng tin cái năng lượng và những gì em đang giúp chị nhận ra là thật. Như kiểu có một ngày rất tệ mà được nói chuyện với em xong thấy mình như viên ngọc chưa được mài vậy. Chị rất biết ơn vì được đồng hành cùng em.</p>
+      </div>
+      <div class="testi-card reveal">
+        <img src="/mnt/user-data/uploads/IMG_5329.jpeg" alt="Feedback Chị T" class="testi-screenshot">
+        <div class="testi-name">Chị T — Khách hàng 1:1</div>
+        <p>Trước khi kết thúc năm cũ em muốn gửi chị đôi lời vì thực sự biết ơn chị đã xuất hiện và đồng hành cùng em trong quãng thời gian em bất ổn nhất.</p>
+        <p>Chị đã giúp em nhìn rất rõ được điểm mạnh và điểm yếu mà nhiều khi em không biết đấy là điểm gì của mình. Xong sau đó chị đã siêu giúp em gỡ rối được đống tơ vò trong đầu theo đúng cái quy luật của nó. Chị là người giúp em cân bằng được lí trí, cảm xúc và có góc nhìn siêu đa chiều — cái đó thực sự giúp em phải đối diện với sự thật và không nên lẩn tránh hiện tại.</p>
+        <p>Em thấy sau mỗi buổi đồng hành cùng chị thì đều được nhận những lời định hướng rất phù hợp với bản thân và tính cách của em. Vậy nên em nghĩ những cái chị nói nếu mà ghi nhớ và làm được thì bản thân ít nhất cũng level up được 90% luôn. Em cảm ơn chị nhiều lắmmm.</p>
+      </div>
+      <div class="testi-card reveal">
+        <img src="/mnt/user-data/uploads/IMG_5328.jpeg" alt="Feedback Chị L" class="testi-screenshot">
+        <div class="testi-name">Chị L — Khách hàng 1:1</div>
+        <p>Cảm ơn chị thực sự đã lắng nghe, và chỉ ra cho em nhiều khía cạnh góc nhìn khác trong từng mớ bong bóng của em, có thẳng thật nhưng vẫn nhẹ nhàng truyền tải vào em, để em nghe, ngộ và từ từ hiểu.</p>
+        <p>Gặp chị như kiểu được tắm suối nước nóng ý, thoải mái thả lòng và được thấu hiểu, healing một cách chậm rãi và thoải mái nhất. Chị không có hùa theo câu chuyện của em, cũng không hề đánh giá chủ quan, chị đứng lập trường vững chắc của chị, đưa ra những câu chuyện tương ứng để em tự ngộ và biết nên làm gì phù hợp với con người và góc cạnh của em.</p>
+        <p>Em cũng bắt đầu cảm nhận mọi thứ rõ ràng hơn, mọi chuyện đến và xảy ra đều có lí do của nó. Cảm ơn chị đã cùng em đồng hành suốt những khoảng thời gian mịt mù và đầy nước mắt của em. ❤️</p>
+      </div>
+    </div>
+  </div>
+</section>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;"><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.55;">✦</span><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span></div>
+
+<!-- ══ CTA BRIDGE ══ -->
+<section id="cta-bridge" style="padding-top:40px;">
+  <div class="container">
+    <div class="bridge-intro reveal">
+      <h2 class="display section-title" style="text-align:center;margin-bottom:24px;">Vậy còn <span style="color:var(--terra);font-style:italic;">bạn thì sao?</span></h2>
+    </div>
+    <div class="bridge-question reveal" style="margin-top:28px;font-size:clamp(15px,2vw,18px);">Có phải bạn cũng đang nhìn thấy hình bóng của chính mình trong câu chuyện mà tôi vừa kể?<br><br>Sâu thẳm bên trong tâm hồn, có phải bạn cũng đang khát khao được cởi bỏ lớp áo giáp nặng nề để sống là chính mình, được yêu thương trong sự trân trọng và bước ra xã hội bằng một tâm thế ung dung, tự chủ không?</div>
+    <div class="bridge-intro reveal">
+      <h3 class="bridge-obstacle-title">Vậy Điều Gì Đang Thực Sự Ngăn Cản Bạn Đạt Được Mong Muốn Đó?</h3>
+      <p>Chúng ta thường có xu hướng đổ lỗi cho hoàn cảnh bên ngoài: đổ cho người đàn ông bên cạnh vô tâm, cho áp lực công việc đè nặng, hay cho những đứa con bướng bỉnh khó bảo.</p>
+      <p>Nhưng sự thật trần trụi là: Điều ngăn cản bạn không nằm ở thế giới ngoài kia, mà nó chính là sự kiệt quệ về năng lượng, sự nhạy cảm quá mức về cảm xúc và những phản ứng hoàn toàn bằng bản năng cũ kỹ bên trong bạn.</p>
+      <p>Bạn bị trói chân bởi nỗi sợ bị phán xét nên luôn phải gồng mình lên để tỏ ra hoàn hảo. Bạn tích tụ những ấm ức, áp lực ngoài xã hội rồi vô tình mang về "xả" lên những người thân yêu nhất bằng sự cằn nhằn, đổ lỗi, hoặc chọn cách im lặng để trừng phạt lẫn nhau.</p>
+      <p>Bạn thấu cảm cái sai của mình, bạn biết mình cần phải thay đổi, nhưng ngọn đèn năng lượng bên trong bạn đã cạn dầu. Bạn kiệt sức đến mức không còn đủ sinh khí để làm chủ cảm xúc của mình nữa, để rồi sau đó lại tiếp tục thỏa hiệp, tiếp tục gồng gánh và cam chịu trong một cái vòng lặp quẩn quanh không lối thoát.</p>
+      <h3 class="bridge-action-title">Vậy Bạn Cần Làm Gì Ngay Lúc Này?</h3>
+      <p>Điều bạn cần làm ngay lúc này không phải là lao đi học thêm các kỹ năng bề nổi bên ngoài hay đọc những cuốn sách lý thuyết khô khan. Những thứ đó chỉ là liều thuốc giảm đau tạm thời, chứ không thể trị bệnh tận gốc rễ.</p>
+      <p>Bạn hãy hình dung mình như một cái cây đang héo úa từ sâu trong lòng đất vì kiệt quệ dưỡng chất, nhưng lại cứ cố lao đi tìm những loại phân bón hóa học cấp tốc để ép cành phải ra hoa, ép lá phải xanh tươi nhằm che mắt thế gian. Bạn cố tô vẽ cho phần ngọn thật lộng lẫy để chứng minh mình ổn, nhưng chỉ cần một cơn gió thoảng qua, cả thân cây đã rung lắc bần bật vì phần rễ bên dưới quá nông và mục rỗng.</p>
+      <p>Những kỹ năng bề nổi ngoài kia chỉ giống như việc bạn đi lau từng chiếc lá úa, cắt từng cái cành khô, và nó không thể cứu sống được sinh mệnh của cái cây. Muốn cây hồi sinh và "Tự Tại" vươn cao trước giông bão, điều duy nhất bạn phải làm là ngừng nhìn vào phần ngọn, chấp nhận sống chậm lại một nhịp để quay về tưới tắm, vun trồng cho vùng đất cốt lõi và nuôi dưỡng nguồn sống từ sâu bên trong.</p>
+    </div>
+    <div class="bridge-pullquote reveal">Đã đến lúc bạn cần cho phép mình dừng lại để tái sinh: sạc đầy lại nguồn năng lượng đã mất, mài giũa một tư duy logic tỉnh táo và thiết lập lại một thế giới cảm xúc ổn định. Bạn xứng đáng sở hữu một chiếc bản đồ lộ trình rõ ràng để tự tay kiến tạo một "Vị thế tự thân vững chãi" — một thứ nội lực có ranh giới, có giới hạn, viên dung nhưng đầy bản lĩnh mà thế giới không một ai có thể ban phát hay tước đoạt của bạn.</div>
+  </div>
+</section>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;"><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.55;">✦</span><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span></div>
+
+<!-- ══ CHOICES ══ -->
+<section id="choices">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="display section-title">Bạn có <span style="color:var(--terra);font-style:italic;">2 lựa chọn</span></h2>
+    </div>
+    <div class="choice-grid reveal">
+      <div class="choice-card">
+        <span class="choice-tag">Lựa chọn 1</span>
+        <div class="choice-title">Tiếp tục tự mình trải nghiệm, tự nghi ngờ và tự sửa sai cho đến khi đúng</div>
+        <p class="choice-desc">Lúc này, có thể bạn vẫn còn những hoài nghi, chưa hoàn toàn tin tưởng vào một con đường mới và muốn tự mình chiêm nghiệm qua những vấp ngã. Quyết định của bạn hoàn toàn xứng đáng được tôn trọng.</p>
+        <p class="choice-desc">Nhưng xin bạn hãy một lần dũng cảm nhìn vào thực tế xung quanh xem: Có biết bao người phụ nữ đã dành 5 năm, 10 năm, thậm chí là cả một đời chật vật trải nghiệm rồi đổi lại được gì? Họ kết thúc một mối quan hệ đổ vỡ này bằng cách bước vào một mối quan hệ độc hại khác. Họ kiệt quệ đấu tranh nhưng mọi thứ vẫn cứ luẩn quẩn lặp lại như một trò đùa số phận.</p>
+        <p class="choice-desc">Bởi vì họ vẫn mang nguyên vẹn cái tâm thế cũ, tư duy cũ và nguồn năng lượng cạn kiệt cũ để đi xử lý những vấn đề mới. Thứ duy nhất bạn có thể làm chủ và sửa đổi chính là bản thân bạn.</p>
+      </div>
+      <div class="choice-card recommended">
+        <span class="choice-tag" style="background:var(--sand-deep);color:var(--bark-soft);border:1px solid var(--border);">Lựa chọn 2</span>
+        <span class="choice-tag" style="background:linear-gradient(135deg,var(--terra-warm) 0%,var(--terra-deep) 100%);color:var(--linen);">✦ Được đề xuất</span>
+        <div class="choice-title">Đi theo sự hướng dẫn của người đi trước để đến đích nhanh hơn và an toàn hơn</div>
+        <p class="choice-desc">Thay vì phải đánh đổi bằng những vết thương lòng, mất nhiều năm trời tự mò mẫm trong bóng tối với sự hoang mang, bạn chọn đặt niềm tin vào một hệ thống lộ trình đã được kiểm chứng bằng xương máu.</p>
+        <p class="choice-desc">Trên hành trình này, điều bạn nhận được không chỉ là những kiến thức cốt lõi, mà bạn xứng đáng có được một người đồng hành mang lại cho bạn cảm giác bao dung, kiên nhẫn và thấu hiểu sâu sắc. Một người dẫn đường không phán xét những tổn thương của bạn, mà luôn ở bên để khích lệ tinh thần, giúp bạn giữ vững sự kiên trì, tái tạo lại nguồn năng lượng gốc và có thêm động lực mạnh mẽ để phát huy những giá trị cốt cách tốt đẹp nhất vốn có của mình.</p>
+        <p class="choice-desc">Tôi không bán cho bạn những lời khuyên lý thuyết suông, tôi trao cho bạn chiếc bản đồ thực tế và một không gian an toàn, hòa ái để bạn tựa vào phục hồi sinh khí.</p>
+        <p class="choice-desc">Thay vì phải mất ngần ấy thời gian, chi phí và cả những tổn thương không đáng có, thì giờ đây, bạn có thể sở hữu toàn bộ chiếc bản đồ bóc tách nội tâm, tìm cách tái sinh một phiên bản "ung dung tự tại" chỉ trong vòng 3 tiếng đồng hồ.</p>
+      </div>
+    </div>
+    <div class="choice-closing reveal"><em>Quyết định nằm ở bạn. Chiếc nôi NOE đã sẵn sàng chào đón bạn trở về.</em></div>
+  </div>
+</section>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;"><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.55;">✦</span><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span></div>
+
+<!-- ══ WORKSHOP ══ -->
+<section id="workshop">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Và đó là lý do tôi tạo nên workshop này</span>
+      <h2 class="display section-title">2 buổi Live Zoom<br><span class="display-italic" style="color:var(--terra);">NOE dẫn trực tiếp · Q&amp;A trực tiếp trong buổi</span></h2>
+    </div>
+    <div class="workshop-logistics reveal">
+      <div class="workshop-logistic"><div class="workshop-logistic-icon">💻</div><span class="workshop-logistic-value">Live Zoom</span><span class="workshop-logistic-label">2 buổi trực tiếp</span></div>
+      <div class="workshop-logistic"><div class="workshop-logistic-icon">⏱</div><span class="workshop-logistic-value">90' × 2 buổi</span><span class="workshop-logistic-label">Thời lượng</span></div>
+      <div class="workshop-logistic"><div class="workshop-logistic-icon">🎥</div><span class="workshop-logistic-value">Có record</span><span class="workshop-logistic-label">Xem lại</span></div>
+    </div>
+    <div class="session-list">
+      <div class="session-item reveal">
+        <div class="session-num">1</div>
+        <div class="session-content">
+          <div class="session-title">Chẩn Đoán Câu Chuyện Vị Thế Của Bạn</div>
+          <div class="session-subtitle">Nhìn rõ hệ thống vô hình đang chi phối tình yêu, gia đình và sự nghiệp của bạn</div>
+          <div class="session-hook">"Vì sao bạn đã cố gắng nhiều, đã học nhiều, nhưng câu chuyện vẫn lặp lại?"</div>
+          <ul class="session-outcomes">
+            <li>Hiểu tại sao không phải kỹ năng hay ý chí bạn đang thiếu mà là cái gốc rễ sâu bên trong mà bạn chưa từng chạm tới</li>
+            <li>Nhận ra câu chuyện vị thế nào đang âm thầm vận hành bên trong bạn, thứ đang quyết định cách bạn phản ứng trong những tình huống quan trọng nhất</li>
+            <li>Gọi tên chính xác bạn đang mắc kẹt ở đâu trong 3 tầng <em>"Tự Tri", "Tự Lực", "Tự Tại"</em> và tại sao đó là điểm cần giải quyết trước tiên</li>
+            <li>Bài tập <em>"Tự Tri"</em> đầu tiên — không phải lý thuyết, là công cụ bạn dùng được ngay sau buổi học</li>
+          </ul>
+          <div class="session-outcome-summary">Bạn rời buổi 1 với: <em>Sự rõ ràng về TẠI SAO.</em> Nhìn thấy gốc rễ thật sự của vấn đề, không phải chỉ là triệu chứng bề mặt.</div>
+        </div>
+      </div>
+      <div class="session-item reveal">
+        <div class="session-num">2</div>
+        <div class="session-content">
+          <div class="session-title">Lộ Trình Chinh Phục Con Đường "Tự Tại"</div>
+          <div class="session-subtitle">Hiểu phương pháp, thấy lộ trình, và biết bước tiếp theo của riêng bạn</div>
+          <div class="session-hook">"Biết vấn đề rồi, nhưng cần làm gì, bắt đầu từ đâu, và hành trình đó trông như thế nào?"</div>
+          <ul class="session-outcomes">
+            <li>Hiểu trọn vẹn Phương pháp Vị Thế 3 Tầng, không phải để nhớ thuộc, mà để bạn tự nhìn thấy mình đang đứng ở đâu và cần đi tới đâu</li>
+            <li><em>"Tự Lực"</em> và <em>"Tự Tại"</em> trông như thế nào trong thực tế, trong cách bạn nói chuyện, giữ ranh giới, xử lý mâu thuẫn, tồn tại trong một không gian mà không cần cố thu hút</li>
+            <li>Roadmap cá nhân hoá: dựa trên điều bạn nhìn thấy ở buổi 1, hành trình xây dựng vị thế tự thân của riêng bạn trông như thế nào</li>
+            <li>Q&amp;A trực tiếp — những câu hỏi cụ thể trong tình huống thật của bạn được trả lời</li>
+          </ul>
+          <div class="session-outcome-summary">Bạn rời buổi 2 với <em>Bản đồ hành trình rõ ràng.</em> Biết mình cần làm gì. Biết bước đầu tiên cụ thể là gì. Và đủ sự rõ ràng để quyết định bước tiếp theo trên hành trình của mình.</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px;" class="reveal"><a href="#pricing" class="btn-primary">Đăng ký tham gia ngay</a></div>
+  </div>
+</section>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;"><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.55;">✦</span><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span></div>
+
+<!-- ══ PRICING ══ -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-header reveal">
+      <h2 class="display section-title">Workshop <span style="color:var(--terra);font-style:italic;">Nghệ Thuật Xác Lập Vị Thế</span></h2>
+    </div>
+    <div class="pricing-card reveal">
+      <span class="pricing-tag">Mức phí gieo duyên</span>
+      <div class="pricing-title">Toàn bộ những gì bạn nhận được</div>
+      <ul class="pricing-inclusions">
+        <li><span class="incl-icon">🎁</span><div class="pricing-incl-inner"><span class="incl-name">2 buổi Live Zoom với NOE</span><span class="incl-desc">90 phút mỗi buổi · NOE dẫn trực tiếp · Q&amp;A trực tiếp trong buổi</span></div></li>
+        <li><span class="incl-icon">🎁</span><div class="pricing-incl-inner"><span class="incl-name">Bộ câu hỏi "Chẩn Đoán Vị Thế"</span><span class="incl-desc">Bộ câu hỏi giúp bạn tự nhận ra mình đang gồng theo kiểu nào và vùng nào trong cuộc sống đang bị ảnh hưởng nhiều nhất.</span></div></li>
+        <li><span class="incl-icon">🎁</span><div class="pricing-incl-inner"><span class="incl-name">Bộ bài tập thực hành "Tự Tri"</span><span class="incl-desc">5 đến 10 phút mỗi ngày giúp bạn phân biệt: mình đang hành động từ điều mình thật sự muốn, hay từ nỗi sợ?</span></div></li>
+        <li><span class="incl-icon">🎁</span><div class="pricing-incl-inner"><span class="incl-name">Bộ tài liệu tìm lại "Điểm Neo"</span><span class="incl-desc">Tài liệu ngắn giúp bạn tìm lại chính mình bất cứ lúc nào cảm thấy đang dao động hay mất phương hướng.</span></div></li>
+        <li><span class="incl-icon">🎁</span><div class="pricing-incl-inner"><span class="incl-name">Video ghi lại toàn bộ 2 buổi</span><span class="incl-desc">Gửi trong vòng 48 giờ sau workshop. Xem lại bất cứ lúc nào trong không gian riêng của bạn.</span></div></li>
+        <li><span class="incl-icon">🎁</span><div class="pricing-incl-inner"><span class="incl-name">Nhóm đồng hành sau Workshop</span><span class="incl-desc">NOE hỗ trợ trực tiếp. Hỏi đáp và chia sẻ tiến trình sau workshop.</span></div></li>
+      </ul>
+      <div class="pricing-original">Giá trị thực: 2.000.000đ</div>
+      <div class="pricing-price">97.000đ</div>
+      <p class="pricing-context">Chưa bằng một ly cà phê hay một bữa ăn nhẹ, nhưng mở ra cho bạn một bệ phóng để đòi lại chủ quyền cuộc đời và rút ngắn tối đa con đường tìm lại vị thế tự thân của chính mình.</p>
+      <div class="pricing-cta-wrap"><a href="#" class="btn-primary">Đăng ký tham gia ngay →</a></div>
+      <p class="pricing-guarantee-note">✦ <span>Hoàn tiền 100%</span> nếu không nhận được giá trị</p>
+    </div>
+  </div>
+</section>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;"><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.55;">✦</span><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span></div>
+
+<!-- ══ GUARANTEE ══ -->
+<section id="guarantee" style="background:linear-gradient(180deg,var(--sand-deep) 0%,var(--sand) 100%);padding:72px 0;">
+  <div class="container">
+    <!-- Headline centered -->
+    <div class="reveal" style="text-align:center;margin-bottom:40px;">
+      <h2 class="display" style="font-size:clamp(24px,4vw,40px);color:var(--bark);font-weight:400;line-height:1.2;"><span style="color:var(--terra);font-style:italic;">Cam Kết</span> "Giá Trị Thật Hoặc Hoàn Tiền"</h2>
+    </div>
+    <!-- Icon + text side by side -->
+    <div class="guarantee-block reveal">
+      <div class="guarantee-seal">100%<br>CAM KẾT</div>
+      <div class="guarantee-text">
+        <p>Nếu bạn dành trọn vẹn 3 tiếng đồng hồ cùng NOE nhưng thành thật cảm thấy những trải nghiệm nhận về không xứng đáng với thời gian bạn bỏ ra, NOE cam kết hoàn trả 100% học phí ngay lập tức mà không kèm theo bất kỳ câu hỏi nào. Giá trị thật không cần sự ràng buộc gượng ép, và uy tín của NOE được minh chứng từ chính sự chuyển hóa bình an bên trong bạn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;"><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.55;">✦</span><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span></div>
+
+<!-- ══ FAQ ══ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Câu hỏi thường gặp</span>
+      <h2 class="display section-title">Bạn đang <span style="color:var(--terra);font-style:italic;">tự hỏi?</span></h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-question">NOE là ai? Tại sao tôi nên tin vào phương pháp của bạn?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Giữa một thời đại mà ai cũng nỗ lực xây dựng thương hiệu cá nhân bằng những hình ảnh lộng lẫy, danh xưng hào nhoáng, và những tấm bằng khen để xây dựng uy tín, thì tôi lựa chọn ẩn sau cái tên NOE.<br><br>Tôi đứng sau NOE không phải vì né tránh hay trốn chạy điều gì, mà bởi vì đó là cách tôi thực hành triết lý sống của chính mình: Tôi muốn dành cho bạn một không gian thuần khiết nhất, nơi không có sự phân tâm bởi vẻ bề ngoài, địa vị xã hội hay bằng cấp của người dạy. Tôi muốn bạn tập trung hoàn toàn vào tần số năng lượng, vào những giá trị tri thức chân thật và chiếc bản đồ mà tôi trao đi, chứ không phải bị phân tâm bởi chiếc mặt nạ bề nổi của tôi.<br><br>Bạn không cần phải tin vào "cái tên" hay "gương mặt" của tôi. Hãy lùi lại một nhịp và tự hỏi: Những lời chia sẻ của tôi có chạm được vào tần số của bạn không? Nó có gọi tên chính xác những tổn thương mà bạn đang cố che giấu? Tri thức đúng đắn và năng lượng bình an tự bản thân nó đã có sức mạnh thuyết phục, không cần bất kỳ một tấm danh thiếp lấp lánh nào để bảo chứng.<br><br>Khi bạn chọn đồng hành cùng NOE, đó là lúc bạn đang bắt đầu hành trình buông bỏ thói quen phán xét mọi thứ bằng vẻ bề nổi để tập trung vào giá trị cốt lõi bên trong của mình.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Tôi từng đi học rất nhiều nơi rồi nhưng đâu lại vào đấy. Tại sao workshop này có thể mang lại sự thay đổi?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Lý do khiến các giải pháp trước đây của bạn nhanh chóng mất tác dụng là vì chúng chỉ giống như những liều thuốc giảm đau cấp tốc, cố xoa dịu triệu chứng bề nổi chứ chưa từng diệt trừ tận gốc rễ vấn đề.<br><br>Bạn học cách để trở nên dịu dàng, học cách giao tiếp và ứng xử khéo léo, cố ép mình trở thành một hình mẫu trông thật "hoàn hảo". Có bao giờ bạn nhận ra: Bạn đang phải gồng mình đóng vai hoàn hảo để vừa mắt thế gian, chứ không phải đang sống hoàn hảo một cách "Tự Tại" và hạnh phúc từ bên trong? Việc cố nhào nặn phần ngọn trong khi nguồn năng lượng gốc đã cạn kiệt chỉ khiến bạn ngày càng kiệt quệ và trống rỗng hơn.<br><br>NOE nói không với những mẹo đối phó gượng ép. Tại đây, chúng ta sẽ cùng nhau thực hiện một cuộc "giải phẫu tâm lý" để bóc tách trần trụi cơ chế vận hành của nỗi sợ và những phản ứng bản năng cũ kỹ.<br><br>Lần này sẽ hoàn toàn khác biệt. Bạn không còn phải gồng mình lên để cam chịu hoàn cảnh, mà được học cách sạc đầy sinh khí và định vị lại hệ giá trị cốt lõi của chính mình. Khi cái gốc đã vững vàng và rõ ràng, bạn sẽ tự động đưa ra những phản ứng tỉnh thức. Đó là lúc thế giới xung quanh tự khắc xoay trục và trả lại sự trân trọng cho bạn một cách tự nhiên.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Chỉ trong vòng 2 buổi (3 tiếng đồng hồ), liệu có quá ngắn để xử lý những bế tắc tích tụ nhiều năm?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Hãy thẳng thắn với nhau về điều này: Tôi không hứa workshop 2 buổi này sẽ biến cuộc đời bạn thành màu hồng hay giải quyết triệt để mọi giông bão ngoài kia ngay lập tức. Nếu ai đó hứa với bạn điều đó chỉ sau 3 tiếng, đó có thể là một lời hứa hoang đường.<br><br>Những gì workshop này làm được cho bạn là bẻ gãy vòng lặp và tiết kiệm cho bạn nhiều năm mò mẫm trong bóng tối. 2 buổi này hoạt động giống như một chiếc kính lúp giúp bạn nhìn thấu suốt "lỗi sai hệ thống" trong tư duy của mình bấy lâu nay. Bạn sẽ mang về một chiếc bản đồ hướng dẫn rõ ràng, biết chính xác mình cần bóc tách rào cản nào trước, chữa lành vết thương nào sau.<br><br>3 tiếng không thể giúp cây ra hoa ngay, nhưng đủ để bạn nhận diện được bộ rễ đang gặp phải vấn đề gì và biết cách tưới tắm cho nó hồi sinh.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Với mức phí 97.000đ, đây có phải là một buổi "phễu" để chèo kéo tôi mua khóa học đắt tiền hơn?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Con số 97.000đ chỉ tương đương một ly cà phê, và nó hoàn toàn không đại diện cho giá trị của những tri thức bạn sẽ nhận được. NOE lựa chọn mức phí gieo duyên này vì một lý do duy nhất: Sự cam kết. Một chương trình miễn phí rất dễ bị bỏ dở, nhưng một khoản chi phí nhỏ sẽ nhắc nhở bạn nghiêm túc tôn trọng thời gian của chính mình.<br><br>Đây là một workshop độc lập, trọn vẹn và có giá trị ứng dụng thực tế ngay sau khi tham gia.<br><br>NOE đương nhiên có những không gian rèn luyện chuyên sâu hơn ở phía sau dành cho những ai thực sự có duyên và khao khát đồng hành lâu dài. Tuy nhiên, tại NOE, tinh thần "Tự Tại" và sự tôn trọng ranh giới luôn được đặt lên hàng đầu. Sẽ tuyệt đối không có bất kỳ sự thao túng tâm lý, chèo kéo hay ép buộc nào. Việc dừng lại hay đi tiếp hoàn toàn là sự lựa chọn tự do của bạn.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Nếu lịch trình bận rộn không thể tham gia trực tiếp, tôi có bị mất quyền lợi không?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Tôi luôn khuyến khích bạn tham gia trực tiếp vì năng lượng cộng hưởng của không gian lớp học tại thời điểm đó sẽ mang lại sự chuyển hóa mạnh mẽ nhất.<br><br>Nhưng là một người thấu hiểu những bộn bề, lo toan của phụ nữ trong cuộc sống, tôi không muốn lịch trình bận rộn trở thành rào cản ngăn bạn chạm vào cơ hội này. Vì vậy, toàn bộ nội dung buổi học sẽ được lưu lại dưới dạng video và gửi đến bạn trong vòng 48 giờ. Bạn hoàn toàn có thể chủ động lựa chọn một góc yên tĩnh, bật ngọn đèn ấm áp và tự tạo cho mình một không gian an toàn để xem lại, ghi chép và suy ngẫm mà không lo bị bỏ lỡ bất kỳ giá trị nào.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Bạn còn câu hỏi nào khác?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Để lại câu hỏi qua form liên hệ tại đây, NOE sẽ phản hồi trong vòng 24h.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;"><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span><span style="color:var(--terra);font-size:12px;opacity:0.55;">✦</span><span style="flex:1;max-width:120px;height:1px;background:rgba(184,78,36,0.22);display:block;"></span></div>
+
+<!-- ══ CLOSING CTA ══ -->
+<section id="closing">
+  <div class="container">
+    <div class="closing-inner">
+      <div class="closing-divider reveal"></div>
+      <h2 class="display closing-title reveal">Bạn đã gồng đủ rồi.</h2>
+      <p class="closing-sub reveal">Giờ là lúc để không cần gồng<br>mà vẫn đứng vững vàng.</p>
+      <p class="closing-desc reveal">Dù bạn là người phụ nữ thứ nhất hay thứ hai, vị thế tự thân là thứ bất kỳ ai cũng có thể xây. Bắt đầu từ đây.</p>
+      <div class="reveal"><a href="#pricing" class="btn-light">Giữ chỗ của tôi — 97.000đ →</a></div>
+      <p class="closing-guarantee reveal">✦ <span>Hoàn tiền 100%</span> nếu không nhận được giá trị</p>
+      <p class="closing-note reveal">"Khi bạn biết dịu dàng với chính mình và có giới hạn với thế giới, cuộc đời tự khắc sẽ dịu dàng với bạn."</p>
+      <p class="closing-sig reveal">— NOE</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">NOE</div>
+  <p>© 2026 NOE · Nghệ Thuật Xác Lập Vị Thế · Có câu hỏi? <a href="#">Nhắn tin tại đây</a></p>
+</footer>
+
+<!-- STICKY CTA -->
+<div class="sticky-cta" id="sticky-cta">
+  <span class="sticky-cta-text display-italic">Nghệ Thuật Xác Lập Vị Thế</span>
+  <a href="#pricing" class="btn-primary" style="padding:12px 32px;font-size:11px;">Workshop NOE · 97.000đ →</a>
+</div>
+
+<script>
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  const stickyCta = document.getElementById('sticky-cta');
+  const heroEl = document.getElementById('hero');
+  const closingEl = document.getElementById('closing');
+  window.addEventListener('scroll', () => {
+    const hb = heroEl.getBoundingClientRect().bottom;
+    const ct = closingEl.getBoundingClientRect().top;
+    stickyCta.classList.toggle('visible', hb < 0 && ct > window.innerHeight);
+  });
+
+  const qtText = document.getElementById('qt-text');
+  const qtCursor = document.getElementById('qt-cursor');
+  const qtBlock = document.getElementById('typewriter-quote');
+  const fullText = 'Vì vậy, tôi bắt đầu sống bằng sự kỳ vọng và đánh giá với ánh nhìn của người xung quanh. Tôi rèn cho mình khả năng quan sát môi trường nhanh, cố gắng phân tích và đọc hiểu mong muốn của người khác rồi đáp ứng cho phù hợp. Tôi học cách nhẫn nhịn, giữ hòa khí hơn là nói ra tiếng nói của mình. Tôi gọi đó là mình đang "biết điều" và tin rằng việc khiến người khác vui lòng, không để bản thân bị khiển trách sẽ mang tới cho mình một cuộc sống an toàn, thuận lợi, nhẹ nhàng.';
+  let started = false;
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !started) {
+        started = true;
+        qtCursor.classList.add('active');
+        let i = 0;
+        (function type() {
+          if (i < fullText.length) { qtText.textContent += fullText[i++]; setTimeout(type, 24); }
+          else { setTimeout(() => { qtCursor.style.opacity = '0'; }, 1400); }
+        })();
+      }
+    });
+  }, { threshold: 0.5 }).observe(qtBlock);
+
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const ans = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-answer').style.maxHeight = '0';
+      });
+      if (!isOpen) { item.classList.add('open'); ans.style.maxHeight = ans.scrollHeight + 'px'; }
+    });
+  });
+</script>
+</body>
+</html>
