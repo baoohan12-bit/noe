@@ -413,7 +413,7 @@
   #testimonials {
     background: linear-gradient(180deg, var(--sand-mid) 0%, var(--sand) 100%);
   }
-  .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .testimonials-grid { display: flex; flex-direction: column; gap: 24px; max-width: 680px; margin: 0 auto; }
 
   /* ══════════════════════════════
      CTA BRIDGE (4.1 + 4.2 + 4.3)
@@ -699,6 +699,7 @@
     width: 100%; border-radius: 4px;
     margin-bottom: 20px; display: block;
     box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    height: auto;
   }
   .testi-card {
     border: 1px solid var(--border);
@@ -747,7 +748,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 48px;
     align-items: center;
-    text-align: left;
+    margin-bottom: 48px;
   }
   .hero-col-img {
     display: flex;
@@ -755,30 +756,21 @@
     align-items: center;
   }
   .hero-logo-main {
-    width: 100%;
-    max-width: 380px;
-    height: auto;
+    width: 340px;
+    height: 340px;
     object-fit: cover;
-    border-radius: 16px;
-    box-shadow: 0 12px 48px rgba(122,48,21,0.15);
+    border-radius: 50%;
+    box-shadow: 0 12px 48px rgba(122,48,21,0.18);
   }
-  .hero-col-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  .hero-col-text .hero-title { font-size: clamp(26px, 3.5vw, 46px); margin-bottom: 20px; text-align: left; }
-  .hero-col-text .hero-subtitle { margin-bottom: 24px; text-align: left; }
-  .hero-col-text .hero-badge { justify-content: flex-start; }
-  .hero-col-text .hero-cta-wrap { text-align: left; }
-  .hero-col-text .hero-guarantee { text-align: left; }
+  .hero-col-text { display: flex; flex-direction: column; }
+  .hero-col-text .hero-title { font-size: clamp(24px, 3.2vw, 42px); margin-bottom: 20px; text-align: left; }
+  .hero-col-text .hero-subtitle { margin-bottom: 0; text-align: left; }
+  .hero-bottom { text-align: center; padding-top: 8px; }
   @media (max-width: 700px) {
-    .hero-two-col { grid-template-columns: 1fr; gap: 32px; text-align: center; }
-    .hero-col-text .hero-title,
-    .hero-col-text .hero-subtitle,
-    .hero-col-text .hero-guarantee { text-align: center; }
-    .hero-col-text .hero-badge { justify-content: center; }
-    .hero-col-text .hero-cta-wrap { text-align: center; }
+    .hero-two-col { grid-template-columns: 1fr; gap: 32px; }
+    .hero-logo-main { width: 220px; height: 220px; }
+    .hero-col-text .hero-title { text-align: center; }
+    .hero-col-text .hero-subtitle { text-align: center; }
   }
 
 </style>
@@ -798,17 +790,18 @@
       <div class="hero-col-text">
         <h1 class="display hero-title">Cách để trở thành <span class="accent">người phụ nữ</span> mà<br><span class="accent">đàn ông tôn trọng,</span><br><span class="accent">phụ nữ ngưỡng mộ</span><br>và <span class="accent">không ai dám coi thường</span></h1>
         <p class="hero-subtitle">Ngay cả khi bạn không phải người xinh nhất, giỏi nhất hay giàu nhất</p>
-        <div style="margin-bottom:32px;">
-          <div class="hero-badge"><div class="dot"></div><span>Workshop · 2 buổi Live · NOE</span><div class="dot"></div></div>
-        </div>
-        <div class="hero-cta-wrap">
-          <a href="#pricing" class="btn-primary">Giữ chỗ của tôi — 97.000đ</a>
-          <p class="hero-guarantee">✦ <span>Hoàn tiền 100%</span> nếu không nhận được giá trị</p>
-        </div>
+      </div>
+    </div>
+    <div class="hero-bottom reveal">
+      <div class="hero-badge" style="justify-content:center;margin-bottom:28px;"><div class="dot"></div><span>Workshop · 2 buổi Live · NOE</span><div class="dot"></div></div>
+      <div class="hero-cta-wrap" style="text-align:center;">
+        <a href="#pricing" class="btn-primary">Giữ chỗ của tôi — 97.000đ</a>
+        <p class="hero-guarantee">✦ <span>Hoàn tiền 100%</span> nếu không nhận được giá trị</p>
       </div>
     </div>
   </div>
 </section>
+
 
 <!-- ══ PAIN ══ -->
 <section id="pain" style="padding-top:40px;">
@@ -1111,7 +1104,7 @@ Nền tảng giáo dục về nề nếp, đạo đức mà gia đình xây dự
   <div class="container">
     <div class="section-header reveal">
       <span class="eyebrow">Và đó là lý do tôi tạo nên workshop này</span>
-      <h2 class="display section-title">2 buổi Live Zoom<br><span class="display-italic" style="color:var(--terra);">NOE dẫn trực tiếp · Q&amp;A trực tiếp trong buổi</span></h2>
+      <h2 class="display section-title"><span class="display-italic" style="color:var(--terra);">Nghệ thuật xác lập vị thế</span></h2>
     </div>
     <div class="workshop-logistics reveal">
       <div class="workshop-logistic"><div class="workshop-logistic-icon">💻</div><span class="workshop-logistic-label">2 buổi trực tiếp</span><span class="workshop-logistic-value">Live Zoom</span></div>
