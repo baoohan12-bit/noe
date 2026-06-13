@@ -404,9 +404,7 @@
     background: linear-gradient(160deg, var(--linen) 0%, var(--sand) 100%);
     border: 1px solid var(--border); padding: 40px 32px;
   }
-  .transformation-icon { font-size: 22px; margin-bottom: 18px; display: block; }
   .transformation-area { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terra); opacity: 0.75; margin-bottom: 14px; display: block; }
-  .transformation-headline { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--bark); margin-bottom: 14px; line-height: 1.35; }
   .transformation-desc { font-size: 14px; line-height: 1.8; color: var(--bark-mid); }
 
   /* ══════════════════════════════
@@ -416,21 +414,6 @@
     background: linear-gradient(180deg, var(--sand-mid) 0%, var(--sand) 100%);
   }
   .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-  .testimonial-card {
-    border: 1px solid var(--border);
-    background: linear-gradient(160deg, rgba(255,255,255,0.7) 0%, var(--sand) 100%);
-    padding: 32px 28px;
-  }
-  .testimonial-avatar {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--terra-light) 0%, var(--terra-deep) 100%);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Cormorant Garamond', serif; font-size: 16px;
-    color: rgba(255,255,255,0.9); margin-bottom: 20px;
-  }
-  .testimonial-quote { font-size: 14px; line-height: 1.8; color: var(--bark-mid); font-style: italic; margin-bottom: 20px; }
-  .testimonial-name { font-size: 12px; font-weight: 500; color: var(--bark); letter-spacing: 0.04em; }
-  .testimonial-role { font-size: 11px; color: var(--bark-soft); margin-top: 2px; }
 
   /* ══════════════════════════════
      CTA BRIDGE (4.1 + 4.2 + 4.3)
@@ -711,95 +694,23 @@
     .qt-cursor { animation: none; opacity: 1; }
   }
 
-  /* ── LOGO IMAGE ── */
-  .hero-logo-img {
-    width: 88px; height: 88px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin: 0 auto 36px;
-    display: block;
-    position: relative; z-index: 1;
-  }
-
-  /* ── TESTIMONIAL SCREENSHOTS ── */
+  /* ── TESTIMONIAL SCREENSHOTS & CARDS ── */
   .testi-screenshot {
     width: 100%; border-radius: 4px;
     margin-bottom: 20px; display: block;
     box-shadow: 0 2px 12px rgba(0,0,0,0.07);
   }
-  .testi-card p { font-size: 14px; line-height: 1.8; color: var(--bark-mid); margin-bottom: 10px; font-style: italic; }
-  .testi-card p:last-child { margin-bottom: 0; }
-
-  /* ── SECTION DIVIDER ── */
-  .section-divider {
-    display: flex; align-items: center; justify-content: center;
-    gap: 16px; padding: 16px 24px; background: transparent;
-  }
-  .section-divider::before, .section-divider::after {
-    content: ''; flex: 1; max-width: 120px;
-    height: 1px; background: var(--border-warm);
-  }
-  .section-divider span { color: var(--terra); font-size: 12px; letter-spacing: 0.2em; opacity: 0.55; }
-
-  /* ── GUARANTEE STANDALONE ── */
-  .guarantee-standalone {
-    display: flex; flex-direction: column; align-items: center;
-    text-align: center; gap: 20px; max-width: 600px; margin: 0 auto;
-  }
-  .guarantee-badge-lg {
-    width: 76px; height: 76px;
-    background: linear-gradient(135deg, rgba(184,78,36,0.1) 0%, rgba(122,48,21,0.08) 100%);
-    border: 1px solid var(--border-warm); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Cormorant Garamond', serif; font-size: 11px;
-    color: var(--terra); text-align: center; line-height: 1.3;
-    letter-spacing: 0.04em; flex-shrink: 0;
-  }
-
-  /* ── BRIDGE H3 ── */
-  .bridge-h3, .obstacle-block h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(22px, 3.5vw, 34px); font-weight: 400;
-    color: var(--bark); margin-bottom: 24px; line-height: 1.2;
-  }
-
-  /* ── QUOTE CLASS ── */
-  .q { font-style: italic; color: var(--bark-mid); }
-
-  /* ── TESTI CARD ── */
   .testi-card {
     border: 1px solid var(--border);
     background: linear-gradient(160deg, rgba(255,255,255,0.7) 0%, var(--sand) 100%);
     padding: 28px 24px;
   }
+  .testi-card p { font-size: 14px; line-height: 1.8; color: var(--bark-mid); margin-bottom: 10px; font-style: italic; }
+  .testi-card p:last-child { margin-bottom: 0; }
   .testi-name {
     font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--terra); opacity: 0.85; margin-bottom: 16px;
   }
-
-  /* ── STORY QUOTE (current version uses .story-quote) ── */
-  .story-quote {
-    font-family: 'Cormorant Garamond', serif; font-style: italic;
-    font-size: clamp(17px, 2.3vw, 21px); font-weight: 300;
-    color: var(--terra-deep); text-align: center;
-    line-height: 1.5; max-width: 560px; margin: 44px auto;
-    padding: 24px;
-    border-top: 1px solid var(--border-warm);
-    border-bottom: 1px solid var(--border-warm);
-  }
-
-  /* ── PAIN CARDS (current uses .pain-card not .persona-card) ── */
-  .pain-card {
-    background: linear-gradient(160deg, var(--linen) 0%, var(--sand) 100%);
-    border: 1px solid var(--border); padding: 40px 32px; position: relative;
-  }
-  .pain-card-label {
-    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--terra); opacity: 0.75; margin-bottom: 14px; display: block;
-  }
-  .pain-card p { font-size: 14.5px; line-height: 1.82; color: var(--bark-mid); }
-  .pain-cards { display: grid; gap: 16px; margin-bottom: 36px; }
-  @media(min-width:640px){ .pain-cards { grid-template-columns: 1fr 1fr; } }
 
   /* ── FRAMED QUOTE ── */
   .framed-quote {
@@ -814,188 +725,20 @@
   }
   .framed-quote p { font-size: 15.5px; font-style: italic; line-height: 1.82; padding-left: 12px; }
 
-  /* ── PAIN BRIDGE ── */
-  .pain-bridge { text-align: center; font-size: 15.5px; line-height: 1.85; color: var(--bark-mid); margin-top: 8px; }
-  .pain-bridge p { margin-bottom: 6px; }
+  /* ── QUOTE ITALIC CLASS ── */
+  .q { font-style: italic; color: var(--bark-mid); }
 
-  /* ── SECRET BLOCK (current uses .secret-block not .secret-item) ── */
-  .secret-block { margin-bottom: 56px; }
-  .secret-block:last-child { margin-bottom: 0; }
-  .secret-number {
-    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-    background: linear-gradient(135deg, var(--terra-light) 0%, var(--terra-deep) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text; margin-bottom: 6px;
-  }
-  .secret-block h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 4vw, 40px); font-weight: 400; color: var(--bark); margin-bottom: 4px; line-height: 1.12; }
-  .secret-block .secret-sub { font-size: 13px; color: var(--terra); opacity: 0.85; font-style: italic; margin-bottom: 20px; }
-  .secret-block p { font-size: 15px; line-height: 1.85; color: var(--bark-mid); margin-bottom: 12px; }
-  .secrets-intro { text-align: center; max-width: 660px; margin: 0 auto 56px; }
-  .secrets-intro p { font-size: 15.5px; line-height: 1.85; color: var(--bark-mid); margin-top: 18px; }
-
-  /* ── TRANSFORM CARD (current uses .transform-card) ── */
-  .transform-cards { display: grid; gap: 16px; }
-  @media(min-width:640px){ .transform-cards { grid-template-columns: repeat(3,1fr); } }
-  .transform-card {
-    background: linear-gradient(160deg, var(--linen) 0%, var(--sand) 100%);
-    border: 1px solid var(--border); padding: 36px 28px;
-  }
-  .transform-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--terra-deep); margin-bottom: 14px; line-height: 1.3; }
-  .transform-card p { font-size: 14px; line-height: 1.8; color: var(--bark-mid); }
-
-  /* ── TESTIMONIALS GRID (current class) ── */
-  .testi-grid { display: grid; gap: 16px; }
-  @media(min-width:860px){ .testi-grid { grid-template-columns: repeat(3,1fr); } }
-
-  /* ── CHOICE CARD (current uses .choice-card.featured) ── */
-  .choice-card.featured {
-    background: linear-gradient(160deg, rgba(184,78,36,0.05) 0%, rgba(122,48,21,0.04) 100%);
-    border-color: var(--terra);
-  }
-  .choice-card.featured h3, .choice-card.featured p { color: var(--bark); opacity: 1; }
-  .choices-grid { display: grid; gap: 16px; }
-  @media(min-width:640px){ .choices-grid { grid-template-columns: 1fr 1fr; } }
-
-  /* ── WORKSHOP (current uses session-cards / session-card) ── */
-  .workshop-meta-bar {
-    display: flex; flex-wrap: wrap; gap: 12px 32px;
-    background: var(--bark); color: #fff;
-    padding: 20px 28px; margin-bottom: 48px;
-  }
-  .workshop-meta-bar span { font-size: 13px; display: flex; align-items: center; gap: 6px; }
-  .workshop-meta-bar span::before { content: '✦'; color: var(--terra-warm); font-size: 10px; }
-  .session-cards { display: grid; gap: 24px; }
-  @media(min-width:640px){ .session-cards { grid-template-columns: 1fr 1fr; } }
-  .session-card {
-    background: linear-gradient(160deg, var(--linen) 0%, var(--sand) 100%);
-    border: 1px solid var(--border); padding: 36px 28px;
-  }
-  .session-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--bark); margin-bottom: 4px; }
-  .session-card .session-sub { font-size: 13px; color: var(--bark-soft); font-style: italic; margin-bottom: 18px; }
-  .session-card p { font-size: 14.5px; line-height: 1.8; color: var(--bark-mid); margin-bottom: 12px; }
-  .session-card ul { padding-left: 20px; margin-top: 12px; }
-  .session-card ul li { font-size: 14px; line-height: 1.8; color: var(--bark-mid); margin-bottom: 10px; }
-  .session-result { margin-top: 20px; padding: 14px 18px; background: linear-gradient(135deg, rgba(184,78,36,0.07) 0%, transparent 100%); border-left: 2px solid rgba(184,78,36,0.4); font-size: 14px; font-style: italic; color: var(--terra-deep); line-height: 1.6; }
-
-  /* ── PRICING (current uses .pricing-box / .bonus-list) ── */
-  .pricing-box {
-    max-width: 580px; margin: 0 auto;
-    background: linear-gradient(160deg, var(--linen) 0%, var(--sand) 100%);
-    border: 1px solid var(--border-warm); padding: 56px 48px; text-align: center;
-    box-shadow: 0 8px 40px rgba(139,58,26,0.08);
-  }
-  .pricing-box h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(20px, 3vw, 28px); font-weight: 400; color: var(--bark); margin-bottom: 32px; }
-  .bonus-list { list-style: none; text-align: left; margin-bottom: 36px; }
-  .bonus-list li { display: flex; gap: 14px; font-size: 14.5px; color: var(--bark-mid); padding: 12px 0; border-bottom: 1px solid var(--border); line-height: 1.55; align-items: flex-start; }
-  .bonus-list li:last-child { border-bottom: none; }
-  .bonus-list .bonus-emoji { font-size: 17px; flex-shrink: 0; }
-  .bonus-list .bonus-title { color: var(--bark); font-weight: 400; display: block; margin-bottom: 2px; }
-  .bonus-list .bonus-title + span, .bonus-list .incl-desc { color: var(--bark-soft); font-size: 12.5px; }
-  .pricing-incl-inner { display: flex; flex-direction: column; }
-  .price-strike { font-size: 13px; color: var(--bark-soft); text-decoration: line-through; margin-bottom: 4px; }
-  .price-main {
-    font-family: 'Cormorant Garamond', serif; font-size: clamp(52px, 9vw, 88px); font-weight: 300;
-    background: linear-gradient(135deg, var(--terra-warm) 0%, var(--terra-deep) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    line-height: 1; margin-bottom: 6px;
-  }
-  .price-label { font-size: 13px; color: var(--bark-soft); font-style: italic; margin-bottom: 32px; line-height: 1.65; }
-
-  /* ── SECTION/FAQ CURRENT CLASSES ── */
-  .section { padding: 64px 0; }
-  .section-alt { background: var(--sand); }
-  .story-section { padding: 64px 0; background: linear-gradient(180deg, var(--sand-deep) 0%, var(--linen) 60%, var(--sand) 100%); }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 4.5vw, 48px); font-weight: 400; color: var(--bark); text-align: center; margin-bottom: 36px; line-height: 1.1; }
-  .faq-list { max-width: 640px; margin: 0 auto; }
-  .faq-item { border-bottom: 1px solid var(--border); }
-  .faq-q { width: 100%; background: transparent; border: none; color: var(--bark); font-family: 'Lora', serif; font-size: 15px; font-weight: 400; text-align: left; padding: 22px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; line-height: 1.5; transition: color 0.2s; }
-  .faq-q:hover { color: var(--terra-deep); }
-  .faq-icon { flex-shrink: 0; width: 22px; height: 22px; border: 1px solid var(--border-warm); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--terra); transition: transform 0.25s ease; }
-  .faq-item.open .faq-icon { transform: rotate(45deg); }
-  .faq-a { display: none; padding: 0 0 24px; font-size: 14.5px; line-height: 1.82; color: var(--bark-mid); }
-  .faq-item.open .faq-a { display: block; }
-
-  /* ── STICKY BAR (current uses .sticky-bar) ── */
-  .sticky-bar {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: linear-gradient(135deg, rgba(247,240,232,0.97) 0%, rgba(235,224,211,0.97) 100%);
-    backdrop-filter: blur(14px);
-    border-top: 1px solid var(--border-warm);
-    padding: 14px 24px; z-index: 100;
-    transform: translateY(100%); transition: transform 0.35s ease;
-    display: flex; align-items: center; justify-content: center; gap: 24px;
-  }
-  .sticky-bar.visible { transform: translateY(0); }
-  .sticky-bar-text { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic; color: var(--bark); display: none; }
-  @media(min-width:640px){ .sticky-bar-text { display: block; } }
-  .sticky-bar .btn-primary { padding: 10px 28px; font-size: 11px; }
-
-  /* ── CLOSING (current) ── */
-  .closing {
-    background: linear-gradient(160deg, var(--terra-warm) 0%, var(--terra) 35%, var(--terra-deep) 80%, #5A2410 100%);
-    padding: 72px 0; text-align: center; color: #fff; position: relative; overflow: hidden;
-  }
-  .closing::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.07) 0%, transparent 55%); pointer-events: none; }
-  .closing h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 5.5vw, 60px); font-weight: 400; margin-bottom: 20px; color: rgba(255,255,255,0.96); line-height: 1.1; }
-  .closing p { font-size: 17px; opacity: 0.9; max-width: 480px; margin: 0 auto 40px; }
-  .closing p.small { font-size: 13px; opacity: 0.6; margin-top: 14px; }
-  .btn-light { display: inline-block; background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(247,240,232,0.9) 100%); color: var(--terra-deep); font-family: 'Lora', serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; padding: 16px 44px; transition: opacity 0.25s ease, transform 0.2s ease; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
-  .btn-light:hover { opacity: 0.9; transform: translateY(-1px); }
-
-  /* ── TOPBAR (current) ── */
-  .topbar { padding: 18px 24px; display: flex; align-items: center; justify-content: center; background: var(--linen); border-bottom: 1px solid var(--border); }
-  .topbar-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--terra-deep); letter-spacing: 0.25em; }
-
-  /* ── HERO (current uses .hero not #hero) ── */
-  .hero {
-    background: linear-gradient(180deg, var(--linen) 0%, var(--sand) 40%, var(--sand-mid) 100%);
-    padding: 96px 0 72px; text-align: center; position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
-    width: 700px; height: 500px;
-    background: radial-gradient(ellipse at 50% 30%, rgba(201,97,46,0.09) 0%, rgba(184,78,36,0.04) 40%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(28px, 5vw, 52px); color: var(--bark); line-height: 1.2; position: relative; z-index: 1; margin-bottom: 20px; white-space: nowrap; }
-  @media(max-width:680px){ .hero h1 { white-space: normal; font-size: 26px; } }
-  .hero h1 .accent {
-    background: linear-gradient(135deg, var(--terra-warm) 0%, var(--terra-deep) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .hero-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(15px, 2vw, 18px); color: var(--bark-soft); max-width: 440px; margin: 0 auto 32px; line-height: 1.65; position: relative; z-index: 1; }
-  .hero-meta { display: flex; justify-content: center; gap: 0; margin-bottom: 48px; flex-wrap: wrap; position: relative; z-index: 1; }
-  .hero-meta-item { display: flex; align-items: center; gap: 6px; padding: 0 20px; border-right: 1px solid var(--border); font-size: 13px; color: var(--bark-mid); letter-spacing: 0.04em; }
-  .hero-meta-item::before { content: '✦'; color: var(--terra); font-size: 9px; opacity: 0.7; }
-  .hero-meta-item:last-child { border-right: none; }
+  /* ── HERO DIVIDER ── */
   .hero-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto 24px; max-width: 300px; }
   .hero-divider::before, .hero-divider::after { content: ''; flex: 1; height: 1px; background: var(--border-warm); }
   .hero-divider span { color: var(--terra); font-size: 13px; opacity: 0.6; }
-  .pain-intro { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(16px, 2.2vw, 20px); color: var(--bark-mid); text-align: center; max-width: 560px; margin: 0 auto 48px; line-height: 1.65; }
-  .pullquote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(16px, 2.3vw, 21px); color: var(--terra-deep); padding: 24px 32px; margin: 36px 0; border-left: 2px solid var(--terra); background: linear-gradient(135deg, rgba(184,78,36,0.05) 0%, transparent 100%); line-height: 1.65; }
-  .obstacle-block { margin: 36px 0; }
 
-  /* ── NOE SECTION (current uses .noe-section not #noe-meaning) ── */
-  .noe-section {
-    background: linear-gradient(160deg, var(--terra-warm) 0%, var(--terra) 40%, var(--terra-deep) 100%);
-    padding: 80px 0; color: #fff; text-align: center; position: relative; overflow: hidden;
+  /* ── TYPEWRITER GLOW (fires after typing completes) ── */
+  @keyframes quoteReveal {
+    from { border-left-color: rgba(184,78,36,0.15); box-shadow: none; }
+    to   { border-left-color: var(--terra); box-shadow: 0 2px 28px rgba(184,78,36,0.1); }
   }
-  .noe-section::before {
-    content: 'NOE'; font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(160px, 28vw, 300px); font-weight: 300;
-    color: rgba(255,255,255,0.05); position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%); letter-spacing: 0.25em; white-space: nowrap; pointer-events: none;
-  }
-  .noe-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; margin-bottom: 32px; position: relative; z-index: 1; }
-  .noe-section p { font-size: 15.5px; line-height: 1.9; margin-bottom: 1.2em; max-width: 620px; margin-left: auto; margin-right: auto; opacity: 0.9; position: relative; z-index: 1; }
-  .noe-slogan { font-family: 'Cormorant Garamond', serif; font-size: 20px; letter-spacing: 0.1em; margin: 36px auto 0; position: relative; z-index: 1; color: rgba(255,255,255,0.85); }
-  .noe-section-logo { width: 72px; height: 72px; object-fit: cover; border-radius: 50%; margin: 0 auto 28px; display: block; position: relative; z-index: 1; }
-
-  @media(max-width:700px){
-    .choices-grid, .transform-cards, .testi-grid, .pain-cards { grid-template-columns: 1fr; }
-    .session-cards { grid-template-columns: 1fr; }
-    .pricing-box { padding: 36px 24px; }
-  }
+  .quote-typewriter.typed { animation: quoteReveal 1s ease forwards; }
 
 </style>
 </head>
@@ -1519,7 +1262,12 @@ Nền tảng giáo dục về nề nếp, đạo đức mà gia đình xây dự
         let i = 0;
         (function type() {
           if (i < fullText.length) { qtText.textContent += fullText[i++]; setTimeout(type, 24); }
-          else { setTimeout(() => { qtCursor.style.opacity = '0'; }, 1400); }
+          else {
+            setTimeout(() => {
+              qtCursor.style.opacity = '0';
+              qtBlock.classList.add('typed');
+            }, 1400);
+          }
         })();
       }
     });
