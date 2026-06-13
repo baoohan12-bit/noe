@@ -125,6 +125,29 @@
 - **Niche fit:** Spiritual healing, meditation, energy work, astrology
 - **Reference:** `tro-ve-ben-trong`
 
+### 10. Warm Terracotta Sand
+```css
+:root {
+  --terra-deep:  #7A3015;
+  --terra:       #B84E24;
+  --terra-warm:  #C9612E;
+  --terra-light: #D4795A;
+  --terra-pale:  #E8B49A;
+  --sand:        #F7F0E8;
+  --sand-mid:    #F2E9DE;
+  --sand-deep:   #EBE0D3;
+  --linen:       #FBF7F2;
+  --bark:        #3D2010;
+  --bark-mid:    #6B3E28;
+  --bark-soft:   #9A6A52;
+  --border:      rgba(139,58,26,0.13);
+  --border-warm: rgba(139,58,26,0.22);
+}
+```
+- **Vibe:** warm-feminine · luxury-serif · editorial · sand
+- **Niche fit:** Personal branding workshop cho phụ nữ, vị thế & ảnh hưởng, soft luxury coaching
+- **Reference:** `noe-sales-page` — NOE Workshop "Nghệ Thuật Xác Lập Vị Thế"
+
 ---
 
 ## 6 Font Pairings chuẩn
@@ -140,6 +163,7 @@
 | E | **Lora** | **Roboto** | Warm educational | `bac-thuy-cat` | ✅ |
 | F | ~~Geist + Instrument Serif~~ → **DM Sans** + **Playfair Display** (italic) | **DM Sans** | Modern editorial agency (fallback) | `duy-landing-page` (cần update) | ✅ fallback |
 | G | **Montserrat** | **Be Vietnam Pro** | Clinical tech VN | `ai-ghostwriter-vn` | ✅ |
+| H | **Cormorant Garamond** (italic serif) | **DM Sans** | Warm terracotta editorial, personal branding phụ nữ sang trọng | `noe-sales-page` | ✅ |
 
 **Default safe pick khi không chắc:** Heading = **Poppins** hoặc **Plus Jakarta Sans** · Body = **Inter** hoặc **Be Vietnam Pro**.
 
@@ -161,6 +185,7 @@ Google Fonts preload snippet (chèn vào `<head>`):
 | AI / Tech / Income | #2 Dark Glow Green | G (Montserrat) |
 | Aviation / Executive | #3 Dark Gold | D (Poppins) |
 | Parenting / Wellness | #4 Warm Rose | A (Lora + Inter) |
+| Personal branding workshop phụ nữ | #10 Warm Terracotta | H (Cormorant + DM Sans) |
 | Education founder | #5 Warm Copper | E (Lora + Roboto) |
 | Agency / DFY | #7 Editorial Light | F (Geist) |
 | Premium product | #8 Luxury Black Gold | D (Poppins) |

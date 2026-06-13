@@ -20,7 +20,7 @@
 | B2B Agency / DFY service | **DNA-07 Editorial Light** |
 | Premium product / Boutique | **DNA-08 Luxury Black Burgundy Gold** |
 | Spiritual / Healing / Meditation | **DNA-09 Cosmic Mystical** |
-| Personal branding workshop cho phụ nữ | **DNA-08** (default) hoặc **DNA-04** (softer) |
+| Personal branding workshop cho phụ nữ | **DNA-10** (warm terracotta editorial) hoặc **DNA-08** (dark luxury) |
 
 ---
 
@@ -172,6 +172,32 @@
   - Italic phrases màu lavender accent
   - Section divider dạng sigil/symbol
 - **Khi pick:** Healing/spiritual offer, audience tìm "kết nối tâm linh"
+
+---
+
+### DNA-10 — Warm Terracotta Editorial ⭐
+- **Vibe:** Warm feminine · luxury serif · editorial · sand & terracotta
+- **Niche fit:** Personal branding workshop cho phụ nữ, vị thế & ảnh hưởng, soft luxury coaching
+- **Palette ref:** `color-systems.md` #10 Warm Terracotta Sand
+- **Font pairing:** Cormorant Garamond (h, serif italic) + DM Sans (b) — Font pairing H
+- **Layout pattern:** Pattern 3 (Narrow Editorial 720px) — long-form sales letter
+- **Signature elements:**
+  - Radial warm glow hero (rgba terra 0.09) + topbar logo centered
+  - Hero badge pill bordered + hero-meta row (4 items, border-right dividers)
+  - Persona grid 2-col với numbered ghost (opacity 0.07) — pain section
+  - Quote typewriter animation (border-left terra + `"` ghost)
+  - NOE-meaning section: full terracotta ombre bg + watermark text behind content
+  - Secret items numbered: large ghost number 54px + border-left content
+  - Transformation grid 3-col + testimonials grid 3-col
+  - Choice grid 2-col với `.recommended` card border terra
+  - Session list: ghost number 42px + border-left session content
+  - Pricing card centered 580px + guarantee block 2-col (seal circle + text)
+  - FAQ native accordion với `+` icon circle
+  - Closing CTA: deep terracotta ombre bg full-section + white text
+  - Sticky CTA bar bottom (slide up after scroll, cream backdrop-blur)
+  - Scroll reveal JS (IntersectionObserver, `.reveal` → `.visible`)
+- **Real example:** `templates/noe-sales-page.html` — NOE Workshop "Nghệ Thuật Xác Lập Vị Thế"
+- **Khi pick:** Workshop/khóa học cho phụ nữ tuổi 28-45, message "vị thế / tôn trọng / ảnh hưởng", cần cảm giác vừa sang trọng vừa ấm áp (không lạnh như DNA-08 dark, không ngọt như DNA-04 rose)
 
 ---
 
