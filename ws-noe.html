@@ -377,7 +377,7 @@
   .secrets-intro { text-align: left; max-width: 860px; margin: 0 auto 80px; }
   .secrets-intro p { font-size: 15.5px; line-height: 1.85; color: var(--bark-mid); margin-top: 22px; text-align: left; }
 
-  .secret-item { display: block; margin-bottom: 72px; text-align: center; }
+  .secret-item { display: block; margin-bottom: 72px; text-align: center; overflow: hidden; word-break: break-word; }
   .secret-num-wrap { text-align: center; padding-top: 4px; margin-bottom: 16px; }
   .secret-num {
     font-family: 'Cormorant Garamond', serif; font-size: 54px; font-weight: 300;
@@ -776,6 +776,20 @@
     .hero-col-text .hero-subtitle { text-align: center; }
   }
 
+
+  .story-img-wrap {
+    text-align: center;
+    padding: 40px 0;
+  }
+  .story-img-wrap img {
+    width: min(340px, 78vw);
+    height: min(340px, 78vw);
+    object-fit: cover;
+    object-position: center;
+    border-radius: 4px;
+    display: inline-block;
+    filter: brightness(0.92) contrast(1.04);
+  }
 </style>
 </head>
 <body>
