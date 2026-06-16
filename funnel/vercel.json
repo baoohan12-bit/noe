@@ -1,8 +1,10 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/", "destination": "/dang-ky", "permanent": false }
+  ],
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
     { "source": "/dang-ky", "destination": "/dang-ky.html" },
     { "source": "/checkout", "destination": "/checkout.html" },
     { "source": "/xac-nhan", "destination": "/xac-nhan.html" }
