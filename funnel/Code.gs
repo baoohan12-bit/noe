@@ -25,7 +25,7 @@ const CONFIG = {
   SHEET_TAB_NAME: 'Orders',
 
   // Sepay API key — match với query param ?key=... trong webhook URL
-  SEPAY_API_KEY: '__SEPAY_API_KEY__',
+  SEPAY_API_KEY: '83ROLVG2T5QXDHC6KRJH5NWSKPTBQZI7VDAVCMBUFRPWST7SU910ZODBOJOVWY0G',
 
   // Email — Sender = account deploy GAS
   EMAIL_SENDER_NAME: 'NOE Workshop',
