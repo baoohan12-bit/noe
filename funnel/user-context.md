@@ -27,3 +27,4 @@
 - Sheet ID: __PENDING__ (Phase 3)
 - Sepay API Key: 83ROLVG2T5QXDHC6KRJH5NWSKPTBQZI7VDAVCMBUFRPWST7SU910ZODBOJOVWY0G
 - Sheet ID: 1aCzTkj_uJvHzhba9oWrywAcLjGi_lFocB2g-58zWdaA
+- GAS URL: https://script.google.com/macros/s/AKfycbznu-eD33zlFa6rmh9OHgz8Az7yxXxQV99M4tcuELu4POqJm-LkL-HSsXK_OOwBT3Hj/exec
