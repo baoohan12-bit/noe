@@ -29,7 +29,7 @@ const CONFIG = {
 
   // Email — Sender = account deploy GAS
   EMAIL_SENDER_NAME: 'NOE Workshop',
-  EMAIL_REPLY_TO: 'noevn.hello@gmail.com',
+  EMAIL_REPLY_TO: 'hello.noevn@gmail.com',
 
   // Zalo group (optional, empty string nếu không có)
   ZALO_GROUP_URL: 'https://zalo.me/g/mcyd8fcdaus2zwf7zdj2',

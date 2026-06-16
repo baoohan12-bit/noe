@@ -10,7 +10,7 @@
 - Bumps: không có
 
 ## Contact & Sender
-- Email gửi mail: noevn.hello@gmail.com
+- Email gửi mail: hello.noevn@gmail.com
 - Hotline: 0342580741
 - Zalo group (delivery): https://zalo.me/g/mcyd8fcdaus2zwf7zdj2
 - Facebook: https://www.facebook.com/noe.noi.vn
