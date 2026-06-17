@@ -53,7 +53,12 @@ const CONFIG = {
   // Brand info
   HOTLINE: '0342580741',
   ADDRESS: 'NOE Workshop',
-  SITE_URL: ''
+  SITE_URL: '',
+
+  // Workshop schedule (cập nhật trước mỗi khoá)
+  SESSION1: '[Thứ, ngày/tháng/năm] · 20h00',
+  SESSION2: '[Thứ, ngày/tháng/năm] · 20h00',
+  ZOOM_NOTE: 'Link Zoom sẽ được gửi qua nhóm Zalo trước buổi học 30 phút'
 };
 
 // ============================================================
@@ -330,7 +335,7 @@ function sendConfirmationEmail(order) {
     bump2: !!order.bump2
   };
 
-  const subject = CONFIG.EMAIL_SENDER_NAME + " — Xác nhận đơn hàng · Mã " + v.orderId;
+  const subject = "Chào mừng bạn đến với NOE · Xác nhận đăng ký Workshop #" + v.orderId;
 
   MailApp.sendEmail({
     to: order.email,
@@ -343,42 +348,55 @@ function sendConfirmationEmail(order) {
 }
 
 function buildHtmlEmail(v) {
-  let bumpSection = '';
-  if (v.hasBumps) {
-    bumpSection = '<h3 style="font-size:16px;color:#222;margin:24px 0 8px">Tài liệu đi kèm bạn đã mua thêm</h3>';
-    if (v.bump1) {
-      bumpSection += '<p>• <strong>' + CONFIG.BUMP1_NAME + '</strong><br>'
-        + 'Tải: <a href="' + CONFIG.BUMP1_URL + '">' + CONFIG.BUMP1_URL + '</a></p>';
-    }
-    if (v.bump2) {
-      bumpSection += '<p>• <strong>' + CONFIG.BUMP2_NAME + '</strong><br>'
-        + 'Tải: <a href="' + CONFIG.BUMP2_URL + '">' + CONFIG.BUMP2_URL + '</a></p>';
-    }
-  }
-
+  const s = CONFIG;
   return [
-    '<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"></head>',
-    '<body style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#222;max-width:600px;margin:0 auto;padding:24px">',
-    '<p style="font-size:14px;color:#666;margin:0 0 24px;border-bottom:1px solid #ddd;padding-bottom:12px">',
-    '<strong>' + esc(CONFIG.EMAIL_SENDER_NAME) + '</strong>',
-    '</p>',
-    '<h2 style="color:#222;font-size:20px;margin:0 0 16px">Chào ' + esc(v.name) + ',</h2>',
-    '<p>Chúng tôi đã nhận được thanh toán của bạn cho <strong>' + esc(CONFIG.PRODUCT_NAME) + '</strong>. Cảm ơn bạn đã tin tưởng!</p>',
-    '<p style="background:#f5f5f5;padding:12px 16px;border-left:3px solid #c0392b;margin:20px 0">',
+    '<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>',
+    '<body style="font-family:Georgia,serif;font-size:15px;line-height:1.7;color:#222;max-width:600px;margin:0 auto;padding:32px 24px;background:#fff">',
+
+    // Header
+    '<p style="font-size:13px;color:#999;letter-spacing:0.08em;margin:0 0 32px">NOE · Nest of Essence</p>',
+
+    // Greeting
+    '<p style="font-size:17px;margin:0 0 8px">Chào ' + esc(v.name) + ',</p>',
+    '<p style="margin:0 0 24px">NOE đã nhận được thanh toán của bạn cho <strong>Workshop Nghệ Thuật Xác Lập Vị Thế</strong>.</p>',
+
+    // Order info box
+    '<div style="background:#f9f6f2;border-left:3px solid #8B6F5E;padding:14px 18px;margin:0 0 28px;font-size:14px;line-height:1.8">',
     'Mã đơn: <strong>' + esc(v.orderId) + '</strong><br>',
     'Số tiền: <strong>' + v.totalAmount + 'đ</strong>',
     v.goal ? '<br>Mục tiêu: <strong>' + esc(v.goal) + '</strong>' : '',
-    '</p>',
-    '<h3 style="font-size:16px;color:#222;margin:24px 0 8px">Tài liệu chính</h3>',
-    '<p><a href="' + CONFIG.EBOOK_URL + '">' + CONFIG.EBOOK_URL + '</a></p>',
-    CONFIG.ZALO_GROUP_URL ? '<h3 style="font-size:16px;color:#222;margin:24px 0 8px">Tham gia cộng đồng Zalo</h3><p><a href="' + CONFIG.ZALO_GROUP_URL + '">' + CONFIG.ZALO_GROUP_URL + '</a></p>' : '',
-    bumpSection,
-    '<p style="font-size:14px;color:#555;margin-top:24px">',
-    'Có thắc mắc? Liên hệ hotline <a href="tel:' + CONFIG.HOTLINE.replace(/\s/g,'') + '">' + esc(CONFIG.HOTLINE) + '</a>.',
-    '</p>',
-    '<p style="font-size:13px;color:#888;margin-top:32px;border-top:1px solid #eee;padding-top:16px">',
-    esc(CONFIG.EMAIL_SENDER_NAME) + '<br>',
-    esc(CONFIG.ADDRESS) + ' · ' + esc(CONFIG.HOTLINE),
+    '</div>',
+
+    // Welcome message
+    '<p style="margin:0 0 28px">Chiếc nôi NOE đã sẵn sàng chào đón bạn.<br><br>NOE rất vui khi bạn đã chọn dành 3 tiếng đồng hồ này cho chính mình. Đây không phải là một quyết định nhỏ, và mình trân trọng sự tin tưởng đó.</p>',
+
+    // Schedule
+    '<h3 style="font-size:15px;font-weight:bold;color:#222;margin:0 0 12px;padding-bottom:6px;border-bottom:1px solid #eee">Thông tin buổi học của bạn</h3>',
+    '<p style="margin:0 0 6px">🗓 Buổi 1: <strong>' + esc(s.SESSION1) + '</strong></p>',
+    '<p style="margin:0 0 6px">🗓 Buổi 2: <strong>' + esc(s.SESSION2) + '</strong></p>',
+    '<p style="margin:0 0 6px">📍 Hình thức: <strong>Live Zoom · 90 phút mỗi buổi</strong></p>',
+    '<p style="margin:0 0 24px">🔗 Link Zoom: <em>' + esc(s.ZOOM_NOTE) + '</em></p>',
+
+    // Zalo CTA
+    '<h3 style="font-size:15px;font-weight:bold;color:#222;margin:0 0 12px;padding-bottom:6px;border-bottom:1px solid #eee">Bước tiếp theo của bạn</h3>',
+    '<p style="margin:0 0 8px">Tham gia nhóm Zalo đồng hành để nhận link Zoom, tài liệu chuẩn bị và cập nhật từ NOE trước buổi học:</p>',
+    '<p style="margin:0 0 8px">👉 <a href="' + s.ZALO_GROUP_URL + '" style="color:#8B6F5E;font-weight:bold">Nhấn vào đây để tham gia nhóm Zalo</a></p>',
+    '<p style="font-size:13px;color:#666;margin:0 0 28px">Lưu ý: Link Zoom sẽ được gửi qua nhóm trước buổi học 30 phút. Nếu bạn không nhận được, hãy nhắn tin trực tiếp cho NOE trong nhóm.</p>',
+
+    // Preparation note
+    '<h3 style="font-size:15px;font-weight:bold;color:#222;margin:0 0 12px;padding-bottom:6px;border-bottom:1px solid #eee">Để buổi học có giá trị nhất với bạn</h3>',
+    '<p style="margin:0 0 8px">Trước khi đến với buổi 1, bạn không cần chuẩn bị gì đặc biệt. Chỉ cần dành cho mình một góc yên tĩnh, một tách trà hay cà phê, và sự sẵn lòng ngồi lại với chính mình.</p>',
+    '<p style="margin:0 0 8px">Nếu trong lúc chờ đợi bạn muốn bắt đầu suy ngẫm, hãy thử tự hỏi:</p>',
+    '<p style="font-style:italic;color:#555;margin:0 0 8px;padding-left:16px;border-left:2px solid #ddd">Điều gì đang khiến mình mệt mỏi nhất lúc này? Và mình thực sự muốn điều gì?</p>',
+    '<p style="font-size:14px;color:#666;margin:0 0 32px">Không cần trả lời ngay. Chỉ cần dành một chút thời gian để suy ngẫm.</p>',
+
+    // Sign off
+    '<p style="margin:0 0 4px">Hẹn gặp lại!</p>',
+    '<p style="margin:0 0 32px"><strong>NOE</strong><br><span style="font-size:13px;color:#888">Nest of Essence — Tổ ấm của Bản thể</span></p>',
+
+    // Footer
+    '<p style="font-size:12px;color:#aaa;border-top:1px solid #eee;padding-top:16px;margin:0">',
+    'Câu hỏi? Nhắn qua nhóm Zalo hoặc hotline <a href="tel:' + s.HOTLINE + '" style="color:#aaa">' + s.HOTLINE + '</a>',
     '</p>',
     '</body></html>'
   ].join('\n');
