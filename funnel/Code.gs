@@ -354,7 +354,7 @@ function buildHtmlEmail(v) {
     '<body style="font-family:Georgia,serif;font-size:15px;line-height:1.7;color:#222;max-width:600px;margin:0 auto;padding:32px 24px;background:#fff">',
 
     // Header
-    '<p style="font-size:13px;color:#999;letter-spacing:0.08em;margin:0 0 32px">NOE · Nest of Essence</p>',
+    '<p style="font-size:13px;color:#999;letter-spacing:0.08em;margin:0 0 32px">NOE</p>',
 
     // Greeting
     '<p style="font-size:17px;margin:0 0 8px">Chào ' + esc(v.name) + ',</p>',
