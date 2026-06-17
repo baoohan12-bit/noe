@@ -28,7 +28,7 @@ const CONFIG = {
   SEPAY_API_KEY: '83ROLVG2T5QXDHC6KRJH5NWSKPTBQZI7VDAVCMBUFRPWST7SU910ZODBOJOVWY0G',
 
   // Email — Sender = account deploy GAS
-  EMAIL_SENDER_NAME: 'NOE Workshop',
+  EMAIL_SENDER_NAME: 'NOE',
   EMAIL_REPLY_TO: 'hello.noevn@gmail.com',
 
   // Zalo group (optional, empty string nếu không có)
