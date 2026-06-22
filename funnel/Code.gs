@@ -335,7 +335,7 @@ function sendConfirmationEmail(order) {
     bump2: !!order.bump2
   };
 
-  const subject = "Chào mừng bạn đến với NOE · Xác nhận đăng ký Workshop #" + v.orderId;
+  const subject = 'Xác nhận đăng ký Workshop "Nghệ Thuật Xác Lập Vị Thế"';
 
   MailApp.sendEmail({
     to: order.email,
@@ -357,13 +357,6 @@ function buildHtmlEmail(v) {
     // Greeting
     '<p style="font-size:17px;margin:0 0 8px">Chào ' + esc(v.name) + ',</p>',
     '<p style="margin:0 0 24px">NOE đã nhận được thanh toán của bạn cho <strong>Workshop Nghệ Thuật Xác Lập Vị Thế</strong>.</p>',
-
-    // Order info box
-    '<div style="background:#f9f6f2;border-left:3px solid #8B6F5E;padding:14px 18px;margin:0 0 28px;font-size:14px;line-height:1.8">',
-    'Mã đơn: <strong>' + esc(v.orderId) + '</strong><br>',
-    'Số tiền: <strong>' + v.totalAmount + 'đ</strong>',
-    v.goal ? '<br>Mục tiêu: <strong>' + esc(v.goal) + '</strong>' : '',
-    '</div>',
 
     // Welcome message
     '<p style="margin:0 0 28px">Chiếc nôi NOE đã sẵn sàng chào đón bạn.<br><br>NOE rất vui khi bạn đã chọn dành 3 tiếng đồng hồ này cho chính mình. Đây không phải là một quyết định nhỏ, và mình trân trọng sự tin tưởng đó.</p>',
