@@ -1523,7 +1523,16 @@
         goal: data.goal
       }));
 
-      window.location.href = 'https://noe-funnel.vercel.app/checkout';
+      const orderParam = btoa(unescape(encodeURIComponent(JSON.stringify({
+        orderId: json.orderId,
+        ckContent: json.ckContent,
+        totalAmount: json.totalAmount,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        goal: data.goal
+      }))));
+      window.location.href = 'https://noe-funnel.vercel.app/checkout?o=' + orderParam;
     } catch (err) {
       errEl.textContent = 'Lỗi: ' + err.message + '. Vui lòng thử lại.';
       errEl.style.display = 'block';

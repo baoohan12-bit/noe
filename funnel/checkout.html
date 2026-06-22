@@ -100,7 +100,17 @@
   const BUMP1_PRICE = 0;
   const BUMP2_PRICE = 0;
 
-  const order = JSON.parse(sessionStorage.getItem('order') || '{}');
+  // Read order from URL param (cross-domain) or sessionStorage
+  let order = {};
+  const urlParam = new URLSearchParams(window.location.search).get('o');
+  if (urlParam) {
+    try {
+      order = JSON.parse(decodeURIComponent(escape(atob(urlParam))));
+      sessionStorage.setItem('order', JSON.stringify(order));
+    } catch(e) {}
+  } else {
+    order = JSON.parse(sessionStorage.getItem('order') || '{}');
+  }
   if (!order.orderId) { window.location.href = '/dang-ky'; }
 
   if (BUMP1_PRICE > 0) document.querySelector('[data-bump="1"]').style.display = 'flex';
