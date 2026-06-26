@@ -634,6 +634,9 @@ body{font-family:'Lora',serif;background:white;color:#2C1810;font-size:10.5pt;}
 .ans-box{background:#FBF7F3;border:1px solid #E8DDD5;border-radius:4px;padding:6px 9px;min-height:36px;font-size:9.5pt;color:#2C1810;white-space:pre-wrap;line-height:1.5;}
 .ans-empty{background:#FBF7F3;border:1px dashed #E8DDD5;border-radius:4px;padding:6px 9px;min-height:36px;color:#C0A898;font-style:italic;font-size:9.5pt;}
 .notes-lbl{font-size:8.5pt;font-weight:600;color:#8B6B5A;letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px;}
+.sum-ttl{font-family:'Cormorant Garamond',serif;font-size:22pt;font-weight:700;line-height:1;margin-bottom:6px;}
+.sum-intro-txt{font-size:9.5pt;font-style:italic;color:#8B6B5A;margin-bottom:14px;}
+.ref-sec-ttl{font-family:'Cormorant Garamond',serif;font-size:15pt;font-weight:600;color:#2C1810;border-bottom:1px solid #E8DDD5;padding-bottom:4px;margin:14px 0 8px;}
 </style></head><body>`;
 
   // Cover page
@@ -698,7 +701,42 @@ body{font-family:'Lora',serif;background:white;color:#2C1810;font-size:10.5pt;}
   </div>`;
 
     html += `</div>`;
+
+    // Summary page after days 7, 17, 30
+    if([7,17,30].includes(n)){
+      const sumData = SUMS[String(n)];
+      const sumColor = PHASE_COLORS[p];
+      html += `<div class="day-page">
+  <div class="sum-ttl" style="color:${sumColor}">${escHtml(sumData.title)}</div>
+  <div class="sum-intro-txt">Dừng lại và nhìn lại những gì bạn đã đi qua.</div>`;
+      sumData.questions.forEach(function(q, i){
+        const sk = 's'+n+'q'+i;
+        const ans = S.sans[sk] || '';
+        html += `<div class="q-block">
+    <div class="q-txt">${escHtml(q)}</div>
+    ${ans ? `<div class="ans-box">${escHtml(ans)}</div>` : '<div class="ans-empty">Chưa có câu trả lời</div>'}
+  </div>`;
+      });
+      html += `</div>`;
+    }
   });
+
+  // Reflection page
+  html += `<div class="day-page">
+  <div class="sum-ttl" style="color:#B84218">Chiêm nghiệm cuối hành trình</div>
+  <div class="sum-intro-txt">30 ngày. Hãy dành thời gian ngồi với trang này, không vội, không áp lực. Chỉ cần thật.</div>`;
+  REF.forEach(function(sec, si){
+    html += `<div class="ref-sec-ttl">${escHtml(sec.title)}</div>`;
+    sec.questions.forEach(function(q, qi){
+      const rk = 'r'+si+'q'+qi;
+      const ans = S.rans[rk] || '';
+      html += `<div class="q-block">
+    <div class="q-txt">${escHtml(q)}</div>
+    ${ans ? `<div class="ans-box">${escHtml(ans)}</div>` : '<div class="ans-empty">Chưa có câu trả lời</div>'}
+  </div>`;
+    });
+  });
+  html += `</div>`;
 
   html += `</body></html>`;
 
