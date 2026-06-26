@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>NOE · Tự Tri 30 Ngày</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--wine:#B84218;--wine-lt:#f4e9e3;--ivory:#FBF7F3;--cream:#F5EFE8;--ink:#2C1810;--warm:#5C3D2E;--muted:#8B6B5A;--border:#E8DDD5;--g1:#B84218;--g2:#7A5C3A;--g3:#4A3728;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Lora',serif;background:var(--ivory);color:var(--warm);min-height:100vh;padding-bottom:60px;}
+.screen{display:none;min-height:100vh;}
+.screen.active{display:block;}
+
+/* HEADER */
+.hdr{background:var(--ivory);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:99;}
+.hdr-back{background:none;border:none;cursor:pointer;color:var(--wine);font-size:22px;padding:0 8px 0 0;}
+.hdr h1{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--ink);flex:1;}
+
+/* HOME HERO */
+.hero{padding:28px 18px 20px;text-align:center;border-bottom:1px solid var(--border);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:700;color:var(--wine);line-height:1;}
+.tagline{font-size:12px;color:var(--muted);font-style:italic;margin-top:3px;}
+.book-ttl{margin-top:14px;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink);}
+.book-sub{font-size:13px;color:var(--muted);font-style:italic;margin-top:3px;}
+
+/* PROGRESS */
+.prog-sec{padding:16px 18px;background:var(--cream);border-bottom:1px solid var(--border);}
+.prog-lbl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.prog-bar{background:var(--border);border-radius:999px;height:6px;overflow:hidden;margin-bottom:5px;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--g1),var(--g3));border-radius:999px;transition:width .4s ease;}
+.prog-cnt{font-size:12px;color:var(--warm);text-align:right;}
+
+/* TODAY CARD */
+.today-wrap{padding:14px 18px 0;}
+.today-card{background:white;border-radius:14px;border:2px solid var(--wine);overflow:hidden;cursor:pointer;}
+.today-hdr{background:var(--wine);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;}
+.today-badge{font-size:11px;font-weight:700;color:rgba(255,255,255,.75);letter-spacing:.1em;text-transform:uppercase;}
+.today-day{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:white;}
+.today-body{padding:14px 16px;}
+.today-q{font-size:13px;font-style:italic;color:var(--ink);line-height:1.6;}
+.today-ft{display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
+.today-ph{font-size:11px;color:var(--muted);font-style:italic;}
+.today-tap{font-size:12px;color:var(--wine);font-weight:600;}
+
+/* TRACKER */
+.tracker-sec{padding:18px 18px 0;}
+.sec-ttl{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--ink);margin-bottom:12px;}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
+.leg-dot{width:10px;height:10px;border-radius:50%;}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;}
+.cell{aspect-ratio:1;border-radius:10px;border:2px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s;background:white;position:relative;overflow:hidden;}
+.cell:active{transform:scale(.94);}
+.cell.g1{border-color:var(--g1);}
+.cell.g2{border-color:var(--g2);}
+.cell.g3{border-color:var(--g3);}
+.cell.done::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:white;border-radius:8px;}
+.cell.done.g1::after{background:var(--g1);}
+.cell.done.g2::after{background:var(--g2);}
+.cell.done.g3::after{background:var(--g3);}
+.cell.today-cell{box-shadow:0 0 0 3px var(--wine);}
+.cn{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;line-height:1;}
+.cn.g1c{color:var(--g1);}
+.cn.g2c{color:var(--g2);}
+.cn.g3c{color:var(--g3);}
+.cl{font-size:8px;color:var(--muted);margin-top:1px;}
+
+/* DAY LIST */
+.list-sec{padding:16px 18px 0;}
+.ph-grp{margin-bottom:18px;}
+.ph-badge{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:999px;display:inline-block;margin-bottom:8px;color:white;font-family:'Lora',serif;}
+.ph-badge.g1{background:var(--g1);}
+.ph-badge.g2{background:var(--g2);}
+.ph-badge.g3{background:var(--g3);}
+.dl-item{display:flex;align-items:center;gap:10px;padding:11px 12px;background:white;border-radius:12px;border:1px solid var(--border);margin-bottom:5px;cursor:pointer;transition:background .15s;}
+.dl-item:active{background:var(--cream);}
+.dl-item.done-item{background:var(--cream);}
+.dl-item.sum-item{border-style:dashed;}
+.dl-item.ref-item{border:2px solid var(--wine);}
+.dn-badge{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;flex-shrink:0;color:white;}
+.dn-badge.g1{background:var(--g1);}
+.dn-badge.g2{background:var(--g2);}
+.dn-badge.g3{background:var(--g3);}
+.dl-info{flex:1;min-width:0;}
+.dl-ttl{font-size:13px;font-weight:500;color:var(--ink);}
+.dl-sub{font-size:11px;color:var(--muted);font-style:italic;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dl-chk{color:var(--wine);font-size:16px;}
+
+/* DAY SCREEN */
+.day-hdr{padding:14px 18px;display:flex;align-items:flex-start;gap:10px;}
+.day-hdr-info{flex:1;}
+.day-num{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:700;line-height:1;}
+.day-ph{font-size:12px;font-style:italic;margin-top:3px;}
+.done-btn{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:6px;flex-shrink:0;}
+.done-circle{width:42px;height:42px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;transition:all .2s;background:white;color:transparent;}
+.done-btn.marked .done-circle{background:var(--wine);border-color:var(--wine);color:white;}
+.done-lbl{font-size:10px;color:var(--muted);letter-spacing:.04em;}
+
+/* SECTION CARDS */
+.day-body{padding:0 18px 16px;}
+.sec-card{border-radius:13px;overflow:hidden;margin-bottom:10px;border:1px solid var(--border);}
+.sec-hdr{padding:9px 14px;display:flex;align-items:center;gap:7px;}
+.sec-icon{font-size:17px;}
+.sec-ttl2{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:white;}
+.sec-body{background:white;padding:13px 15px;}
+.morning-q{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--ink);line-height:1.6;}
+.sec-note{font-size:13px;font-style:italic;color:var(--warm);line-height:1.6;}
+
+/* EVENING */
+.eve-card{background:white;border-radius:13px;border:1px solid var(--border);overflow:hidden;margin-bottom:10px;}
+.eve-hdr{padding:9px 14px;background:var(--cream);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px;}
+.eve-ttl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--warm);}
+.eve-hint{font-size:11px;color:var(--muted);font-style:italic;margin-left:auto;}
+.q-block{padding:12px 15px;border-bottom:1px solid var(--border);}
+.q-block:last-child{border-bottom:none;}
+.q-txt{font-size:13px;color:var(--ink);line-height:1.6;margin-bottom:8px;}
+.ans{width:100%;border:none;border-bottom:1.5px solid var(--border);background:transparent;font-family:'Lora',serif;font-size:13px;color:var(--ink);line-height:1.9;resize:none;outline:none;min-height:56px;padding:3px 0;display:block;transition:border-color .2s;}
+.ans:focus{border-bottom-color:var(--wine);}
+
+/* NOTES */
+.notes-card{background:white;border-radius:13px;border:1px dashed var(--border);padding:13px 15px;margin-bottom:10px;}
+.notes-lbl{font-size:11px;color:var(--muted);font-style:italic;margin-bottom:7px;}
+
+/* NAV */
+.day-nav{display:flex;gap:8px;padding:0 18px 16px;}
+.nav-btn{flex:1;padding:13px;border-radius:12px;border:1.5px solid var(--border);background:white;font-family:'Lora',serif;font-size:13px;color:var(--warm);cursor:pointer;transition:background .15s;text-align:center;}
+.nav-btn:active{background:var(--cream);}
+.nav-btn.pri{background:var(--wine);border-color:var(--wine);color:white;}
+
+/* SUMMARY */
+.sum-body{padding:18px;}
+.sum-intro{font-size:13px;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:18px;padding:13px 15px;background:var(--cream);border-radius:12px;}
+.sum-q{margin-bottom:18px;}
+.sum-qtxt{font-size:14px;font-weight:500;color:var(--ink);line-height:1.6;margin-bottom:7px;}
+.sum-ans{width:100%;border:none;border-bottom:1.5px solid var(--border);background:transparent;font-family:'Lora',serif;font-size:13px;color:var(--ink);line-height:2;resize:none;outline:none;min-height:72px;padding:3px 0;display:block;transition:border-color .2s;}
+.sum-ans:focus{border-bottom-color:var(--wine);}
+.ready{margin-top:20px;padding:14px 15px;background:var(--wine-lt);border-radius:12px;border-left:3px solid var(--wine);font-size:13px;font-style:italic;color:var(--wine);line-height:1.6;font-weight:500;}
+.next-btn{margin-top:16px;width:100%;padding:14px;border-radius:12px;border:none;background:var(--wine);color:white;font-family:'Lora',serif;font-size:14px;cursor:pointer;}
+
+/* REFLECTION */
+.ref-sec-ttl{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink);margin:22px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--border);}
+
+/* FINAL */
+.final-card{margin:18px;padding:24px;background:white;border-radius:18px;border:2px solid var(--wine);text-align:center;}
+.final-ttl{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--wine);margin-bottom:10px;}
+.final-body{font-size:13px;font-style:italic;color:var(--warm);line-height:1.7;margin-bottom:14px;}
+.final-quote{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--wine);line-height:1.6;padding:14px;background:var(--cream);border-radius:10px;}
+.contact{display:flex;gap:8px;margin:0 18px;}
+.contact-item{flex:1;padding:11px;background:var(--cream);border-radius:11px;border:1px solid var(--border);text-align:center;font-size:12px;color:var(--warm);}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--ink);color:white;padding:9px 18px;border-radius:999px;font-size:13px;z-index:999;transition:transform .3s;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+.sp{height:14px;}
+.jday{margin-bottom:28px;}
+.jday-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--border);}
+.jday-num{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:700;}
+.jday-ph{font-size:11px;font-style:italic;color:var(--muted);}
+.jday-done{font-size:11px;color:var(--wine);font-weight:600;margin-left:auto;}
+.jentry{margin-bottom:12px;}
+.jentry-lbl{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.jentry-q{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:4px;line-height:1.5;}
+.jentry-ans{font-size:14px;color:var(--ink);line-height:1.75;padding:10px 12px;background:white;border-radius:10px;border-left:3px solid var(--border);white-space:pre-wrap;}
+.jentry-ans.empty{color:var(--muted);font-style:italic;font-size:13px;}
+.jph-divider{text-align:center;padding:16px 0;margin:8px 0 20px;}
+.jph-divider-line{display:flex;align-items:center;gap:12px;}
+.jph-divider-line::before,.jph-divider-line::after{content:"";flex:1;border-top:1px solid var(--border);}
+.jph-badge{font-size:11px;font-weight:700;letter-spacing:.08em;color:white;padding:4px 14px;border-radius:999px;}
+.jempty{text-align:center;padding:48px 24px;color:var(--muted);font-style:italic;font-size:14px;line-height:1.7;}
+
+hr.d{border:none;border-top:1px solid var(--border);margin:0 18px;}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- HOME -->
+<div class="screen active" id="screen-home">
+  <div class="hero">
+    <div class="logo">noe</div>
+    <div class="tagline">Tổ ấm của những Bản thể</div>
+    <div class="book-ttl">Bộ bài tập "Tự Tri"</div>
+    <div class="book-sub">30 ngày · 3 giai đoạn</div>
+  </div>
+  <div class="prog-sec">
+    <div class="prog-lbl">Tiến trình của bạn</div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="prog-cnt" id="prog-cnt">0 / 30 ngày hoàn thành</div>
+  </div>
+  <div style="padding:0 18px;margin-top:14px;">
+  <div onclick="openJournal()" style="background:var(--cream);border:1.5px solid var(--border);border-radius:13px;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
+    <div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--ink);">📖 Nhật ký của tôi</div>
+      <div style="font-size:12px;color:var(--muted);font-style:italic;margin-top:2px;">Đọc lại tất cả những gì bạn đã viết</div>
+    </div>
+    <span style="color:var(--wine);font-size:18px;">→</span>
+  </div>
+</div>
+<div class="today-wrap">
+    <div class="sp"></div>
+    <div class="today-card" id="today-card" onclick="goToday()">
+      <div class="today-hdr">
+        <span class="today-badge">Hôm nay</span>
+        <span class="today-day" id="today-lbl">Ngày 1</span>
+      </div>
+      <div class="today-body">
+        <div class="today-q" id="today-q"></div>
+        <div class="today-ft">
+          <span class="today-ph" id="today-ph"></span>
+          <span class="today-tap">Mở bài tập →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tracker-sec">
+    <div class="sp"></div>
+    <div class="sec-ttl">Bảng theo dõi 30 ngày</div>
+    <div class="legend">
+      <div class="leg-item"><div class="leg-dot" style="background:var(--g1)"></div>Giai đoạn 1 · Quan sát</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--g2)"></div>Giai đoạn 2 · Nhận diện</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--g3)"></div>Giai đoạn 3 · Thực hành</div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+  <hr class="d" style="margin-top:16px">
+  <div class="list-sec">
+    <div class="sp"></div>
+    <div class="sec-ttl">Tất cả các ngày</div>
+    <div id="day-list"></div>
+    <div class="sp"></div>
+  </div>
+</div>
+
+<!-- DAY -->
+<div class="screen" id="screen-day">
+  <div class="hdr">
+    <button class="hdr-back" onclick="go('home')">←</button>
+    <h1 id="day-hdr-ttl">Ngày 1</h1>
+  </div>
+  <div class="day-hdr">
+    <div class="day-hdr-info">
+      <div class="day-num" id="day-num-disp"></div>
+      <div class="day-ph" id="day-ph-disp"></div>
+    </div>
+    <div class="done-btn" id="done-btn" onclick="toggleDone()">
+      <div class="done-circle" id="done-circle">✓</div>
+      <div class="done-lbl">HOÀN THÀNH</div>
+    </div>
+  </div>
+  <div class="day-body" id="day-body"></div>
+  <div class="day-nav" id="day-nav"></div>
+</div>
+
+<!-- SUMMARY -->
+<div class="screen" id="screen-summary">
+  <div class="hdr">
+    <button class="hdr-back" onclick="go('home')">←</button>
+    <h1 id="sum-hdr-ttl">Tổng kết</h1>
+  </div>
+  <div class="sum-body" id="sum-body"></div>
+</div>
+
+<!-- REFLECTION -->
+<div class="screen" id="screen-reflection">
+  <div class="hdr">
+    <button class="hdr-back" onclick="go('home')">←</button>
+    <h1>Chiêm nghiệm cuối hành trình</h1>
+  </div>
+  <div class="sum-body" id="ref-body"></div>
+</div>
+
+<!-- JOURNAL -->
+<div class="screen" id="screen-journal">
+  <div class="hdr">
+    <button class="hdr-back" onclick="go('home')">←</button>
+    <h1>Nhật ký của tôi</h1>
+  </div>
+  <div id="journal-body" style="padding:0 18px 32px;"></div>
+</div>
+
+<script>
+// ── DATA (JSON, no escaping issues) ──────────────────
+const D = JSON.parse(`{"days": [{"n": 1, "sang": "Hôm nay, mình sẽ chú ý xem mình nói có với ai, với điều gì — và lúc đó cảm giác bên trong mình như thế nào.", "ngay": null, "yDinh": null, "toi": ["Hôm nay có lúc nào mình đồng ý với điều gì đó mà trong bụng không hoàn toàn muốn không? Chuyện gì đã xảy ra?", "Lúc đó mình cảm thấy gì — nhẹ nhõm, bồn chồn, hay bình thường?"]}, {"n": 2, "sang": "Hôm nay, mình sẽ để ý xem mình đang cố làm hài lòng ai.", "ngay": null, "yDinh": null, "toi": ["Hôm nay mình đã làm gì để người khác vừa lòng — dù mình không thật sự muốn làm vậy?", "Người đó là ai? Mình sợ điều gì sẽ xảy ra nếu không làm hài lòng họ?"]}, {"n": 3, "sang": "Hôm nay, mình sẽ chú ý xem mình đang tránh điều gì.", "ngay": null, "yDinh": null, "toi": ["Hôm nay có điều gì mình đã trì hoãn, né tránh, hoặc cố không nghĩ đến không?", "Nếu không tránh nó — điều tệ nhất có thể xảy ra là gì?"]}, {"n": 4, "sang": "Hôm nay, mình sẽ để ý xem khi nào mình cảm thấy nhẹ nhõm — và khi nào mình cảm thấy nặng nề.", "ngay": null, "yDinh": null, "toi": ["Khoảnh khắc nào hôm nay mình cảm thấy nhẹ và tự nhiên nhất?", "Khoảnh khắc nào mình cảm thấy nặng, gồng, hoặc không thoải mái?", "Có điểm gì khác nhau giữa hai khoảnh khắc đó?"]}, {"n": 5, "sang": "Hôm nay, mình sẽ để ý xem mình đang đóng vai gì.", "ngay": null, "yDinh": null, "toi": ["Hôm nay mình đã đóng vai gì — người mạnh mẽ, người biết điều, người luôn ổn?", "Với ai mình cảm thấy không cần đóng vai gì cả? Điều đó trông như thế nào?"]}, {"n": 6, "sang": "Hôm nay, mình sẽ chú ý đến giọng nói trong đầu — giọng đó đang nói gì với mình?", "ngay": null, "yDinh": null, "toi": ["Giọng nói trong đầu mình hôm nay hay nói gì nhất?", "Giọng nói đó nghe giống giọng của ai trong cuộc đời mình?"]}, {"n": 7, "sang": "Hôm nay, mình sẽ nhìn lại cả tuần vừa rồi — mình đã học được gì về bản thân?", "ngay": null, "yDinh": null, "toi": ["Sau 7 ngày quan sát, điều gì mình nhận ra mà trước đây chưa để ý?", "Có những thứ mình hay làm đi làm lại mà không biết tại sao không?", "Mình cảm thấy thế nào với những gì vừa nhìn thấy?"]}, {"n": 8, "sang": "Hôm nay, mình sẽ để ý xem mình đang làm điều gì vì thật sự muốn — và điều gì vì sợ.", "ngay": "Mỗi khi sắp làm gì đó, thử hỏi nhanh: Mình làm vì muốn hay vì sợ? Không cần thay đổi gì. Chỉ cần hỏi.", "yDinh": null, "toi": ["Hôm nay có khoảnh khắc nào mình nhận ra mình đang làm gì đó vì sợ không?", "Nỗi sợ đó là sợ điều gì cụ thể?"]}, {"n": 9, "sang": "Hôm nay, mình sẽ để ý xem mình đang cần sự đồng ý của ai.", "ngay": "Sau khi làm điều gì đó, để ý xem mình có đang chờ phản ứng của ai không — chờ họ khen, chờ họ đồng ý.", "yDinh": null, "toi": ["Hôm nay mình đã tìm kiếm sự đồng ý hay xác nhận từ ai?", "Nếu người đó không phản ứng như mình mong — mình cảm thấy thế nào?", "Điều đó nói lên gì về mối quan hệ của mình với sự công nhận từ bên ngoài?"]}, {"n": 10, "sang": "Hôm nay, mình sẽ để ý xem mình đang mang năng lượng của ai vào người.", "ngay": "Sau mỗi cuộc gặp, để ý xem mình cảm thấy nhẹ hơn hay nặng hơn so với trước khi gặp.", "yDinh": null, "toi": ["Sau cuộc trò chuyện nào hôm nay mình cảm thấy nhẹ và tràn năng lượng?", "Sau cuộc nào mình cảm thấy kiệt sức hay bị rút cạn?", "Mình có thường xuyên ở gần những người rút cạn năng lượng không?"]}, {"n": 11, "sang": "Hôm nay, mình sẽ để ý xem mình đang chạy trốn khỏi cảm xúc nào.", "ngay": "Mỗi khi với tay lấy điện thoại hoặc ăn khi không đói — thử dừng lại 3 giây và hỏi: Mình đang cảm thấy gì?", "yDinh": null, "toi": ["Hôm nay mình đã dùng thứ gì để thoát khỏi một cảm xúc khó chịu?", "Cảm xúc đó là gì nếu mình phải gọi tên nó?", "Nếu không thoát mà ở lại với nó — điều tệ nhất có thể xảy ra là gì?"]}, {"n": 12, "sang": "Hôm nay, mình sẽ để ý xem mình đang tự nói chuyện với bản thân như thế nào.", "ngay": "Chú ý giọng nói trong đầu khi mình mắc lỗi, khi không làm được điều gì đó.", "yDinh": null, "toi": ["Hôm nay giọng nói trong đầu mình tử tế với mình không?", "Nếu mình nói với người bạn những gì mình tự nói với bản thân — họ sẽ cảm thấy thế nào?", "Mình có đang khắt khe với bản thân hơn mức cần thiết không?"]}, {"n": 13, "sang": "Hôm nay, mình sẽ để ý xem mình đang so sánh bản thân với ai và để làm gì.", "ngay": "Mỗi khi thấy mình đang so sánh, hãy hỏi: So sánh này đang phục vụ mình hay đang hại mình?", "yDinh": null, "toi": ["Hôm nay mình đã so sánh mình với ai? Trong tình huống nào?", "Sau khi so sánh, mình cảm thấy thế nào về bản thân?", "Điều mình so sánh đó — thật ra mình có thật sự muốn nó không?"]}, {"n": 14, "sang": "Hôm nay, mình sẽ để ý xem điều gì khiến mình cảm thấy xấu hổ.", "ngay": "Để ý khi nào mình có cảm giác muốn giấu đi một phần của mình trước người khác.", "yDinh": null, "toi": ["Hôm nay có khoảnh khắc nào mình muốn giấu đi điều gì không?", "Mình nghĩ nếu người khác biết điều đó, họ sẽ nghĩ gì về mình?", "Điều đó có thật không — hay đó chỉ là điều mình sợ họ nghĩ?"]}, {"n": 15, "sang": "Hôm nay, mình sẽ để ý xem mình đang kỳ vọng điều gì từ người xung quanh.", "ngay": "Khi cảm thấy thất vọng vì ai đó — thử hỏi: Mình đã kỳ vọng họ làm gì mà họ không làm?", "yDinh": null, "toi": ["Hôm nay mình cảm thấy thất vọng với ai không? Chuyện gì đã xảy ra?", "Kỳ vọng đó mình có nói ra với họ chưa — hay mình chỉ mong họ tự hiểu?", "Điều đó nói lên gì về những gì mình đang cần mà chưa dám nói thẳng?"]}, {"n": 16, "sang": "Hôm nay, mình sẽ để ý xem mình đang định nghĩa thành công theo tiêu chuẩn của ai.", "ngay": "Mỗi khi cảm thấy chưa đủ — thử hỏi: Tiêu chuẩn này là của mình hay của ai khác?", "yDinh": null, "toi": ["Hôm nay mình cảm thấy mình chưa đủ ở điểm nào?", "Tiêu chuẩn đó đến từ đâu — gia đình, xã hội, bạn bè, hay mạng xã hội?", "Nếu tự mình đặt ra tiêu chuẩn cho đủ — nó sẽ trông như thế nào?"]}, {"n": 17, "sang": "Hôm nay, mình sẽ nhìn lại 10 ngày vừa rồi — mình đã học được gì về bản thân?", "ngay": "Không cần để ý thêm điều gì mới hôm nay. Chỉ cần để những gì đã quan sát được lắng xuống.", "yDinh": null, "toi": ["Điều nào mình nhận ra trong 10 ngày vừa rồi khiến mình ngạc nhiên nhất?", "Mình đang hành động từ nỗi sợ nhiều hơn hay từ điều mình muốn nhiều hơn?", "Có điều gì mình muốn thay đổi — dù chỉ một chút nhỏ thôi?"]}, {"n": 18, "sang": "Hôm nay, mình sẽ thử nói thật một điều nhỏ mà thường ngày mình hay nuốt vào trong.", "ngay": "Để ý cảm giác trước và sau khi nói thật. Có gì khác không?", "yDinh": "Chọn 1 tình huống nhỏ hôm nay để nói ra điều mình thật sự nghĩ. Có thể chỉ là: mình không thích điều này, hay mình cần thêm thời gian.", "toi": ["Mình đã nói thật điều gì hôm nay? Chuyện gì đã xảy ra?", "Cảm giác trước và sau khi nói ra có khác nhau không?", "Điều tệ nhất mình sợ xảy ra — có xảy ra không?"]}, {"n": 19, "sang": "Hôm nay, mình sẽ thử nói không với ít nhất một điều mình không muốn làm.", "ngay": "Chú ý cảm giác tội lỗi nếu nó xuất hiện — và hỏi: Mình có thật sự làm gì sai không?", "yDinh": "Không cần giải thích dài dòng. Không cần xin lỗi. Chỉ cần một câu đơn giản như: mình không thể hôm nay.", "toi": ["Hôm nay mình đã nói không với điều gì chưa?", "Nếu có — cảm giác sau đó như thế nào?", "Nếu chưa — điều gì đã ngăn mình lại?"]}, {"n": 20, "sang": "Hôm nay, mình sẽ làm một điều chỉ vì mình thích — không cần lý do, không cần ai đồng ý.", "ngay": "Để ý xem có giọng nói nào nói làm vậy có ích gì hay đáng lẽ phải làm việc khác không.", "yDinh": "Chọn một điều nhỏ mà mình thích nhưng hay gác lại. Hôm nay làm nó — dù chỉ 10 phút.", "toi": ["Mình đã làm điều gì chỉ vì mình thích hôm nay?", "Cảm giác lúc làm và sau khi làm như thế nào?", "Giọng nói phán xét có xuất hiện không — và mình đã làm gì với nó?"]}, {"n": 21, "sang": "Hôm nay, mình sẽ để ý xem mình đang cho đi từ sự đầy đủ hay từ sự sợ hãi.", "ngay": "Nếu là từ sợ hãi — không cần từ chối ngay. Chỉ cần nhận ra là đủ.", "yDinh": "Khi giúp đỡ ai đó, dừng lại một nhịp và hỏi: Mình giúp vì muốn hay vì sợ họ nghĩ gì?", "toi": ["Hôm nay mình đã cho đi — thời gian, sự giúp đỡ — từ đâu?", "Khi cho đi từ điều mình muốn vs từ nỗi sợ — cảm giác khác nhau thế nào?", "Có ranh giới nào mình cần đặt ra rõ hơn không?"]}, {"n": 22, "sang": "Hôm nay, mình sẽ để ý xem mình đang xin phép ai để được là chính mình.", "ngay": "Chú ý cảm giác khi tự cho mình phép — có thoải mái không, có bất an không?", "yDinh": "Chọn 1 điều mình thường chờ ai đó cho phép — và hôm nay thử tự cho mình phép làm điều đó.", "toi": ["Mình đã tự cho mình phép làm điều gì hôm nay?", "Cảm giác đó như thế nào so với khi chờ người khác cho phép?", "Có điều gì mình vẫn đang chờ ai đó xác nhận mà thật ra mình đã biết câu trả lời rồi không?"]}, {"n": 23, "sang": "Hôm nay, mình sẽ thực hành ngồi yên với cảm xúc khó chịu thay vì tìm cách thoát ra.", "ngay": "Không cần giải quyết cảm xúc đó. Chỉ cần ở lại với nó 5 hơi thở.", "yDinh": "Lần tới khi cảm thấy bồn chồn — thay vì với tay lấy điện thoại, thử đặt tay lên ngực và đếm 5 hơi thở.", "toi": ["Hôm nay có khoảnh khắc nào mình thử ở lại với cảm xúc khó chịu không?", "Điều gì xảy ra khi mình không chạy trốn nó?", "Cảm xúc đó có tan đi, thay đổi, hay nói điều gì với mình không?"]}, {"n": 24, "sang": "Hôm nay, mình sẽ nói chuyện với bản thân tử tế hơn.", "ngay": "Chú ý xem giọng nói tử tế đó nghe khác như thế nào so với giọng thường ngày.", "yDinh": "Mỗi khi giọng nói trong đầu bắt đầu chỉ trích — thử thay bằng điều một người bạn tốt sẽ nói với mình.", "toi": ["Hôm nay giọng nói trong đầu mình tử tế hay khắt khe?", "Có khoảnh khắc nào mình chuyển được từ chỉ trích sang tử tế không?", "Nếu đối xử với bản thân tử tế hơn mỗi ngày — cuộc sống mình sẽ trông khác như thế nào?"]}, {"n": 25, "sang": "Hôm nay, mình sẽ đặt ranh giới với một điều nhỏ.", "ngay": "Để ý cảm giác sau khi giữ ranh giới — có nhẹ hơn không, hay vẫn còn cảm giác tội lỗi?", "yDinh": "Chọn một tình huống nhỏ mà mình thường nhượng bộ dù không muốn. Hôm nay thử một lần không nhượng bộ.", "toi": ["Mình đã đặt ranh giới với điều gì hôm nay?", "Cảm giác trước, trong và sau khoảnh khắc đó như thế nào?", "Ranh giới đó có bảo vệ được mình không — hay mình vẫn cảm thấy mình đã làm sai điều gì?"]}, {"n": 26, "sang": "Hôm nay, mình sẽ để ý xem khoảnh khắc nào mình cảm thấy đang là chính mình nhất.", "ngay": "Khi nhận ra khoảnh khắc đó — dừng lại một nhịp và ghi nhớ cảm giác đó.", "yDinh": "Không cần tạo ra khoảnh khắc đó. Chỉ cần để ý và nhận ra khi nó xuất hiện tự nhiên.", "toi": ["Khoảnh khắc nào hôm nay mình cảm thấy thật nhất?", "Điều gì tạo ra khoảnh khắc đó — mình đang ở đâu, với ai, đang làm gì?", "Mình có thể tạo ra nhiều khoảnh khắc như vậy hơn không?"]}, {"n": 27, "sang": "Hôm nay, mình sẽ thử đưa ra một quyết định nhỏ mà không hỏi ý kiến ai.", "ngay": "Để ý xem có cảm giác bất an khi không có ai xác nhận không.", "yDinh": "Chọn một quyết định nhỏ và đưa ra chỉ dựa trên điều mình muốn. Không hỏi, không tìm kiếm sự đồng ý.", "toi": ["Mình đã tự đưa ra quyết định gì hôm nay mà không cần hỏi ai?", "Cảm giác sau đó — nhẹ nhõm, lo lắng, hay bình thường?", "Mình có đủ tin tưởng bản thân để tự đưa ra những quyết định lớn hơn không?"]}, {"n": 28, "sang": "Hôm nay, mình sẽ để ý xem mình đang bảo vệ điều gì quan trọng với mình.", "ngay": "Chú ý xem có lúc nào mình đánh đổi điều quan trọng đó để lấy sự chấp thuận của người khác không.", "yDinh": "Nghĩ đến một điều quan trọng với mình và hôm nay chủ động làm một việc nhỏ để bảo vệ điều đó.", "toi": ["Điều quan trọng với mình mà mình đang bảo vệ là gì?", "Hôm nay mình đã làm gì để bảo vệ nó?", "Có lúc nào mình đã đánh đổi nó để được ai đó chấp thuận không?"]}, {"n": 29, "sang": "Hôm nay, mình sẽ thực hành tin tưởng vào phán đoán của chính mình.", "ngay": "Để ý xem tiếng nói bên trong mình nói gì trước khi bị tiếng ồn bên ngoài lấn át.", "yDinh": "Khi có quyết định cần đưa ra — thử hỏi bản thân trước: Mình nghĩ gì? Mình cảm thấy thế nào? Rồi mới hỏi người khác.", "toi": ["Hôm nay mình đã hỏi bản thân trước khi hỏi người khác chưa?", "Tiếng nói bên trong mình nói gì — và mình có tin nó không?", "Có lúc nào mình cảm thấy phán đoán của mình đúng mà vẫn không dám tin không?"]}, {"n": 30, "sang": "Hôm nay, mình sẽ nhìn lại cả hành trình 30 ngày vừa rồi.", "ngay": "Cho phép mình cảm nhận — dù là tự hào, dù là chưa hài lòng. Tất cả đều ổn.", "yDinh": "Không có bài tập mới hôm nay. Chỉ cần ngồi yên với chính mình và nhìn lại.", "toi": ["Sau 30 ngày, điều gì đã thay đổi trong cách mình nhìn bản thân?", "Điều gì mình biết về mình bây giờ mà 30 ngày trước chưa biết?", "Bước tiếp theo trong hành trình tự tri của mình là gì?"]}], "summaries": {"7": {"title": "Tổng kết Giai đoạn 1", "intro": "Trước khi sang Giai đoạn 2, hãy dành 10-15 phút với những câu hỏi này. Không cần vội. Không cần câu trả lời hoàn hảo.", "questions": ["Trong 7 ngày quan sát, có điều gì mình hay làm đi làm lại — dù mình không chủ động chọn làm vậy? Ví dụ: hay đồng ý dù không muốn, hay im lặng dù có điều muốn nói... Viết ra ít nhất 1 điều.", "Điều đó thường xuất hiện nhiều nhất trong tình huống nào — với ai, ở đâu?", "Khi nhận ra điều đó, bạn cảm thấy thế nào?", "Một từ mô tả trạng thái của bạn khi bắt đầu Giai đoạn 1:", "Một từ mô tả trạng thái của bạn bây giờ:"], "ready": "Nếu bạn đã bắt đầu nhìn thấy những thứ mình hay làm mà trước đây chưa để ý — bạn đã sẵn sàng sang Giai đoạn 2.", "next": 8, "nextLabel": "Sang Giai đoạn 2"}, "17": {"title": "Tổng kết Giai đoạn 2", "intro": "Dành 15-20 phút cho phần này trước khi sang Giai đoạn 3.", "questions": ["Trong 10 ngày vừa rồi, có điều gì mình nhận ra mình hay làm vì sợ — không phải vì thật sự muốn? Viết ra ít nhất 1 điều.", "Nỗi sợ lớn nhất đang vận hành phía sau những hành động đó là gì — nếu phải gọi tên bằng 1 câu?", "Có khoảnh khắc nào mình dừng lại được và nhận ra ngay lúc đó — không phải sau đó mới nhận ra?", "Điều mình thật sự muốn — không phải muốn vì ai đó nói mình nên muốn — là gì?", "Một từ mô tả điều mình cảm thấy rõ ràng hơn về bản thân sau giai đoạn này:"], "ready": "Nếu bạn bắt đầu nhận ra được ngay trong lúc đang xảy ra — mình đang hành động từ điều mình muốn hay từ nỗi sợ, bạn đã sẵn sàng sang Giai đoạn 3.", "next": 18, "nextLabel": "Sang Giai đoạn 3"}, "30": {"title": "Tổng kết Giai đoạn 3", "intro": "Dành 20-30 phút cho phần này. Đây là tổng kết cuối cùng của hành trình 30 ngày.", "questions": ["Trong 13 ngày thực hành, có khoảnh khắc nào mình cảm thấy đang là chính mình nhất? Khoảnh khắc đó trông như thế nào?", "Điều gì đã thay đổi trong cách mình đưa ra quyết định — dù nhỏ?", "Ranh giới nhỏ nào mình đã đặt ra mà trước đây chưa bao giờ dám? Cảm giác sau đó như thế nào?", "Điều mình học được về bản thân trong Giai đoạn 3 mà muốn ghi nhớ lâu dài:"], "ready": "Khi những lựa chọn này không còn là nỗ lực nữa — chúng bắt đầu trở thành cách bạn tự nhiên tồn tại.", "next": 0, "nextLabel": "Chiêm nghiệm cuối"}}, "reflection": [{"title": "Tôi đã bắt đầu từ đây", "questions": ["Ở ngày đầu tiên, trạng thái của tôi là:", "Điều tôi mang theo vào hành trình — điều tôi muốn tìm hiểu hoặc thay đổi:"]}, {"title": "Những điều tôi nhìn thấy", "questions": ["3 điều quan trọng nhất tôi nhận ra về bản thân sau 30 ngày — Điều 1:", "Điều 2:", "Điều 3:", "Điều khiến tôi ngạc nhiên nhất về chính mình:", "Điều tôi thấy khó đối diện nhất — và tôi đã làm gì với nó:"]}, {"title": "Điều tôi chọn mang theo", "questions": ["1 thói quen nhỏ tôi muốn tiếp tục thực hành:", "1 điều tôi muốn chọn khác đi so với 30 ngày trước:", "Một câu tôi muốn nói với bản thân mình lúc này:"]}]}`);
+const DAYS = D.days;
+const SUMS = D.summaries;
+const REF  = D.reflection;
+
+const PHASES = {
+  1:{name:"Quan sát",  color:"#B84218",cls:"g1"},
+  2:{name:"Nhận diện", color:"#7A5C3A",cls:"g2"},
+  3:{name:"Thực hành", color:"#4A3728",cls:"g3"},
+};
+function ph(n){ return n<=7?1:n<=17?2:3; }
+
+// ── STATE ─────────────────────────────────────────────
+let S = {done:{}, ans:{}, sans:{}, rans:{}};
+function load(){ try{ const s=localStorage.getItem("noe_tt"); if(s) S=JSON.parse(s); }catch(e){} }
+function save(){ try{ localStorage.setItem("noe_tt",JSON.stringify(S)); }catch(e){} }
+function doneCount(){ return Object.values(S.done).filter(Boolean).length; }
+function todayDay(){ return DAYS.find(d=>!S.done[d.n]) || DAYS[29]; }
+
+// ── ROUTING ───────────────────────────────────────────
+let curDay=1, curSum="7";
+function go(scr){ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active")); document.getElementById("screen-"+scr).classList.add("active"); window.scrollTo(0,0); if(scr==="home") renderHome(); }
+function goToday(){ const t=todayDay(); openDay(t.n); }
+function openDay(n){ curDay=n; renderDay(n); go("day"); }
+function openSum(key){ curSum=key; renderSum(key); go("summary"); }
+function openRef(){ renderRef(); go("reflection"); }
+
+// ── HOME ──────────────────────────────────────────────
+function renderHome(){
+  const cnt=doneCount();
+  document.getElementById("prog-fill").style.width=(cnt/30*100)+"%";
+  document.getElementById("prog-cnt").textContent=cnt+" / 30 ngày hoàn thành";
+  const t=todayDay(), p=PHASES[ph(t.n)];
+  document.getElementById("today-lbl").textContent="Ngày "+t.n;
+  document.getElementById("today-q").textContent=t.sang;
+  document.getElementById("today-ph").textContent="Giai đoạn "+ph(t.n)+" · "+p.name;
+
+  // Grid
+  const g=document.getElementById("grid"); g.innerHTML="";
+  const tn=t.n;
+  DAYS.forEach(d=>{
+    const p=ph(d.n), el=document.createElement("div");
+    el.className="cell "+PHASES[p].cls+(S.done[d.n]?" done":"")+(d.n===tn&&!S.done[d.n]?" today-cell":"");
+    el.innerHTML='<div class="cn '+PHASES[p].cls+'c">'+d.n+'</div><div class="cl">GĐ'+p+'</div>';
+    el.onclick=()=>openDay(d.n); g.appendChild(el);
+  });
+
+  // List
+  const list=document.getElementById("day-list"); list.innerHTML="";
+  [1,2,3].forEach(phase=>{
+    const grp=document.createElement("div"); grp.className="ph-grp";
+    grp.innerHTML='<div class="ph-badge '+PHASES[phase].cls+'">Giai đoạn '+phase+' — '+PHASES[phase].name+'</div>';
+    DAYS.filter(d=>ph(d.n)===phase).forEach(d=>{
+      const el=document.createElement("div");
+      el.className="dl-item"+(S.done[d.n]?" done-item":"");
+      el.innerHTML='<div class="dn-badge '+PHASES[phase].cls+'">'+(S.done[d.n]?"✓":d.n)+'</div><div class="dl-info"><div class="dl-ttl">Ngày '+d.n+'</div><div class="dl-sub">'+(S.done[d.n]?"Đã hoàn thành":d.sang.substring(0,36)+"...")+'</div></div>'+(S.done[d.n]?'<div class="dl-chk">✓</div>':'');
+      el.onclick=()=>openDay(d.n); grp.appendChild(el);
+    });
+    // Summary link
+    const sKey=phase===1?"7":phase===2?"17":"30";
+    const sl=document.createElement("div"); sl.className="dl-item sum-item";
+    sl.style.borderColor=PHASES[phase].color;
+    sl.innerHTML='<div class="dn-badge '+PHASES[phase].cls+'" style="opacity:.7">✦</div><div class="dl-info"><div class="dl-ttl" style="color:'+PHASES[phase].color+'">Tổng kết Giai đoạn '+phase+'</div><div class="dl-sub">Sau ngày '+sKey+'</div></div>';
+    sl.onclick=()=>openSum(sKey); grp.appendChild(sl);
+    list.appendChild(grp);
+  });
+  const rl=document.createElement("div"); rl.className="dl-item ref-item";
+  rl.innerHTML='<div class="dn-badge g1">❤</div><div class="dl-info"><div class="dl-ttl" style="color:var(--wine)">Chiêm nghiệm cuối hành trình</div><div class="dl-sub">Nhìn lại 30 ngày</div></div>';
+  rl.onclick=openRef; list.appendChild(rl);
+}
+
+// ── DAY ───────────────────────────────────────────────
+function renderDay(n){
+  const day=DAYS[n-1], p=ph(n), pi=PHASES[p];
+  document.getElementById("day-hdr-ttl").textContent="Ngày "+n;
+  document.getElementById("day-num-disp").innerHTML='<span style="color:'+pi.color+'">Ngày '+n+'</span>';
+  document.getElementById("day-ph-disp").textContent="Giai đoạn "+p+" · "+pi.name;
+  document.getElementById("day-ph-disp").style.color=pi.color;
+  const db=document.getElementById("done-btn"), dc=document.getElementById("done-circle");
+  if(S.done[n]){db.classList.add("marked");dc.style.background=pi.color;dc.style.borderColor=pi.color;}
+  else{db.classList.remove("marked");dc.style.background="";dc.style.borderColor="";}
+
+  const body=document.getElementById("day-body"); body.innerHTML="";
+
+  // Morning
+  body.appendChild(secCard("☀️","SÁNG",pi.color,day.sang,"morning-q"));
+
+  // Ý định
+  if(day.yDinh) body.appendChild(secCard("✨","Ý ĐỊNH","#8B6B5A",day.yDinh,"sec-note"));
+
+  // Trong ngày
+  if(day.ngay) body.appendChild(secCard("💡","TRONG NGÀY","#7A5C3A",day.ngay,"sec-note"));
+
+  // Evening
+  const eve=document.createElement("div"); eve.className="eve-card";
+  eve.innerHTML='<div class="eve-hdr"><span class="sec-icon">🌙</span><span class="eve-ttl">Buổi tối</span><span class="eve-hint">Viết tự do, không cần đủ ý</span></div>';
+  day.toi.forEach((q,i)=>{
+    const key="d"+n+"q"+i, blk=document.createElement("div"); blk.className="q-block";
+    const ta=document.createElement("textarea"); ta.className="ans"; ta.placeholder="Viết ở đây..."; ta.value=S.ans[key]||""; ta.rows=3;
+    ta.oninput=function(){S.ans[key]=this.value;save();ar(this);}; ta.onfocus=()=>ar(ta);
+    blk.innerHTML='<div class="q-txt">'+q+'</div>'; blk.appendChild(ta); eve.appendChild(blk);
+  });
+  body.appendChild(eve);
+
+  // Notes
+  const nk="d"+n+"note", nc=document.createElement("div"); nc.className="notes-card";
+  const nta=document.createElement("textarea"); nta.className="ans"; nta.placeholder="Ghi chú thêm hoặc điều muốn chia sẻ..."; nta.value=S.ans[nk]||""; nta.rows=3;
+  nta.oninput=function(){S.ans[nk]=this.value;save();ar(this);};
+  nc.innerHTML='<div class="notes-lbl">📝 Ghi chú thêm / Chia sẻ</div>'; nc.appendChild(nta); body.appendChild(nc);
+
+  // Nav
+  const nav=document.getElementById("day-nav"); nav.innerHTML="";
+  if(n>1){const b=document.createElement("button");b.className="nav-btn";b.textContent="← Ngày "+(n-1);b.onclick=()=>openDay(n-1);nav.appendChild(b);}
+  const nb=document.createElement("button"); nb.className="nav-btn pri";
+  if([7,17,30].includes(n)){nb.textContent="Tổng kết →";nb.onclick=()=>openSum(String(n));}
+  else if(n<30){nb.textContent="Ngày "+(n+1)+" →";nb.onclick=()=>openDay(n+1);}
+  else{nb.textContent="Chiêm nghiệm →";nb.onclick=openRef;}
+  nav.appendChild(nb);
+}
+
+function secCard(icon,lbl,color,txt,txtCls){
+  const c=document.createElement("div"); c.className="sec-card";
+  c.innerHTML='<div class="sec-hdr" style="background:'+color+'"><span class="sec-icon">'+icon+'</span><span class="sec-ttl2">'+lbl+'</span></div><div class="sec-body"><div class="'+txtCls+'">'+txt+'</div></div>';
+  return c;
+}
+function ar(el){el.style.height="auto";el.style.height=el.scrollHeight+"px";}
+
+// ── DONE TOGGLE ───────────────────────────────────────
+function toggleDone(){
+  const n=curDay; S.done[n]=!S.done[n]; save();
+  const pi=PHASES[ph(n)], db=document.getElementById("done-btn"), dc=document.getElementById("done-circle");
+  if(S.done[n]){db.classList.add("marked");dc.style.background=pi.color;dc.style.borderColor=pi.color;toast("✓ Ngày "+n+" đã hoàn thành!");}
+  else{db.classList.remove("marked");dc.style.background="";dc.style.borderColor="";toast("Đã bỏ đánh dấu");}
+}
+
+// ── SUMMARY ───────────────────────────────────────────
+function renderSum(key){
+  const data=SUMS[key];
+  document.getElementById("sum-hdr-ttl").textContent=data.title;
+  const body=document.getElementById("sum-body"); body.innerHTML='<div class="sum-intro">'+data.intro+'</div>';
+  data.questions.forEach((q,i)=>{
+    const sk="s"+key+"q"+i, div=document.createElement("div"); div.className="sum-q";
+    const ta=document.createElement("textarea"); ta.className="sum-ans"; ta.value=S.sans[sk]||""; ta.rows=3; ta.placeholder="Viết ở đây...";
+    ta.oninput=function(){S.sans[sk]=this.value;save();ar(this);};
+    div.innerHTML='<div class="sum-qtxt">'+q+'</div>'; div.appendChild(ta); body.appendChild(div);
+  });
+  body.innerHTML+='<div class="ready">→ '+data.ready+'</div>';
+  const nb=document.createElement("button"); nb.className="next-btn";
+  if(data.next>0){nb.textContent=data.nextLabel+" →";nb.onclick=()=>openDay(data.next);}
+  else{nb.textContent="Chiêm nghiệm cuối →";nb.onclick=openRef;}
+  body.appendChild(nb);
+}
+
+// ── REFLECTION ────────────────────────────────────────
+function renderRef(){
+  const body=document.getElementById("ref-body");
+  body.innerHTML='<div class="sum-intro">30 ngày. Hãy dành thời gian ngồi với trang này — không vội, không áp lực. Chỉ cần thật.</div>';
+  REF.forEach((sec,si)=>{
+    const ttl=document.createElement("div"); ttl.className="ref-sec-ttl"; ttl.textContent=sec.title; body.appendChild(ttl);
+    sec.questions.forEach((q,qi)=>{
+      const rk="r"+si+"q"+qi, div=document.createElement("div"); div.className="sum-q";
+      const ta=document.createElement("textarea"); ta.className="sum-ans"; ta.value=S.rans[rk]||""; ta.rows=3; ta.placeholder="Viết ở đây...";
+      ta.oninput=function(){S.rans[rk]=this.value;save();ar(this);};
+      div.innerHTML='<div class="sum-qtxt">'+q+'</div>'; div.appendChild(ta); body.appendChild(div);
+    });
+  });
+  body.innerHTML+='<div class="final-card"><div class="final-ttl">Bạn đã hoàn thành hành trình.</div><div class="final-body">Những gì bạn đã xây dựng — thói quen dừng lại, quan sát và lắng nghe chính mình — là thứ không ai có thể lấy đi.</div><div class="final-quote">Mỗi ngày bạn chọn lắng nghe bản thân thêm một chút, bạn đang trở nên vững vàng hơn. Không ồn ào. Không phô trương. Chỉ là thật hơn — với chính mình.</div></div><div class="sum-intro" style="margin:0 18px 10px">Nếu bạn muốn được đồng hành sâu hơn, hãy gửi về cho NOE.</div><div class="contact"><div class="contact-item">✉ hello.noevn@gmail.com</div><div class="contact-item">Zalo 0342580741</div></div><div style="height:20px"></div>';
+}
+
+// ── TOAST ─────────────────────────────────────────────
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2000);}
+
+// ── JOURNAL ───────────────────────────────────────────
+function openJournal(){ renderJournal(); go("journal"); }
+
+function renderJournal(){
+  const body = document.getElementById("journal-body");
+  body.innerHTML = "";
+
+  // Check if any answers exist
+  const hasAny = Object.values(S.ans).some(v => v && v.trim()) ||
+                 Object.values(S.sans).some(v => v && v.trim()) ||
+                 Object.values(S.rans).some(v => v && v.trim());
+
+  if(!hasAny){
+    body.innerHTML = '<div class="jempty">Bạn chưa có ghi chép nào.<br><br>Hãy bắt đầu từ Ngày 1 — mỗi tối dành 5 phút viết ra suy nghĩ của mình.<br>Những gì bạn viết sẽ hiện ra ở đây.</div>';
+    return;
+  }
+
+  let curPhase = 0;
+
+  DAYS.forEach(day => {
+    const n = day.n;
+    const p = ph(n);
+    const pi = PHASES[p];
+
+    // Phase divider
+    if(p !== curPhase){
+      curPhase = p;
+      const div = document.createElement("div");
+      div.className = "jph-divider";
+      div.innerHTML = '<div class="jph-divider-line"><span class="jph-badge" style="background:'+pi.color+'">Giai đoạn '+p+' — '+pi.name+'</span></div>';
+      body.appendChild(div);
+    }
+
+    // Check if this day has any content
+    const toiKeys = day.toi.map((_,i) => "d"+n+"q"+i);
+    const noteKey = "d"+n+"note";
+    const hasContent = toiKeys.some(k => S.ans[k] && S.ans[k].trim()) ||
+                       (S.ans[noteKey] && S.ans[noteKey].trim());
+
+    if(!hasContent) return; // Skip empty days
+
+    const dayDiv = document.createElement("div");
+    dayDiv.className = "jday";
+
+    // Day header
+    const hdr = document.createElement("div");
+    hdr.className = "jday-hdr";
+    hdr.innerHTML = '<div class="jday-num" style="color:'+pi.color+'">Ngày '+n+'</div>' +
+      '<div class="jday-ph">'+pi.name+'</div>' +
+      (S.done[n] ? '<div class="jday-done">✓ Hoàn thành</div>' : '');
+    dayDiv.appendChild(hdr);
+
+    // Morning question (just show the question as context)
+    const morningEntry = document.createElement("div");
+    morningEntry.className = "jentry";
+    morningEntry.innerHTML = '<div class="jentry-lbl">☀️ Câu hỏi buổi sáng</div>' +
+      '<div class="jentry-q">' + day.sang + '</div>';
+    dayDiv.appendChild(morningEntry);
+
+    // Evening answers
+    day.toi.forEach((q, i) => {
+      const key = "d"+n+"q"+i;
+      const val = S.ans[key];
+      if(!val || !val.trim()) return;
+      const entry = document.createElement("div");
+      entry.className = "jentry";
+      entry.innerHTML = '<div class="jentry-q">— '+q+'</div>' +
+        '<div class="jentry-ans">'+escHtml(val)+'</div>';
+      dayDiv.appendChild(entry);
+    });
+
+    // Notes
+    const noteVal = S.ans[noteKey];
+    if(noteVal && noteVal.trim()){
+      const entry = document.createElement("div");
+      entry.className = "jentry";
+      entry.innerHTML = '<div class="jentry-lbl">📝 Ghi chú</div>' +
+        '<div class="jentry-ans">'+escHtml(noteVal)+'</div>';
+      dayDiv.appendChild(entry);
+    }
+
+    body.appendChild(dayDiv);
+  });
+
+  // Summary answers
+  const sumKeys = ["7","17","30"];
+  const sumHasAny = sumKeys.some(k => {
+    const data = SUMS[k];
+    return data.questions.some((_,i) => S.sans["s"+k+"q"+i] && S.sans["s"+k+"q"+i].trim());
+  });
+
+  if(sumHasAny){
+    const sdiv = document.createElement("div"); sdiv.className = "jph-divider";
+    sdiv.innerHTML = '<div class="jph-divider-line"><span class="jph-badge" style="background:var(--ink)">Tổng kết các giai đoạn</span></div>';
+    body.appendChild(sdiv);
+
+    sumKeys.forEach(key => {
+      const data = SUMS[key];
+      const hasContent = data.questions.some((_,i) => S.sans["s"+key+"q"+i] && S.sans["s"+key+"q"+i].trim());
+      if(!hasContent) return;
+      const dayDiv = document.createElement("div"); dayDiv.className = "jday";
+      const hdr = document.createElement("div"); hdr.className = "jday-hdr";
+      hdr.innerHTML = '<div class="jday-num" style="color:var(--wine)">'+data.title+'</div>';
+      dayDiv.appendChild(hdr);
+      data.questions.forEach((q,i) => {
+        const val = S.sans["s"+key+"q"+i];
+        if(!val || !val.trim()) return;
+        const entry = document.createElement("div"); entry.className = "jentry";
+        entry.innerHTML = '<div class="jentry-q">'+q+'</div><div class="jentry-ans">'+escHtml(val)+'</div>';
+        dayDiv.appendChild(entry);
+      });
+      body.appendChild(dayDiv);
+    });
+  }
+
+  // Reflection answers
+  const refHasAny = REF.some((sec,si) => sec.questions.some((_,qi) => S.rans["r"+si+"q"+qi] && S.rans["r"+si+"q"+qi].trim()));
+  if(refHasAny){
+    const rdiv = document.createElement("div"); rdiv.className = "jph-divider";
+    rdiv.innerHTML = '<div class="jph-divider-line"><span class="jph-badge" style="background:var(--g3)">Chiêm nghiệm cuối hành trình</span></div>';
+    body.appendChild(rdiv);
+    REF.forEach((sec,si) => {
+      const hasContent = sec.questions.some((_,qi) => S.rans["r"+si+"q"+qi] && S.rans["r"+si+"q"+qi].trim());
+      if(!hasContent) return;
+      const dayDiv = document.createElement("div"); dayDiv.className = "jday";
+      const hdr = document.createElement("div"); hdr.className = "jday-hdr";
+      hdr.innerHTML = '<div class="jday-num" style="color:var(--g3)">'+sec.title+'</div>';
+      dayDiv.appendChild(hdr);
+      sec.questions.forEach((q,qi) => {
+        const val = S.rans["r"+si+"q"+qi];
+        if(!val || !val.trim()) return;
+        const entry = document.createElement("div"); entry.className = "jentry";
+        entry.innerHTML = '<div class="jentry-q">'+q+'</div><div class="jentry-ans">'+escHtml(val)+'</div>';
+        dayDiv.appendChild(entry);
+      });
+      body.appendChild(dayDiv);
+    });
+  }
+}
+
+function escHtml(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+// ── INIT ──────────────────────────────────────────────
+load(); renderHome();
+</script>
+</body>
+</html>
