@@ -614,30 +614,26 @@ function printExport(){
 <title>NOE · Tự Tri 30 Ngày</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
+@page{size:A4;margin:15mm 18mm;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Lora',serif;background:#FBF7F3;color:#2C1810;font-size:11pt;}
-.cover{page-break-after:always;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:40px;}
-.cover img{width:160px;margin-bottom:16px;}
-.cover h1{font-family:'Cormorant Garamond',serif;font-size:28pt;font-weight:700;color:#2C1810;margin-bottom:8px;}
-.cover .sub{font-size:13pt;color:#8B6B5A;font-style:italic;}
-.day-page{page-break-before:always;padding:28px 36px;min-height:100vh;}
-.day-num{font-family:'Cormorant Garamond',serif;font-size:32pt;font-weight:700;line-height:1;}
-.day-phase{font-size:10pt;font-style:italic;margin-top:4px;margin-bottom:16px;}
-.sec{margin-bottom:14px;border-radius:8px;overflow:hidden;border:1px solid #E8DDD5;}
-.sec-hdr{padding:7px 14px;color:white;font-size:9pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:6px;}
-.sec-body{padding:10px 14px;background:white;}
-.sec-txt{font-size:10.5pt;line-height:1.65;color:#2C1810;}
-.sec-note{font-size:10pt;line-height:1.6;color:#5C3D2E;font-style:italic;}
-.q-block{margin-bottom:10px;}
-.q-txt{font-size:10.5pt;line-height:1.6;color:#2C1810;margin-bottom:5px;}
-.ans-box{background:#FBF7F3;border:1px solid #E8DDD5;border-radius:6px;padding:8px 10px;min-height:48px;font-size:10pt;color:#2C1810;white-space:pre-wrap;line-height:1.6;}
-.ans-empty{background:#FBF7F3;border:1px dashed #E8DDD5;border-radius:6px;padding:8px 10px;min-height:48px;color:#C0A898;font-style:italic;font-size:10pt;}
-.notes-lbl{font-size:9pt;font-weight:600;color:#8B6B5A;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
-@media print{
-  body{background:white;}
-  .day-page{page-break-before:always;}
-  .cover{page-break-after:always;}
-}
+body{font-family:'Lora',serif;background:white;color:#2C1810;font-size:10.5pt;}
+.cover{text-align:center;padding:60px 40px 40px;page-break-after:always;}
+.cover img{width:140px;margin-bottom:14px;}
+.cover h1{font-family:'Cormorant Garamond',serif;font-size:26pt;font-weight:700;color:#2C1810;margin-bottom:8px;}
+.cover .sub{font-size:12pt;color:#8B6B5A;font-style:italic;}
+.day-page{page-break-before:always;padding:10px 0 20px;}
+.day-num{font-family:'Cormorant Garamond',serif;font-size:28pt;font-weight:700;line-height:1;}
+.day-phase{font-size:9.5pt;font-style:italic;margin-top:3px;margin-bottom:12px;}
+.sec{margin-bottom:10px;border-radius:6px;overflow:hidden;border:1px solid #E8DDD5;}
+.sec-hdr{padding:5px 12px;color:white;font-size:8.5pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:5px;}
+.sec-body{padding:8px 12px;background:white;}
+.sec-txt{font-size:10pt;line-height:1.6;color:#2C1810;}
+.sec-note{font-size:9.5pt;line-height:1.55;color:#5C3D2E;font-style:italic;}
+.q-block{margin-bottom:8px;}
+.q-txt{font-size:10pt;line-height:1.55;color:#2C1810;margin-bottom:4px;}
+.ans-box{background:#FBF7F3;border:1px solid #E8DDD5;border-radius:4px;padding:6px 9px;min-height:36px;font-size:9.5pt;color:#2C1810;white-space:pre-wrap;line-height:1.5;}
+.ans-empty{background:#FBF7F3;border:1px dashed #E8DDD5;border-radius:4px;padding:6px 9px;min-height:36px;color:#C0A898;font-style:italic;font-size:9.5pt;}
+.notes-lbl{font-size:8.5pt;font-weight:600;color:#8B6B5A;letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px;}
 </style></head><body>`;
 
   // Cover page
