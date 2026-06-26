@@ -78,7 +78,7 @@
 
   <div class="info-box">
     <div class="info-row"><span>Ngân hàng</span><strong>Vietinbank</strong></div>
-    <div class="info-row"><span>Số TK</span><strong>100861950222</strong></div>
+    <div class="info-row"><span>Số VA</span><strong>100861950222</strong></div>
     <div class="info-row"><span>Chủ TK</span><strong>NGUYEN HOANG GIA BACH</strong></div>
     <div class="info-row"><span>Nội dung CK</span><span class="mono" id="ckContent">—</span></div>
     <div class="info-row"><span>Số tiền</span><span class="mono" id="amount">—</span></div>
@@ -130,8 +130,10 @@
   }
 
   function updateQR(amount) {
-    const url = 'https://qr.sepay.vn/img?acc=100861950222&bank=Vietinbank&amount=' + amount + '&des=' + encodeURIComponent(order.ckContent);
+    const vaContent = 'SEVQR TKPHGB ' + order.ckContent;
+    const url = 'https://vietqr.app/img?acc=100861950222&bank=VietinBank&amount=' + amount + '&des=' + encodeURIComponent(vaContent);
     document.getElementById('qrImg').src = url;
+    document.getElementById('ckContent').textContent = vaContent;
     document.getElementById('amount').textContent = formatVnd(amount) + 'đ';
     document.getElementById('total').textContent = formatVnd(amount) + 'đ';
   }
