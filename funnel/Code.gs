@@ -383,7 +383,7 @@ function buildHtmlEmail(v) {
 
     // Sign off
     '<p style="margin:0 0 4px">Hẹn gặp lại!</p>',
-    '<p style="margin:0 0 32px"><strong>NOE</strong><br><span style="font-size:13px;color:#888">Nest of Essence — Tổ ấm của Bản thể</span></p>',
+    '<p style="margin:0 0 32px"><strong>NOE</strong><br><span style="font-size:13px;color:#888">Nest of Essence — Tổ ấm của những bản thể</span></p>',
 
     // Footer
     '<p style="font-size:12px;color:#aaa;border-top:1px solid #eee;padding-top:16px;margin:0">',
