@@ -171,10 +171,20 @@ body{font-family:'Lora',serif;background:var(--ivory);color:var(--warm);min-heig
 .jempty{text-align:center;padding:48px 24px;color:var(--muted);font-style:italic;font-size:14px;line-height:1.7;}
 
 hr.d{border:none;border-top:1px solid var(--border);margin:0 18px;}
+@media print{#fab-support{display:none!important;}}
 </style>
 </head>
 <body>
 <div class="toast" id="toast"></div>
+
+<!-- FLOATING SUPPORT BUTTON -->
+<div id="fab-support" style="position:fixed;bottom:22px;right:18px;z-index:999;display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+  <div id="fab-menu" style="display:none;flex-direction:column;gap:6px;align-items:flex-end;">
+    <a href="https://zalo.me/0342580741" target="_blank" style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid var(--border);border-radius:24px;padding:8px 14px;font-size:13px;color:var(--ink);text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.1);white-space:nowrap;">📞 Zalo NOE</a>
+    <a href="mailto:hello.noevn@gmail.com" style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid var(--border);border-radius:24px;padding:8px 14px;font-size:13px;color:var(--ink);text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.1);white-space:nowrap;">✉️ Email NOE</a>
+  </div>
+  <button onclick="toggleFab()" style="background:var(--wine);color:white;border:none;border-radius:24px;padding:11px 18px;font-family:'Lora',serif;font-size:13px;font-weight:500;cursor:pointer;box-shadow:0 3px 14px rgba(184,66,24,.35);display:flex;align-items:center;gap:7px;">💬 Trò chuyện cùng NOE</button>
+</div>
 
 <!-- HOME -->
 <div class="screen active" id="screen-home">
@@ -191,6 +201,12 @@ hr.d{border:none;border-top:1px solid var(--border);margin:0 18px;}
   </div>
   <div style="padding:0 18px;margin-top:10px;">
     <button onclick="printExport()" style="width:100%;padding:12px;background:var(--wine);color:white;border:none;border-radius:12px;font-family:'Lora',serif;font-size:13px;font-weight:500;cursor:pointer;letter-spacing:.03em;">📄 Xuất PDF tất cả 30 ngày</button>
+    <div style="font-size:11px;color:var(--muted);font-style:italic;line-height:1.5;margin-top:7px;text-align:center;">Dữ liệu của bạn được lưu bảo mật tuyệt đối trên thiết bị này. Hãy chủ động xuất file PDF sau mỗi tuần thực hành để lưu giữ lại các câu trả lời và tránh bị mất khi dọn dẹp bộ nhớ trình duyệt nhé!</div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button onclick="backupData()" style="flex:1;padding:10px 8px;background:white;color:var(--warm);border:1.5px solid var(--border);border-radius:10px;font-family:'Lora',serif;font-size:12px;cursor:pointer;">💾 Tải file sao lưu</button>
+      <button onclick="document.getElementById('restore-input').click()" style="flex:1;padding:10px 8px;background:white;color:var(--warm);border:1.5px solid var(--border);border-radius:10px;font-family:'Lora',serif;font-size:12px;cursor:pointer;">📂 Nhập dữ liệu cũ</button>
+      <input type="file" id="restore-input" accept=".json" style="display:none" onchange="restoreData(this)">
+    </div>
   </div>
   <div style="padding:0 18px;margin-top:14px;">
   <div onclick="openJournal()" style="background:var(--cream);border:1.5px solid var(--border);border-radius:13px;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
@@ -632,8 +648,14 @@ body{font-family:'Lora',serif;background:white;color:#2C1810;font-size:10.5pt;}
 .q-block{margin-bottom:8px;}
 .q-txt{font-size:10pt;line-height:1.55;color:#2C1810;margin-bottom:4px;}
 .ans-box{background:#FBF7F3;border:1px solid #E8DDD5;border-radius:4px;padding:6px 9px;min-height:36px;font-size:9.5pt;color:#2C1810;white-space:pre-wrap;line-height:1.5;}
-.ans-empty{background:#FBF7F3;border:1px dashed #E8DDD5;border-radius:4px;padding:6px 9px;min-height:36px;color:#C0A898;font-style:italic;font-size:9.5pt;}
+.ans-empty{background:transparent;border:none;padding:2px 0;min-height:52px;}
+.ans-empty::before,.ans-empty::after{content:"";display:block;border-bottom:1px dotted #C8B8AF;margin-bottom:10px;}
+.ans-empty span{display:block;border-bottom:1px dotted #C8B8AF;margin-bottom:10px;}
 .notes-lbl{font-size:8.5pt;font-weight:600;color:#8B6B5A;letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px;}
+@media print{
+  @page{size:A4;margin:15mm 18mm;}
+  html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
 .sum-ttl{font-family:'Cormorant Garamond',serif;font-size:22pt;font-weight:700;line-height:1;margin-bottom:6px;}
 .sum-intro-txt{font-size:9.5pt;font-style:italic;color:#8B6B5A;margin-bottom:14px;}
 .ref-sec-ttl{font-family:'Cormorant Garamond',serif;font-size:15pt;font-weight:600;color:#2C1810;border-bottom:1px solid #E8DDD5;padding-bottom:4px;margin:14px 0 8px;}
@@ -687,7 +709,7 @@ body{font-family:'Lora',serif;background:white;color:#2C1810;font-size:10.5pt;}
       const ans = S.ans[key] || '';
       html += `<div class="q-block">
       <div class="q-txt">${escHtml(q)}</div>
-      ${ans ? `<div class="ans-box">${escHtml(ans)}</div>` : '<div class="ans-empty">Chưa có câu trả lời</div>'}
+      ${ans ? `<div class="ans-box">${escHtml(ans)}</div>` : '<div class="ans-empty"><span></span><span></span></div>'}
     </div>`;
     });
     html += `</div></div>`;
@@ -697,7 +719,7 @@ body{font-family:'Lora',serif;background:white;color:#2C1810;font-size:10.5pt;}
     const noteVal = S.ans[noteKey] || '';
     html += `<div style="margin-top:10px;">
     <div class="notes-lbl">📝 Ghi chú thêm / Chia sẻ</div>
-    ${noteVal ? `<div class="ans-box">${escHtml(noteVal)}</div>` : '<div class="ans-empty">Chưa có ghi chú</div>'}
+    ${noteVal ? `<div class="ans-box">${escHtml(noteVal)}</div>` : '<div class="ans-empty"><span></span><span></span></div>'}
   </div>`;
 
     html += `</div>`;
@@ -714,7 +736,7 @@ body{font-family:'Lora',serif;background:white;color:#2C1810;font-size:10.5pt;}
         const ans = S.sans[sk] || '';
         html += `<div class="q-block">
     <div class="q-txt">${escHtml(q)}</div>
-    ${ans ? `<div class="ans-box">${escHtml(ans)}</div>` : '<div class="ans-empty">Chưa có câu trả lời</div>'}
+    ${ans ? `<div class="ans-box">${escHtml(ans)}</div>` : '<div class="ans-empty"><span></span><span></span></div>'}
   </div>`;
       });
       html += `</div>`;
@@ -732,7 +754,7 @@ body{font-family:'Lora',serif;background:white;color:#2C1810;font-size:10.5pt;}
       const ans = S.rans[rk] || '';
       html += `<div class="q-block">
     <div class="q-txt">${escHtml(q)}</div>
-    ${ans ? `<div class="ans-box">${escHtml(ans)}</div>` : '<div class="ans-empty">Chưa có câu trả lời</div>'}
+    ${ans ? `<div class="ans-box">${escHtml(ans)}</div>` : '<div class="ans-empty"><span></span><span></span></div>'}
   </div>`;
     });
   });
@@ -745,6 +767,45 @@ body{font-family:'Lora',serif;background:white;color:#2C1810;font-size:10.5pt;}
   w.document.close();
   w.onload = function(){ w.print(); };
 }
+
+
+// ── BACKUP & RESTORE ─────────────────────────────────
+function backupData(){
+  const blob = new Blob([JSON.stringify(S, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const d = new Date(); const pad = n=>String(n).padStart(2,'0');
+  a.download = 'noe-tutri-backup-'+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'.json';
+  a.click(); URL.revokeObjectURL(a.href);
+  toast('✅ Đã tải file sao lưu!');
+}
+function restoreData(input){
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const parsed = JSON.parse(e.target.result);
+      if(typeof parsed.ans==='object'){
+        S = parsed; save(); renderHome();
+        toast('✅ Đã khôi phục dữ liệu!');
+      } else { toast('❌ File không hợp lệ'); }
+    } catch(err){ toast('❌ Không đọc được file'); }
+    input.value='';
+  };
+  reader.readAsText(file);
+}
+
+// ── FAB ───────────────────────────────────────────────
+function toggleFab(){
+  const m = document.getElementById('fab-menu');
+  m.style.display = m.style.display==='flex' ? 'none' : 'flex';
+}
+document.addEventListener('click', function(e){
+  const fab = document.getElementById('fab-support');
+  if(fab && !fab.contains(e.target)){
+    document.getElementById('fab-menu').style.display='none';
+  }
+});
 
 // ── INIT ──────────────────────────────────────────────
 load(); renderHome();
