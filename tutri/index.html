@@ -171,6 +171,25 @@ body{font-family:'Lora',serif;background:var(--ivory);color:var(--warm);min-heig
 .jempty{text-align:center;padding:48px 24px;color:var(--muted);font-style:italic;font-size:14px;line-height:1.7;}
 
 hr.d{border:none;border-top:1px solid var(--border);margin:0 18px;}
+.pi-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--wine);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
+.pi-rule{border:none;border-top:2px solid var(--wine);margin:8px 0 18px;opacity:.4;}
+.pi-sub{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;}
+.pi-intro{font-size:13.5px;font-style:italic;color:var(--warm);line-height:1.75;margin-bottom:16px;}
+.pi-sec-ttl{font-size:13px;font-weight:700;color:var(--ink);margin:14px 0 6px;}
+.pi-list{list-style:none;padding:0;margin:0 0 10px;}
+.pi-list li{font-size:13px;color:var(--warm);line-height:1.65;padding:3px 0 3px 18px;position:relative;}
+.pi-list li::before{content:"•";position:absolute;left:4px;color:var(--wine);}
+.pi-list.italic li{font-style:italic;}
+.pi-list li ul{list-style:none;padding:0;margin:4px 0 0 16px;}
+.pi-list li ul li::before{content:"○";color:var(--muted);}
+.pi-box{background:var(--cream);border-radius:12px;border:1px solid var(--border);padding:14px 16px;margin-top:14px;}
+.pi-box-ttl{font-size:13px;font-weight:700;color:var(--wine);margin-bottom:8px;font-style:italic;}
+.pi-ready{background:var(--wine);color:white;border-radius:12px;padding:14px 16px;margin-top:16px;font-size:13px;font-style:italic;line-height:1.65;}
+.pi-nav{display:flex;gap:10px;padding:16px 18px 32px;margin-top:6px;}
+.pi-nav button{flex:1;padding:13px;border-radius:12px;border:none;font-family:'Lora',serif;font-size:13px;cursor:pointer;}
+.pi-nav .pri{background:var(--wine);color:white;font-weight:600;}
+.pi-nav .sec{background:white;color:var(--warm);border:1.5px solid var(--border);}
+.pre-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:999px;background:var(--wine);color:white;margin-bottom:14px;}
 @media print{#fab-support{display:none!important;}}
 </style>
 </head>
@@ -290,6 +309,25 @@ hr.d{border:none;border-top:1px solid var(--border);margin:0 18px;}
   <div class="sum-body" id="ref-body"></div>
 </div>
 
+
+<!-- PRE-JOURNEY -->
+<div class="screen" id="screen-prejourney">
+  <div class="hdr">
+    <button class="hdr-back" onclick="go('home')">←</button>
+    <h1>Trước khi bắt đầu</h1>
+  </div>
+  <div class="sum-body" id="prejourney-body"></div>
+</div>
+
+<!-- PHASE INFO -->
+<div class="screen" id="screen-phaseinfo">
+  <div class="hdr">
+    <button class="hdr-back" onclick="go('home')">←</button>
+    <h1 id="phaseinfo-ttl"></h1>
+  </div>
+  <div class="sum-body" id="phaseinfo-body"></div>
+</div>
+
 <!-- JOURNAL -->
 <div class="screen" id="screen-journal">
   <div class="hdr">
@@ -351,21 +389,42 @@ function renderHome(){
 
   // List
   const list=document.getElementById("day-list"); list.innerHTML="";
+
+  // Pre-journey card (always at top)
+  const preCard=document.createElement("div"); preCard.className="dl-item";
+  preCard.style.cssText="border:1.5px solid var(--wine);background:var(--wine-lt);";
+  preCard.innerHTML='<div class="dn-badge g1">✦</div><div class="dl-info"><div class="dl-ttl" style="color:var(--wine)">Trước khi bắt đầu hành trình</div><div class="dl-sub">Ghi lại trạng thái xuất phát của bạn</div></div>';
+  preCard.onclick=openPreJourney; list.appendChild(preCard);
+
   [1,2,3].forEach(phase=>{
     const grp=document.createElement("div"); grp.className="ph-grp";
+    // Phase intro card
+    const phKey=['ph1','ph2','ph3'][phase-1];
+    const phIntro=document.createElement("div"); phIntro.className="dl-item";
+    phIntro.style.cssText="border:1.5px solid "+PHASES[phase].color+";background:white;";
+    phIntro.innerHTML='<div class="dn-badge '+PHASES[phase].cls+'">→</div><div class="dl-info"><div class="dl-ttl" style="color:'+PHASES[phase].color+'">Giai đoạn '+phase+': '+PHASES[phase].name+'</div><div class="dl-sub">Mục tiêu và hướng dẫn giai đoạn</div></div>';
+    phIntro.onclick=()=>openPhaseInfo(phKey); grp.appendChild(phIntro);
     grp.innerHTML='<div class="ph-badge '+PHASES[phase].cls+'">Giai đoạn '+phase+' · '+PHASES[phase].name+'</div>';
     DAYS.filter(d=>ph(d.n)===phase).forEach(d=>{
       const el=document.createElement("div");
       el.className="dl-item"+(S.done[d.n]?" done-item":"");
-      el.innerHTML='<div class="dn-badge '+PHASES[phase].cls+'">'+(S.done[d.n]?"✓":d.n)+'</div><div class="dl-info"><div class="dl-ttl">Ngày '+d.n+'</div><div class="dl-sub">'+(S.done[d.n]?"Đã hoàn thành":d.sang.substring(0,36)+"...")+'</div></div>'+(S.done[d.n]?'<div class="dl-chk">✓</div>':'');
+      el.innerHTML='<div class="dn-badge '+PHASES[phase].cls+'">'+( S.done[d.n]?"✓":d.n)+'</div><div class="dl-info"><div class="dl-ttl">Ngày '+d.n+'</div><div class="dl-sub">'+( S.done[d.n]?"Đã hoàn thành":d.sang.substring(0,36)+"...")+"</div></div>"+(S.done[d.n]?'<div class="dl-chk">✓</div>':'')+';'
       el.onclick=()=>openDay(d.n); grp.appendChild(el);
     });
-    // Summary link
-    const sKey=phase===1?"7":phase===2?"17":"30";
-    const sl=document.createElement("div"); sl.className="dl-item sum-item";
-    sl.style.borderColor=PHASES[phase].color;
-    sl.innerHTML='<div class="dn-badge '+PHASES[phase].cls+'" style="opacity:.7">✦</div><div class="dl-info"><div class="dl-ttl" style="color:'+PHASES[phase].color+'">Tổng kết Giai đoạn '+phase+'</div><div class="dl-sub">Sau ngày '+sKey+'</div></div>';
-    sl.onclick=()=>openSum(sKey); grp.appendChild(sl);
+    // Phase outro + Summary link
+    const sumKey=phase===1?"7":phase===2?"17":"30";
+    const outroKey=['sum1','sum2',''  ][phase-1];
+    if(outroKey){
+      const ot=document.createElement("div"); ot.className="dl-item sum-item";
+      ot.style.cssText="border-color:"+PHASES[phase].color+";border-style:dashed;";
+      ot.innerHTML='<div class="dn-badge '+PHASES[phase].cls+'" style="opacity:.7">✦</div><div class="dl-info"><div class="dl-ttl" style="color:'+PHASES[phase].color+'">Tổng kết Giai đoạn '+phase+'</div><div class="dl-sub">Chuyển giao sang giai đoạn tiếp theo</div></div>';
+      ot.onclick=()=>openPhaseInfo(outroKey); grp.appendChild(ot);
+    } else {
+      const sl=document.createElement("div"); sl.className="dl-item sum-item";
+      sl.style.borderColor=PHASES[phase].color;
+      sl.innerHTML='<div class="dn-badge '+PHASES[phase].cls+'" style="opacity:.7">✦</div><div class="dl-info"><div class="dl-ttl" style="color:'+PHASES[phase].color+'">Tổng kết Giai đoạn '+phase+'</div><div class="dl-sub">Sau ngày '+sumKey+'</div></div>';
+      sl.onclick=()=>openSum(sumKey); grp.appendChild(sl);
+    }
     list.appendChild(grp);
   });
   const rl=document.createElement("div"); rl.className="dl-item ref-item";
@@ -416,7 +475,7 @@ function renderDay(n){
   const nav=document.getElementById("day-nav"); nav.innerHTML="";
   if(n>1){const b=document.createElement("button");b.className="nav-btn";b.textContent="← Ngày "+(n-1);b.onclick=()=>openDay(n-1);nav.appendChild(b);}
   const nb=document.createElement("button"); nb.className="nav-btn pri";
-  if([7,17,30].includes(n)){nb.textContent="Tổng kết →";nb.onclick=()=>openSum(String(n));}
+  if([7,17,30].includes(n)){nb.textContent="Tổng kết →";nb.onclick=()=>{if(n===7)openPhaseInfo('sum1');else if(n===17)openPhaseInfo('sum2');else openSum('30');};}
   else if(n<30){nb.textContent="Ngày "+(n+1)+" →";nb.onclick=()=>openDay(n+1);}
   else{nb.textContent="Chiêm nghiệm →";nb.onclick=openRef;}
   nav.appendChild(nb);
@@ -668,11 +727,42 @@ body{font-family:'Lora',serif;background:white;color:#2C1810;font-size:10.5pt;}
   <div class="sub">NOE - Tổ ấm của những bản thể</div>
 </div>`;
 
+  // Pre-journey page in PDF
+  const preInfo = PHASE_INFO.pre;
+  html += `<div class="day-page">
+  <div class="sum-ttl" style="color:#B84218">${escHtml(preInfo.badge)}</div>
+  <div class="sum-intro-txt">Ghi lại trạng thái xuất phát của bạn trước khi bắt đầu hành trình.</div>`;
+  preInfo.questions.forEach(function(item, i){
+    const sk = "pre_q"+i, ans = S.sans[sk]||'';
+    html += `<div class="q-block"><div class="q-txt">${escHtml(item.q)}</div>${ans?`<div class="ans-box">${escHtml(ans)}</div>`:'<div class="ans-empty"><span></span><span></span></div>'}</div>`;
+  });
+  html += `</div>`;
+
   DAYS.forEach(function(day){
     const n = day.n;
     const p = ph(n);
     const color = PHASE_COLORS[p];
     const pname = PHASE_NAMES[p];
+
+    // Phase intro page before Day 1, 8, 18
+    if([1,8,18].includes(n)){
+      const phKey = n===1?'ph1':n===8?'ph2':'ph3';
+      const phData = PHASE_INFO[phKey];
+      html += `<div class="day-page">
+  <div class="pi-pdf-badge" style="color:${PHASE_COLORS[p]};font-family:'Cormorant Garamond',serif;font-size:20pt;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">${escHtml(phData.badge)}</div>
+  <div style="border-top:2px solid ${PHASE_COLORS[p]};opacity:.4;margin:8px 0 16px;"></div>
+  <div style="font-size:12pt;font-weight:600;color:#2C1810;margin-bottom:12px;">${escHtml(phData.sub)}</div>`;
+      phData.sections.forEach(function(sec){
+        html += `<div style="font-size:10.5pt;font-weight:700;color:#2C1810;margin:10px 0 5px;">${escHtml(sec.ttl)}</div><ul style="padding-left:16px;margin:0;">`;
+        sec.items.forEach(function(item){
+          html += `<li style="font-size:10pt;color:#5C3D2E;line-height:1.65;${sec.italic?'font-style:italic;':''}">${escHtml(item.text)}`;
+          if(item.sub){ html+='<ul style="padding-left:14px;margin:3px 0;">'; item.sub.forEach(function(s){ html+=`<li style="font-size:9.5pt;font-style:italic;line-height:1.6;">${escHtml(s)}</li>`; }); html+='</ul>'; }
+          html += `</li>`;
+        });
+        html += `</ul>`;
+      });
+      html += `</div>`;
+    }
 
     html += `<div class="day-page">
   <div class="day-num" style="color:${color}">Ngày ${n}</div>
@@ -740,6 +830,29 @@ body{font-family:'Lora',serif;background:white;color:#2C1810;font-size:10.5pt;}
   </div>`;
       });
       html += `</div>`;
+      // Phase outro page after Day 7 and 17 summary
+      const outroKey = n===7?'sum1':n===17?'sum2':null;
+      if(outroKey){
+        const outro = PHASE_INFO[outroKey];
+        html += `<div class="day-page">
+  <div class="pi-pdf-badge" style="font-family:'Cormorant Garamond',serif;font-size:18pt;font-weight:700;text-align:center;color:${sumColor};border:2px solid ${sumColor};border-radius:8px;padding:10px 18px;display:inline-block;margin-bottom:16px;">✦ ${escHtml(outro.title)}</div>
+  <div style="font-size:13pt;font-weight:700;text-transform:uppercase;color:#2C1810;margin-bottom:10px;">${escHtml(outro.badge)}</div>
+  <p style="font-size:10.5pt;font-weight:600;color:#2C1810;margin-bottom:8px;">${escHtml(outro.intro)}</p>
+  <p style="font-size:10pt;font-style:italic;color:#5C3D2E;line-height:1.7;margin-bottom:14px;">${escHtml(outro.body)}</p>`;
+        if(outro.readySec){
+          html += `<div style="font-size:10.5pt;font-style:italic;color:#5C3D2E;font-weight:600;margin-bottom:8px;">${escHtml(outro.readySec.ttl)}</div><ul style="padding-left:16px;margin:0 0 12px;">`;
+          outro.readySec.items.forEach(function(item){
+            html += `<li style="font-size:10pt;color:#5C3D2E;line-height:1.65;">${escHtml(item.text)}`;
+            if(item.sub){ html+='<ul style="padding-left:14px;margin:3px 0;">'; item.sub.forEach(function(s){ html+=`<li style="font-size:9.5pt;font-style:italic;line-height:1.6;">${escHtml(s)}</li>`; }); html+='</ul>'; }
+            html += `</li>`;
+          });
+          html += `</ul>`;
+        }
+        if(outro.notAlone){
+          html += `<div style="background:${sumColor};color:white;border-radius:8px;padding:12px 16px;font-size:10pt;line-height:1.7;margin-top:10px;"><strong>Bạn không hề đơn độc!</strong><br>${escHtml(outro.notAlone)}</div>`;
+        }
+        html += `</div>`;
+      }
     }
   });
 
@@ -806,6 +919,198 @@ document.addEventListener('click', function(e){
     document.getElementById('fab-menu').style.display='none';
   }
 });
+
+
+// ── PHASE INFO DATA ───────────────────────────────────
+const PHASE_INFO = {
+  pre: {
+    title: "Trước khi bắt đầu hành trình",
+    badge: "TRƯỚC KHI BẮT ĐẦU HÀNH TRÌNH",
+    questions: [
+      {q: "Trạng thái của tôi ngay lúc này là:"},
+      {q: "Điều tôi mang theo vào hành trình / điều tôi muốn tìm hiểu hoặc thay đổi", note: "nếu trong hành trình trải nghiệm, bất cứ lúc nào có phát hiện thêm và muốn bổ sung điều gì hãy viết vào đây"},
+      {q: "Điều tôi thấy khó đối diện và cảm thấy khó thay đổi nhất"}
+    ],
+    next: {label: "Bắt đầu Giai đoạn 1 →", action: "openPhaseInfo('ph1')"}
+  },
+  ph1: {
+    title: "Giai đoạn 1",
+    badge: "GIAI ĐOẠN 1",
+    sub: "Quan sát · 7 ngày",
+    color: "#B84218",
+    sections: [
+      {ttl: "Mục tiêu:", items: [
+        {text: "Bạn chưa cần phải thay đổi hay làm gì khác đi"},
+        {text: "Chỉ cần bắt đầu chậm lại và quan sát thay vì vội vã phản ứng:", sub:[
+          "Quan sát xem cảm xúc của mình vào lúc đó là như nào, mình đang phản ứng thế nào, đang chọn điều gì, đang tránh điều gì."
+        ]},
+        {text: "Quan sát như một người lạ đứng xem, không phán xét, không vội kết luận."}
+      ]},
+      {ttl: "Sẵn sàng sang giai đoạn tiếp theo khi:", italic: true, items: [
+        {text: "Bạn bắt đầu nhận ra những thứ mình hay làm theo vô thức / thói quen trước đây và chưa từng để ý."},
+        {text: "Bạn không còn ngạc nhiên khi những phản ứng vô thức ấy xuất hiện nữa (vì bạn đã nhận ra chúng rồi)."}
+      ]}
+    ],
+    next: {label: "Bắt đầu Ngày 1 →", action: "openDay(1)"}
+  },
+  sum1: {
+    title: "✦ Tổng kết Giai đoạn 1",
+    badge: "GIAI ĐOẠN 1: QUAN SÁT ĐỂ NHẬN DIỆN",
+    color: "#B84218",
+    intro: "Chúc mừng bạn đã hoàn thành chặng đường đầu tiên!",
+    body: "Bước đi khó khăn nhất luôn là bước đi khởi đầu, khi bạn chịu dừng lại để bắt đầu nhìn vào thế giới bên trong. Việc gọi tên những thói quen cũ hay những hành động vô thức vốn đã lặp đi lặp lại bấy lâu nay đòi hỏi một sự can đảm rất lớn. Chính sự tỉnh thức ban đầu này là chiếc chìa khóa đầu tiên mở ra cánh cửa tự do của bạn.",
+    readySec: {
+      ttl: "Bạn đã sẵn sàng để chuyển giao?",
+      items: [
+        {text: "Nếu bạn đã thấy \"chạm\":", sub:[
+          "Bạn cảm thấy mình đã bắt đầu \"bắt quả tang\" được những hành vi, suy nghĩ tự động của bản thân mà trước đây chưa từng để ý, bạn đã hoàn toàn sẵn sàng để bước sang Giai đoạn 2, nơi chúng ta sẽ cùng đi sâu hơn vào việc thấu hiểu nguyên nhân và ôm ấp các tầng cảm xúc."
+        ]},
+        {text: "Nếu bạn cảm thấy chưa sẵn sàng:", sub:[
+          "Đừng vội vàng. Nếu bạn thấy mình vẫn còn mờ hồ, chưa quan sát được nhiều hoặc thỉnh thoảng vẫn quên mất việc thực hành, điều đó hoàn toàn bình thường.",
+          "Mỗi người đều có một hành trình riêng và đây không phải là một cuộc đua tốc độ. Hãy cứ thong thả ở lại hoặc quay lại thực hành lần lượt các bài tập của Giai đoạn 1. Thật chậm rãi, kiên nhẫn và bao dung với chính mình.",
+          "Hành trình này không có vạch đích để tranh giành, và thời gian không phải thước đo cho sự chín muồi này. Điều bạn cần lúc này chỉ là sự chuyển hóa tự thân từ sâu bên trong."
+        ]}
+      ]
+    },
+    notAlone: "Trong quá trình thực hành, nếu bạn cảm thấy quá tải, hoang mang hoặc có những nút thắt chưa thể tự mình gỡ bỏ, đừng ngần ngại liên hệ ngay với NOE. Chúng mình luôn ở đây, sẵn sàng lắng nghe và đồng hành để cùng bạn tháo gỡ mọi rào cản trên hành trình này.",
+    next: {label: "Vào Tổng kết →", action: "openSum('7')"}
+  },
+  ph2: {
+    title: "Giai đoạn 2",
+    badge: "GIAI ĐOẠN 2",
+    sub: "Nhận diện · 10 ngày",
+    color: "#7A5C3A",
+    sections: [
+      {ttl: "Mục tiêu:", items: [
+        {text: "Bước vào Giai đoạn 2, khi những thói quen vô thức đã bắt đầu lộ diện, chúng ta sẽ cùng nhau đi sâu hơn một chút để tìm kiếm gốc rễ của sự xuất hiện này."},
+        {text: "Thử lắng lòng lại và hỏi xem: Bạn đang bước đi vì một mong muốn tự thân thuần khiết, hay đang bị thúc đẩy bởi một nỗi sợ ẩn mình?"}
+      ]},
+      {ttl: "Sẵn sàng sang giai đoạn tiếp theo khi:", italic: true, items: [
+        {text: "Nhận biết ngay trong khoảnh khắc"},
+        {text: "Bạn nhận diện được các phản ứng và hành động của mình ngay tại thời điểm nó xảy ra."},
+        {text: "Bạn thực sự biết rõ mình đang làm gì, mình đang lựa chọn vì mong muốn, hay chỉ đang phản ứng lại từ nỗi sợ?"}
+      ]}
+    ],
+    next: {label: "Bắt đầu Ngày 8 →", action: "openDay(8)"}
+  },
+  sum2: {
+    title: "✦ Tổng kết Giai đoạn 2",
+    badge: "GIAI ĐOẠN 2: THẤU HIỂU ĐỂ CHỮA LÀNH",
+    color: "#7A5C3A",
+    intro: "Chúc mừng bạn đã đi qua một chặng đường đầy dũng cảm!",
+    body: "Việc đối diện với những góc khuất, gọi tên cảm xúc thực sự và nhìn thấu những thói quen vô thức chưa bao giờ là điều dễ dàng. Bạn đã không còn né tránh, mà đã học cách ngồi lại và ôm lấy chính mình. Đây chính là nền tảng vững chắc nhất cho mọi sự thay đổi.",
+    readySec: {
+      ttl: "Bạn đã sẵn sàng để chuyển giao?",
+      items: [
+        {text: "Nếu bạn đã thấy \"chạm\":", sub:[
+          "Bạn cảm thấy việc nhìn sâu vào nội tâm đã trở nên tự nhiên, không còn quá nặng nề, bạn đã hoàn toàn sẵn sàng để bước sang Giai đoạn 3, nơi chúng ta bắt đầu chủ động đưa ra những lựa chọn mới, tự do và thuộc về chính mình."
+        ]},
+        {text: "Nếu bạn cảm thấy chưa sẵn sàng:", sub:[
+          "Đừng vội vàng. Nếu bạn thấy mình vẫn còn nhiều bối rối, chưa thể quan sát hay gọi tên cảm xúc, điều đó hoàn toàn bình thường.",
+          "Đây không phải là một cuộc đua tốc độ. Mỗi người có một nhịp độ nở rộ riêng. Hãy cứ thong thả quay lại thực hành các bài tập của Giai đoạn 2 (hoặc Giai đoạn 1 nếu cần). Chậm rãi, kiên nhẫn và bao dung với chính mình chính là cách bạn thực sự chuyển hóa từ sâu bên trong. Thời gian không phải là thước đo cho sự chín muồi của tâm hồn bạn."
+        ]}
+      ]
+    },
+    notAlone: "Trong quá trình thực hành, nếu bạn cảm thấy quá tải, hoang mang hoặc có những nút thắt chưa thể tự mình gỡ bỏ, đừng ngần ngại liên hệ ngay với NOE. Chúng mình luôn ở đây, sẵn sàng lắng nghe và đồng hành để cùng bạn tháo gỡ mọi rào cản trên hành trình này.",
+    next: {label: "Vào Tổng kết →", action: "openSum('17')"}
+  },
+  ph3: {
+    title: "Giai đoạn 3",
+    badge: "GIAI ĐOẠN 3",
+    sub: "Thực hành · 13 ngày",
+    color: "#4A3728",
+    sections: [
+      {ttl: "Mục tiêu:", items: [
+        {text: "Bước vào Giai đoạn 3, khi bạn đã quen với việc quan sát và nhận diện, đây là lúc bắt đầu chủ động đưa ra những lựa chọn mới."},
+        {text: "Thực hành đặt ranh giới nhỏ, chọn từ mong muốn thật sự, và sống thuận với bản thân hơn mỗi ngày."}
+      ]},
+      {ttl: "Sẵn sàng hoàn thành hành trình khi:", italic: true, items: [
+        {text: "Bạn bắt đầu thấy sự khác biệt trong cách mình đưa ra quyết định."},
+        {text: "Bạn có thể đặt ra ít nhất một ranh giới nhỏ và giữ được nó."},
+        {text: "Bạn cảm thấy gần với chính mình hơn trước."}
+      ]}
+    ],
+    next: {label: "Bắt đầu Ngày 18 →", action: "openDay(18)"}
+  }
+};
+
+// ── PRE-JOURNEY ───────────────────────────────────────
+function openPreJourney(){
+  const body = document.getElementById("prejourney-body");
+  const info = PHASE_INFO.pre;
+  body.innerHTML = '<div style="padding:16px 18px 0"><div class="pre-badge">'+info.badge+'</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink);margin-bottom:18px;">'+info.title+'</div></div>';
+  info.questions.forEach((item, i) => {
+    const sk = "pre_q"+i, div = document.createElement("div");
+    div.style.cssText = "padding:0 18px;margin-bottom:16px;";
+    const ta = document.createElement("textarea"); ta.className="sum-ans"; ta.value=S.sans[sk]||""; ta.rows=3; ta.placeholder="Viết ở đây...";
+    ta.oninput=function(){S.sans[sk]=this.value;save();ar(this);};
+    div.innerHTML = '<div class="sum-qtxt">'+item.q+'</div>'+(item.note?'<div style="font-size:11px;color:var(--muted);font-style:italic;margin-bottom:6px;line-height:1.5;">('+item.note+')</div>':'');
+    div.appendChild(ta); body.appendChild(div);
+  });
+  const navDiv = document.createElement("div"); navDiv.className="pi-nav";
+  navDiv.innerHTML='<button class="pri" onclick="openPhaseInfo('ph1')">Xem Giai đoạn 1 →</button>';
+  body.appendChild(navDiv);
+  go("prejourney");
+}
+
+// ── PHASE INFO ────────────────────────────────────────
+function openPhaseInfo(key){
+  const info = PHASE_INFO[key];
+  document.getElementById("phaseinfo-ttl").textContent = info.title;
+  const body = document.getElementById("phaseinfo-body"); body.innerHTML="";
+  const wrap = document.createElement("div"); wrap.style.cssText="padding:16px 18px 0;";
+
+  if(info.badge){
+    const badge = document.createElement("div");
+    badge.className="pi-title"; badge.textContent=info.badge;
+    if(info.color) badge.style.color=info.color;
+    wrap.appendChild(badge);
+    const rule = document.createElement("hr"); rule.className="pi-rule";
+    if(info.color) rule.style.borderTopColor=info.color;
+    wrap.appendChild(rule);
+  }
+  if(info.sub){ const s=document.createElement("div"); s.className="pi-sub"; s.textContent=info.sub; wrap.appendChild(s); }
+  if(info.intro){ const p=document.createElement("p"); p.className="pi-intro"; p.style.cssText="font-size:14px;font-weight:600;color:var(--ink);font-style:normal;"; p.textContent=info.intro; wrap.appendChild(p); }
+  if(info.body){ const p=document.createElement("p"); p.className="pi-intro"; p.textContent=info.body; wrap.appendChild(p); }
+
+  if(info.sections){
+    info.sections.forEach(sec=>{
+      const ttl=document.createElement("div"); ttl.className="pi-sec-ttl"; ttl.textContent=sec.ttl; wrap.appendChild(ttl);
+      const ul=document.createElement("ul"); ul.className="pi-list"+(sec.italic?" italic":"");
+      sec.items.forEach(item=>{
+        const li=document.createElement("li"); li.textContent=item.text;
+        if(item.sub){ const sub=document.createElement("ul"); item.sub.forEach(s=>{ const sli=document.createElement("li"); sli.textContent=s; sub.appendChild(sli); }); li.appendChild(sub); }
+        ul.appendChild(li);
+      });
+      wrap.appendChild(ul);
+    });
+  }
+
+  if(info.readySec){
+    const rs=info.readySec;
+    const rdiv=document.createElement("div"); rdiv.className="pi-box";
+    const rttl=document.createElement("div"); rttl.className="pi-box-ttl"; rttl.textContent=rs.ttl; rdiv.appendChild(rttl);
+    const ul=document.createElement("ul"); ul.className="pi-list";
+    rs.items.forEach(item=>{
+      const li=document.createElement("li"); li.textContent=item.text;
+      if(item.sub){ const sub=document.createElement("ul"); item.sub.forEach(s=>{ const sli=document.createElement("li"); sli.style.fontStyle="italic"; sli.textContent=s; sub.appendChild(sli); }); li.appendChild(sub); }
+      ul.appendChild(li);
+    });
+    rdiv.appendChild(ul); wrap.appendChild(rdiv);
+  }
+
+  if(info.notAlone){
+    const box=document.createElement("div"); box.className="pi-ready";
+    box.innerHTML='<strong>Bạn không hề đơn độc!</strong><br><br>'+info.notAlone;
+    wrap.appendChild(box);
+  }
+
+  body.appendChild(wrap);
+  const navDiv=document.createElement("div"); navDiv.className="pi-nav";
+  navDiv.innerHTML='<button class="sec" onclick="go('home')">← Trang chủ</button><button class="pri" onclick="'+info.next.action+'">'+info.next.label+'</button>';
+  body.appendChild(navDiv);
+  go("phaseinfo");
+}
 
 // ── INIT ──────────────────────────────────────────────
 load(); renderHome();
