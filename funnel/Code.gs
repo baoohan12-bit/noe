@@ -35,7 +35,7 @@ const CONFIG = {
   ZALO_GROUP_URL: 'https://zalo.me/g/mcyd8fcdaus2zwf7zdj2',
 
   // Products / Drive links
-  PRODUCT_NAME: 'Workshop Nghệ Thuật Xác Lập Vị Thế',
+  PRODUCT_NAME: 'Workshop Sống Không Trình Diễn',
   PRODUCT_PRICE: 99000,
   EBOOK_URL: 'https://zalo.me/g/mcyd8fcdaus2zwf7zdj2',
 
@@ -335,7 +335,7 @@ function sendConfirmationEmail(order) {
     bump2: !!order.bump2
   };
 
-  const subject = 'Xác nhận đăng ký Workshop "Nghệ Thuật Xác Lập Vị Thế"';
+  const subject = 'Xác nhận đăng ký Workshop "Sống Không Trình Diễn"';
 
   MailApp.sendEmail({
     to: order.email,
@@ -356,7 +356,7 @@ function buildHtmlEmail(v) {
     // Header
     // Greeting
     '<p style="font-size:17px;margin:0 0 8px">Chào ' + esc(v.name) + ',</p>',
-    '<p style="margin:0 0 24px">NOE đã nhận được thanh toán của bạn cho <strong>Workshop Nghệ Thuật Xác Lập Vị Thế</strong>.</p>',
+    '<p style="margin:0 0 24px">NOE đã nhận được thanh toán của bạn cho <strong>Workshop Sống Không Trình Diễn</strong>.</p>',
 
     // Welcome message
     '<p style="margin:0 0 28px">Chiếc nôi NOE đã sẵn sàng chào đón bạn.<br><br>NOE rất vui khi bạn đã chọn dành 3 tiếng đồng hồ này cho chính mình. Đây không phải là một quyết định nhỏ, và mình trân trọng sự tin tưởng đó.</p>',
