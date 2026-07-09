@@ -56,8 +56,8 @@ const CONFIG = {
   SITE_URL: '',
 
   // Workshop schedule (cập nhật trước mỗi khoá)
-  SESSION1: '[Thứ, ngày/tháng/năm] · 20h00',
-  SESSION2: '[Thứ, ngày/tháng/năm] · 20h00',
+  SESSION1: 'Thứ Năm, 24/07/2025 · 20h00',
+  SESSION2: 'Thứ Sáu, 25/07/2025 · 20h00',
   ZOOM_NOTE: 'Link Zoom sẽ được gửi qua nhóm Zalo trước buổi học 30 phút'
 };
 
