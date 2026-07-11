@@ -1,1 +1,12 @@
-{"rewrites":[{"source":"/","destination":"/ws-noe.html"}]}
+{
+  "rewrites": [{"source": "/", "destination": "/ws-noe.html"}],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "index, follow" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ]
+}
