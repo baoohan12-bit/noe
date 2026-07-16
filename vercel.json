@@ -1,11 +1,30 @@
 {
-  "rewrites": [{"source": "/", "destination": "/ws-noe.html"}],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/ws-noe.html"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "/robots.txt"
+    },
+    {
+      "source": "/og-image.png",
+      "destination": "/og-image.png"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "index, follow" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
       ]
     }
   ]
