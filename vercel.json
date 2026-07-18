@@ -11,6 +11,18 @@
     {
       "source": "/og-image.png",
       "destination": "/og-image.png"
+    },
+    {
+      "source": "/dang-ky",
+      "destination": "/dang-ky.html"
+    },
+    {
+      "source": "/checkout",
+      "destination": "/checkout.html"
+    },
+    {
+      "source": "/xac-nhan",
+      "destination": "/xac-nhan.html"
     }
   ],
   "headers": [

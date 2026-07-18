@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOE Workshop — Xác nhận đăng ký Sống Không Trình Diễn</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Lora', serif; background: #EAE0D5; color: #2C2018; line-height: 1.7; min-height: 100vh; padding: 48px 20px; }
+  .container { max-width: 540px; margin: 0 auto; background: #FDFAF7; padding: 48px 36px; border-radius: 4px; box-shadow: 0 2px 24px rgba(0,0,0,0.06); }
+  .brand { font-family: 'Cormorant Garamond', serif; font-size: 13px; letter-spacing: 0.18em; color: #C0612E; text-transform: uppercase; margin-bottom: 36px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .brand img { height: 80px; width: auto; filter: brightness(0) saturate(100%) invert(38%) sepia(50%) saturate(800%) hue-rotate(340deg) brightness(95%); }
+  .check-wrap { margin-bottom: 24px; text-align: center; }
+  .check { width: 52px; height: 52px; background: #5C8C6A; color: #fff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 600; margin-bottom: 10px; line-height: 1.3; }
+  .lead { color: #8B4513; font-size: 15px; margin-bottom: 28px; }
+  .info { background: #F5EFE8; border-radius: 4px; padding: 18px 20px; margin-bottom: 32px; }
+  .info-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 14px; color: #5C2E0A; }
+  .info-row strong { color: #2C2018; }
+  .divider { border: none; border-top: 1px solid #E0D5C8; margin: 28px 0; }
+  .steps { margin-bottom: 32px; }
+  .steps-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #2C2018; }
+  .step { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid #EDE6DD; }
+  .step:last-child { border-bottom: none; }
+  .step-num { background: #C0612E; color: #fff; min-width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+  .step-text { flex: 1; }
+  .step-title { font-weight: 500; font-size: 15px; margin-bottom: 3px; }
+  .step-desc { font-size: 14px; color: #8B4513; }
+  .step-desc a { color: #C0612E; font-weight: 600; text-decoration: none; }
+  .step-desc a:hover { text-decoration: underline; }
+  .zalo-btn { display: block; text-align: center; background: #0068FF; color: #fff; font-size: 15px; font-weight: 500; padding: 14px 24px; border-radius: 4px; text-decoration: none; margin: 24px 0; letter-spacing: 0.02em; transition: background 0.2s; }
+  .zalo-btn:hover { background: #0055D4; }
+  .note { font-size: 13px; color: #D4703A; text-align: center; margin-bottom: 32px; line-height: 1.6; }
+  footer { text-align: center; font-size: 13px; color: #D4935A; padding-top: 20px; border-top: 1px solid #E0D5C8; }
+  footer a { color: #C0612E; text-decoration: none; }
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '4865234023703832');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=4865234023703832&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+<div class="container">
+  <div class="brand"><img src="/logo.png" alt="NOE"></div>
+
+  <div class="check-wrap"><div class="check">✓</div></div>
+  <h1>Bạn đã đăng ký Workshop <em style="color:#C0612E">"Sống Không Trình Diễn"</em> thành công.</h1>
+  <p class="lead">Cảm ơn bạn đã tin tưởng và dành thời gian này cho chính mình. Email xác nhận + hướng dẫn chi tiết đã được gửi về hộp thư của bạn.</p>
+
+  <div class="info">
+    <div class="info-row"><span>Mã đơn</span><strong id="orderId">—</strong></div>
+    <div class="info-row"><span>Họ tên</span><strong id="orderName">—</strong></div>
+    <div class="info-row"><span>Email</span><strong id="orderEmail">—</strong></div>
+    <div class="info-row"><span>Số tiền</span><strong id="orderAmount">—</strong></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="steps">
+    <div class="steps-title">Bước tiếp theo của bạn</div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">
+        <div class="step-title">Tham gia nhóm Zalo đồng hành</div>
+        <div class="step-desc">NOE sẽ gửi link Zoom, tài liệu chuẩn bị và mọi cập nhật qua nhóm này trước buổi học <em>Sống Không Trình Diễn</em>.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">
+        <div class="step-title">Kiểm tra hộp thư email</div>
+        <div class="step-desc">Email xác nhận + thông tin buổi học đã được gửi. Không thấy? Check tab <em>Promotions</em> hoặc <em>Spam</em>.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">
+        <div class="step-title">Chuẩn bị cho buổi học</div>
+        <div class="step-desc">Dành cho mình một góc yên tĩnh, một tách trà hay cà phê, và sự sẵn lòng ngồi lại với chính mình.</div>
+      </div>
+    </div>
+  </div>
+
+  <a target="_blank" rel="noopener" href="https://zalo.me/g/mcyd8fcdaus2zwf7zdj2" class="zalo-btn">👉 Tham gia nhóm Zalo ngay</a>
+  <p class="note">Link Zoom sẽ được gửi qua nhóm trước buổi học 30 phút.<br>Nếu cần hỗ trợ, liên hệ NOE qua:</p>
+  <div style="background:#F5EFE8;border-radius:4px;padding:14px 18px;margin-bottom:28px;font-size:13px;color:#5C2E0A;line-height:2;">
+    <div>📞 Hotline: <a target="_blank" rel="noopener" href="https://zalo.me/0342580741" style="color:#C0612E;font-weight:600;">0342580741</a></div>
+    <div>✉ Email: <a href="mailto:hello.noevn@gmail.com" style="color:#C0612E;font-weight:600;">hello.noevn@gmail.com</a></div>
+  </div>
+
+  <footer>
+    NOE · <a target="_blank" rel="noopener" href="https://zalo.me/0342580741">0342580741</a> · <a href="mailto:hello.noevn@gmail.com">hello.noevn@gmail.com</a>
+  </footer>
+</div>
+
+<script>
+  const order = JSON.parse(sessionStorage.getItem('order') || '{}');
+  if (order.orderId) {
+    document.getElementById('orderId').textContent = order.orderId;
+    document.getElementById('orderName').textContent = order.name || '—';
+    document.getElementById('orderEmail').textContent = order.email || '—';
+    const amt = Number(order.totalAmount || 0).toLocaleString('en-US').replace(/,/g, '.');
+    document.getElementById('orderAmount').textContent = amt + 'đ';
+  }
+</script>
+</body>
+</html>
