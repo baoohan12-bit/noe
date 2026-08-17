@@ -1526,10 +1526,15 @@ src="https://www.facebook.com/tr?id=2483114602153995&ev=PageView&noscript=1"
       totalAmount: 99000
     };
     try {
-      const res = await fetch(GAS_URL_MODAL, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'createOrder', data: data })
+      const params = new URLSearchParams({
+        action: 'createOrder',
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        goal: data.goal,
+        amount: data.totalAmount
       });
+      const res = await fetch(GAS_URL_MODAL + '?' + params.toString());
       const json = await res.json();
       if (!json.success) throw new Error(json.error || 'Order creation failed');
       sessionStorage.setItem('order', JSON.stringify({
