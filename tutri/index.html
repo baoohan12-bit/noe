@@ -1049,7 +1049,7 @@ function openPreJourney(){
     div.appendChild(ta); body.appendChild(div);
   });
   const navDiv = document.createElement("div"); navDiv.className="pi-nav";
-  navDiv.innerHTML='<button class="pri" onclick="openPhaseInfo('ph1')">Xem Giai đoạn 1 →</button>';
+  navDiv.innerHTML='<button class="pri" onclick="openPhaseInfo(\'ph1\')">Xem Giai đoạn 1 →</button>';
   body.appendChild(navDiv);
   go("prejourney");
 }
@@ -1108,7 +1108,7 @@ function openPhaseInfo(key){
 
   body.appendChild(wrap);
   const navDiv=document.createElement("div"); navDiv.className="pi-nav";
-  navDiv.innerHTML='<button class="sec" onclick="go('home')">← Trang chủ</button><button class="pri" onclick="'+info.next.action+'">'+info.next.label+'</button>';
+  navDiv.innerHTML='<button class="sec" onclick="go(\'home\')">← Trang chủ</button><button class="pri" onclick="'+info.next.action+'">'+info.next.label+'</button>';
   body.appendChild(navDiv);
   go("phaseinfo");
 }
