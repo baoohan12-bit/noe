@@ -275,8 +275,7 @@ hr.d{border:none;border-top:1px solid var(--border);margin:0 18px;}
   <div class="list-sec">
     <div class="sp"></div>
     <div class="sec-ttl">Tất cả các ngày</div>
-    <div id="tracker-table" style="margin:0 0 18px;overflow-x:auto;"></div>
-    <div id="day-list"></div>
+<div id="day-list"></div>
     <div class="sp"></div>
   </div>
 </div>
@@ -398,7 +397,6 @@ function renderHome(){
   });
 
   // List
-  renderTrackerTable();
   const list=document.getElementById("day-list"); list.innerHTML="";
 
   // Pre-journey card (always at top)
