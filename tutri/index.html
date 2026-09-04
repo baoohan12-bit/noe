@@ -68,6 +68,15 @@ body{font-family:'Lora',serif;background:var(--ivory);color:var(--warm);min-heig
 
 /* DAY LIST */
 .list-sec{padding:16px 18px 0;}
+.tt{width:100%;border-collapse:collapse;font-family:'Lora',serif;font-size:13px;}
+.tt td{border:1px solid var(--border);padding:9px 10px;text-align:center;vertical-align:middle;background:white;}
+.tt .tt-num{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;display:block;line-height:1.1;}
+.tt .tt-ph{font-size:10px;color:var(--muted);margin-top:2px;display:flex;align-items:center;justify-content:center;gap:3px;}
+.tt td.g1-cell{border-color:#d4956e;}
+.tt td.g2-cell{border-color:#a08060;}
+.tt td.g3-cell{border-color:#7a6050;}
+.tt td.done-cell{background:var(--cream);}
+.tt-chk{font-size:14px;}
 .ph-grp{margin-bottom:18px;}
 .ph-badge{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:999px;display:inline-block;margin-bottom:8px;color:white;font-family:'Lora',serif;}
 .ph-badge.g1{background:var(--g1);}
@@ -266,6 +275,7 @@ hr.d{border:none;border-top:1px solid var(--border);margin:0 18px;}
   <div class="list-sec">
     <div class="sp"></div>
     <div class="sec-ttl">Tất cả các ngày</div>
+    <div id="tracker-table" style="margin:0 0 18px;overflow-x:auto;"></div>
     <div id="day-list"></div>
     <div class="sp"></div>
   </div>
@@ -388,6 +398,7 @@ function renderHome(){
   });
 
   // List
+  renderTrackerTable();
   const list=document.getElementById("day-list"); list.innerHTML="";
 
   // Pre-journey card (always at top)
@@ -431,6 +442,26 @@ function renderHome(){
   const rl=document.createElement("div"); rl.className="dl-item ref-item";
   rl.innerHTML='<div class="dn-badge g1">❤</div><div class="dl-info"><div class="dl-ttl" style="color:var(--wine)">Chiêm nghiệm cuối hành trình</div><div class="dl-sub">Nhìn lại 30 ngày</div></div>';
   rl.onclick=openRef; list.appendChild(rl);
+}
+
+// ── TRACKER TABLE ─────────────────────────────────────
+function renderTrackerTable(){
+  const wrap=document.getElementById("tracker-table"); wrap.innerHTML="";
+  const table=document.createElement("table"); table.className="tt";
+  const COLS=5;
+  for(let row=0;row<6;row++){
+    const tr=document.createElement("tr");
+    for(let col=0;col<COLS;col++){
+      const n=row*COLS+col+1; if(n>30) break;
+      const p=ph(n), cls=["g1-cell","g2-cell","g3-cell"][p-1]+(S.done[n]?" done-cell":"");
+      const td=document.createElement("td"); td.className=cls;
+      td.style.cursor="pointer";
+      td.innerHTML='<span class="tt-num" style="color:'+PHASES[p].color+'">'+n+'</span><div class="tt-ph"><span class="tt-chk">'+(S.done[n]?"✓":"□")+'</span>GĐ'+p+'</div>';
+      td.onclick=()=>openDay(n); tr.appendChild(td);
+    }
+    table.appendChild(tr);
+  }
+  wrap.appendChild(table);
 }
 
 // ── DAY ───────────────────────────────────────────────
@@ -1039,7 +1070,7 @@ const PHASE_INFO = {
 function openPreJourney(){
   const body = document.getElementById("prejourney-body");
   const info = PHASE_INFO.pre;
-  body.innerHTML = '<div style="padding:16px 18px 0"><div class="pre-badge">'+info.badge+'</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink);margin-bottom:18px;">'+info.title+'</div></div>';
+  body.innerHTML = '<div style="padding:16px 18px 0"><div class="pre-badge">'+info.badge+'</div><div style="font-family:\"Cormorant Garamond\",serif;font-size:22px;font-weight:600;color:var(--ink);margin-bottom:18px;">'+info.title+'</div></div>';
   info.questions.forEach((item, i) => {
     const sk = "pre_q"+i, div = document.createElement("div");
     div.style.cssText = "padding:0 18px;margin-bottom:16px;";
