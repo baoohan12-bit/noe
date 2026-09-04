@@ -403,12 +403,13 @@ function renderHome(){
     const phIntro=document.createElement("div"); phIntro.className="dl-item";
     phIntro.style.cssText="border:1.5px solid "+PHASES[phase].color+";background:white;";
     phIntro.innerHTML='<div class="dn-badge '+PHASES[phase].cls+'">→</div><div class="dl-info"><div class="dl-ttl" style="color:'+PHASES[phase].color+'">Giai đoạn '+phase+': '+PHASES[phase].name+'</div><div class="dl-sub">Mục tiêu và hướng dẫn giai đoạn</div></div>';
-    phIntro.onclick=()=>openPhaseInfo(phKey); grp.appendChild(phIntro);
-    grp.innerHTML='<div class="ph-badge '+PHASES[phase].cls+'">Giai đoạn '+phase+' · '+PHASES[phase].name+'</div>';
+    phIntro.onclick=()=>openPhaseInfo(phKey);
+    const badge=document.createElement("div"); badge.className="ph-badge "+PHASES[phase].cls; badge.textContent="Giai đoạn "+phase+" · "+PHASES[phase].name;
+    grp.appendChild(badge); grp.appendChild(phIntro);
     DAYS.filter(d=>ph(d.n)===phase).forEach(d=>{
       const el=document.createElement("div");
       el.className="dl-item"+(S.done[d.n]?" done-item":"");
-      el.innerHTML='<div class="dn-badge '+PHASES[phase].cls+'">'+( S.done[d.n]?"✓":d.n)+'</div><div class="dl-info"><div class="dl-ttl">Ngày '+d.n+'</div><div class="dl-sub">'+( S.done[d.n]?"Đã hoàn thành":d.sang.substring(0,36)+"...")+"</div></div>"+(S.done[d.n]?'<div class="dl-chk">✓</div>':'')+';'
+      el.innerHTML='<div class="dn-badge '+PHASES[phase].cls+'">'+( S.done[d.n]?"✓":d.n)+'</div><div class="dl-info"><div class="dl-ttl">Ngày '+d.n+'</div><div class="dl-sub">'+( S.done[d.n]?"Đã hoàn thành":d.sang.substring(0,36)+"...")+"</div></div>"+(S.done[d.n]?'<div class="dl-chk">✓</div>':'')
       el.onclick=()=>openDay(d.n); grp.appendChild(el);
     });
     // Phase outro + Summary link
