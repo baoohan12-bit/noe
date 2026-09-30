@@ -108,8 +108,17 @@ src="https://www.facebook.com/tr?id=2483114602153995&ev=PageView&noscript=1"
 </div>
 
 <script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const isFree = urlParams.get('type') === 'free';
   const order = JSON.parse(sessionStorage.getItem('order') || '{}');
-  if (order.orderId) {
+
+  if (isFree) {
+    const nameFromUrl = urlParams.get('name');
+    document.getElementById('orderName').textContent = nameFromUrl || order.name || '—';
+    document.getElementById('orderAmount').textContent = 'Miễn phí';
+    document.getElementById('orderId').textContent = order.orderId || '—';
+    document.getElementById('orderEmail').textContent = order.email || '—';
+  } else if (order.orderId) {
     document.getElementById('orderId').textContent = order.orderId;
     document.getElementById('orderName').textContent = order.name || '—';
     document.getElementById('orderEmail').textContent = order.email || '—';
