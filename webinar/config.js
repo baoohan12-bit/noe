@@ -15,5 +15,7 @@ window.NOE_PAY = {
   BANK_NAME: 'MB Bank',
   PRICE: 99000,
   ZALO: '0342 580 741',
-  ZALO_URL: 'https://zalo.me/0342580741'
+  ZALO_URL: 'https://zalo.me/0342580741',
+  // Meta Pixel "NOE Workshop" (TKQC 2) — ghi nhận lượt xem, đăng ký và mua vé
+  PIXEL_ID: '2483114602153995'
 };

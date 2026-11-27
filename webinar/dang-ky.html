@@ -3,7 +3,7 @@
 <meta name="theme-color" content="#f5efe7"><meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/noe.css"><script src="/config.js"></script>
+<link rel="stylesheet" href="/noe.css"><script src="/config.js"></script><script src="/pixel.js"></script>
 <title>NOE · Đăng ký webinar 2 buổi</title></head><body>
 <header class="top"><a href="/"><img src="/logo.png" alt="NOE"></a></header>
 <main class="wrap"><div class="card">
@@ -48,7 +48,8 @@
    var r=await fetch(C.GAS_URL,{method:'POST',body:JSON.stringify({action:'createOrder',data:d})});
    var j=await r.json(); if(!j.success) throw new Error(j.error||'');
    sessionStorage.setItem('noe_order',JSON.stringify({orderId:j.orderId,ck:j.ckContent,amount:j.totalAmount,name:d.name,email:d.email}));
-   location.href='/checkout';
+   if(window.noeTrack) noeTrack('Lead',{value:j.totalAmount||C.PRICE,currency:'VND'},{eventID:'lead-'+j.orderId});
+   setTimeout(function(){location.href='/checkout';},300);
   }catch(x){
    show('Chưa tạo được vé. Bạn thử lại sau ít phút, hoặc nhắn NOE qua Zalo '+(C.ZALO||'')+'.');
    btn.disabled=false; btn.textContent='Tiếp tục đến bước thanh toán →';

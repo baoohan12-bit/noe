@@ -3,7 +3,7 @@
 <meta name="theme-color" content="#f5efe7"><meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/noe.css"><script src="/config.js"></script>
+<link rel="stylesheet" href="/noe.css"><script src="/config.js"></script><script src="/pixel.js"></script>
 <title>NOE · Vé của bạn đã được xác nhận</title></head><body>
 <header class="top"><a href="/"><img src="/logo.png" alt="NOE"></a></header>
 <main class="wrap"><div class="card">
@@ -32,5 +32,10 @@
  if(o.orderId) document.getElementById('oid').textContent=o.orderId;
  document.getElementById('zl').href=C.ZALO_URL;
  document.getElementById('zl').textContent='Zalo '+C.ZALO;
+ var k='noe_purchase_'+o.orderId;
+ if(o.orderId && sessionStorage.getItem('noe_paid')===o.orderId && !localStorage.getItem(k) && window.noeTrack){
+  noeTrack('Purchase',{value:o.amount||C.PRICE,currency:'VND',content_name:'Webinar Khám phá trải nghiệm giao tiếp',num_items:1},{eventID:'purchase-'+o.orderId});
+  try{localStorage.setItem(k,'1');}catch(x){}
+ }
 })();
 </script></body></html>

@@ -3,7 +3,7 @@
 <meta name="theme-color" content="#f5efe7"><meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/noe.css"><script src="/config.js"></script>
+<link rel="stylesheet" href="/noe.css"><script src="/config.js"></script><script src="/pixel.js"></script>
 <title>NOE · Thanh toán vé webinar</title></head><body>
 <header class="top"><a href="/"><img src="/logo.png" alt="NOE"></a></header>
 <main class="wrap"><div class="card">
@@ -28,6 +28,7 @@
  if(!o.orderId){location.replace('/dang-ky');return;}
  function vnd(n){return Number(n).toLocaleString('en-US').replace(/,/g,'.')+'đ';}
  var amount=o.amount||C.PRICE;
+ if(window.noeTrack) noeTrack('InitiateCheckout',{value:amount,currency:'VND',num_items:1},{eventID:'ic-'+o.orderId});
  document.getElementById('bank').textContent=C.BANK_NAME;
  document.getElementById('acc').textContent=C.ACCOUNT_NUMBER||'—';
  document.getElementById('holder').textContent=C.ACCOUNT_HOLDER||'—';
@@ -45,6 +46,7 @@
    var r=await fetch(C.GAS_URL+'?action=getStatus&orderId='+encodeURIComponent(o.orderId));
    var j=await r.json();
    if(j.status==='PAID'){
+    sessionStorage.setItem('noe_paid',o.orderId);
     document.getElementById('st').className='status paid';
     document.getElementById('stt').textContent='✓ Đã nhận thanh toán · Đang chuyển sang vé của bạn...';
     setTimeout(function(){location.href='/xac-nhan';},1400); return;
