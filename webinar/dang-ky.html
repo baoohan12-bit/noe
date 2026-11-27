@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="vi"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5efe7"><meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/noe.css"><script src="/config.js"></script>
+<title>NOE · Đăng ký webinar 2 buổi</title></head><body>
+<header class="top"><a href="/"><img src="/logo.png" alt="NOE"></a></header>
+<main class="wrap"><div class="card">
+ <p class="eyebrow">Webinar 2 buổi · Đăng ký</p>
+ <h1>Khám phá trải nghiệm giao tiếp của bạn</h1>
+ <p class="lead">Điền thông tin để nhận vé. Bước tiếp theo là chuyển khoản qua mã QR, vé được xác nhận tự động sau khoảng 30 giây.</p>
+ <div class="meta">
+  <div><span>Buổi 1</span><strong>Thứ Tư 9/12/2026 · 20:00</strong></div>
+  <div><span>Buổi 2</span><strong>Thứ Năm 10/12/2026 · 20:00</strong></div>
+  <div><span>Hình thức</span><strong>Trực tuyến · 75 phút mỗi buổi</strong></div>
+  <div><span>Phí tham gia</span><strong>99.000đ cho cả 2 buổi</strong></div>
+ </div>
+ <form id="f" novalidate>
+  <label for="name">Họ và tên</label>
+  <input id="name" name="name" autocomplete="name" required maxlength="120">
+  <label for="phone">Số điện thoại</label>
+  <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="09xx xxx xxx">
+  <label for="email">Email nhận vé</label>
+  <input id="email" name="email" type="email" autocomplete="email" required placeholder="ban@email.com">
+  <p class="hint">Vé, link tham gia và ba công cụ thực hành đều được gửi về email này.</p>
+  <button class="btn" id="go" type="submit">Tiếp tục đến bước thanh toán →</button>
+  <p class="error" id="err"></p>
+ </form>
+ <p class="note">NOE chỉ dùng thông tin này để gửi vé, nhắc lịch và hỗ trợ bạn trong chương trình.</p>
+</div></main>
+<script>
+(function(){
+ var C=window.NOE_PAY||{}, f=document.getElementById('f'), btn=document.getElementById('go'), err=document.getElementById('err');
+ var utm=new URLSearchParams(location.search).get('utm_content')||sessionStorage.getItem('noe_utm')||'';
+ if(utm) sessionStorage.setItem('noe_utm',utm);
+ function show(m){err.textContent=m;err.style.display='block';}
+ function phone(p){p=String(p||'').replace(/[^\d+]/g,'');if(p.indexOf('+84')===0)p='0'+p.slice(3);else if(p.indexOf('84')===0&&p.length===11)p='0'+p.slice(2);return p;}
+ f.addEventListener('submit',async function(e){
+  e.preventDefault(); err.style.display='none';
+  var d={name:document.getElementById('name').value.trim(),phone:phone(document.getElementById('phone').value),email:document.getElementById('email').value.trim().toLowerCase(),utm:utm};
+  if(!d.name) return show('Bạn điền giúp NOE họ và tên nhé.');
+  if(!/^0\d{9,10}$/.test(d.phone)) return show('Số điện thoại chưa đúng. Bạn kiểm tra lại giúp NOE nhé.');
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)) return show('Email chưa đúng. Bạn kiểm tra lại giúp NOE nhé.');
+  if(!C.GAS_URL) return show('Cổng đăng ký đang được kết nối. Bạn nhắn NOE qua Zalo '+(C.ZALO||'')+' để giữ chỗ nhé.');
+  btn.disabled=true; btn.textContent='Đang tạo vé...';
+  try{
+   var r=await fetch(C.GAS_URL,{method:'POST',body:JSON.stringify({action:'createOrder',data:d})});
+   var j=await r.json(); if(!j.success) throw new Error(j.error||'');
+   sessionStorage.setItem('noe_order',JSON.stringify({orderId:j.orderId,ck:j.ckContent,amount:j.totalAmount,name:d.name,email:d.email}));
+   location.href='/checkout';
+  }catch(x){
+   show('Chưa tạo được vé. Bạn thử lại sau ít phút, hoặc nhắn NOE qua Zalo '+(C.ZALO||'')+'.');
+   btn.disabled=false; btn.textContent='Tiếp tục đến bước thanh toán →';
+  }
+ });
+})();
+</script></body></html>

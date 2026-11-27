@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="vi"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5efe7"><meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/noe.css"><script src="/config.js"></script>
+<title>NOE · Thanh toán vé webinar</title></head><body>
+<header class="top"><a href="/"><img src="/logo.png" alt="NOE"></a></header>
+<main class="wrap"><div class="card">
+ <p class="eyebrow">Bước cuối · Thanh toán</p>
+ <h1>Quét mã QR để hoàn tất vé</h1>
+ <p class="lead">Mở app ngân hàng, quét mã dưới đây. Số tiền và nội dung chuyển khoản đã được điền sẵn. Vé được xác nhận tự động sau khoảng 30 giây.</p>
+ <div class="qr"><img id="qr" alt="Mã QR chuyển khoản"></div>
+ <div class="pay">
+  <div><span>Ngân hàng</span><strong id="bank">—</strong></div>
+  <div><span>Số tài khoản</span><strong><span id="acc">—</span><button class="copy" data-c="acc" type="button">Chép</button></strong></div>
+  <div><span>Chủ tài khoản</span><strong id="holder">—</strong></div>
+  <div><span>Số tiền</span><strong id="amt">—</strong></div>
+  <div class="ck"><span>Nội dung chuyển khoản</span><strong><span id="ck">—</span><button class="copy" data-c="ck" type="button">Chép</button></strong></div>
+ </div>
+ <p class="hint">Nếu chuyển khoản thủ công, bạn giữ nguyên nội dung chuyển khoản để hệ thống nhận ra vé của bạn.</p>
+ <div class="status" id="st"><span class="dot"></span><span id="stt">Đang chờ giao dịch...</span></div>
+ <p class="note" id="help" style="display:none">Đã chuyển khoản hơn 10 phút mà chưa thấy xác nhận? Bạn nhắn NOE qua <a id="zl" href="#">Zalo</a> kèm nội dung chuyển khoản, NOE kiểm tra và gửi vé cho bạn.</p>
+</div></main>
+<script>
+(function(){
+ var C=window.NOE_PAY||{}, o=JSON.parse(sessionStorage.getItem('noe_order')||'{}');
+ if(!o.orderId){location.replace('/dang-ky');return;}
+ function vnd(n){return Number(n).toLocaleString('en-US').replace(/,/g,'.')+'đ';}
+ var amount=o.amount||C.PRICE;
+ document.getElementById('bank').textContent=C.BANK_NAME;
+ document.getElementById('acc').textContent=C.ACCOUNT_NUMBER||'—';
+ document.getElementById('holder').textContent=C.ACCOUNT_HOLDER||'—';
+ document.getElementById('amt').textContent=vnd(amount);
+ document.getElementById('ck').textContent=o.ck;
+ document.getElementById('zl').href=C.ZALO_URL;
+ document.getElementById('qr').src='https://qr.sepay.vn/img?acc='+encodeURIComponent(C.VA_NUMBER||C.ACCOUNT_NUMBER)+'&bank='+encodeURIComponent(C.BANK_CODE)+'&amount='+amount+'&des='+encodeURIComponent(o.ck)+'&template=compact';
+ document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click',function(){
+  var t=document.getElementById(b.dataset.c).textContent;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='Đã chép';setTimeout(function(){b.textContent='Chép';},1500);}).catch(function(){});
+ });});
+ var started=Date.now();
+ async function poll(){
+  try{
+   var r=await fetch(C.GAS_URL+'?action=getStatus&orderId='+encodeURIComponent(o.orderId));
+   var j=await r.json();
+   if(j.status==='PAID'){
+    document.getElementById('st').className='status paid';
+    document.getElementById('stt').textContent='✓ Đã nhận thanh toán · Đang chuyển sang vé của bạn...';
+    setTimeout(function(){location.href='/xac-nhan';},1400); return;
+   }
+   if(j.status==='UNDERPAID'){
+    document.getElementById('stt').textContent='NOE đã nhận giao dịch nhưng số tiền chưa đủ. Bạn nhắn NOE qua Zalo để được hỗ trợ nhé.';
+    document.getElementById('help').style.display='block'; return;
+   }
+  }catch(x){}
+  if(Date.now()-started>600000) document.getElementById('help').style.display='block';
+  setTimeout(poll,5000);
+ }
+ poll();
+})();
+</script></body></html>
