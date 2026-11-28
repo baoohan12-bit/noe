@@ -11,6 +11,12 @@
  <p class="eyebrow">Vé đã được xác nhận</p>
  <h1>Hẹn gặp bạn lúc 20:00 tối thứ Tư 9/12.</h1>
  <p class="lead">NOE đã nhận thanh toán và gửi vé về email <strong id="em">của bạn</strong>.</p>
+ <div class="zgroup">
+  <p class="zg-t">Bước tiếp theo: Vào nhóm Zalo của webinar</p>
+  <p class="zg-d">NOE gửi link tham gia, nhắc lịch trước mỗi buổi và tài liệu chuẩn bị trong nhóm này. Bạn vào ngay để không lỡ thông tin.</p>
+  <a class="btn" id="zg" target="_blank" rel="noopener" href="https://zalo.me/g/yqpqwmptxcjmqfnyyrl1">Vào nhóm Zalo ngay</a>
+ </div>
+ <style>.zgroup{border:1.5px solid var(--bronze);border-radius:14px;padding:18px;margin:20px 0;background:#fbf3ec;text-align:left}.zgroup .zg-t{font-weight:700;margin:0 0 6px;color:#3a281d}.zgroup .zg-d{margin:0 0 14px;font-size:15px;line-height:1.55;color:#5a463a}.zgroup .btn{margin:0}</style>
  <div class="meta">
   <div><span>Buổi 1</span><strong>Thứ Tư 9/12/2026 · 20:00</strong></div>
   <div><span>Buổi 2</span><strong>Thứ Năm 10/12/2026 · 20:00</strong></div>
@@ -19,6 +25,7 @@
  <a class="btn" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=NOE%20%C2%B7%20Webinar%20giao%20ti%E1%BA%BFp%20%C2%B7%20Bu%E1%BB%95i%201&dates=20261209T130000Z/20261209T141500Z&details=Link%20tham%20gia%20c%C3%B3%20trong%20email%20v%C3%A9%20c%E1%BB%A7a%20NOE.">Thêm buổi 1 vào Google Calendar</a>
  <a class="btn ghost" style="margin-top:10px" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=NOE%20%C2%B7%20Webinar%20giao%20ti%E1%BA%BFp%20%C2%B7%20Bu%E1%BB%95i%202&dates=20261210T130000Z/20261210T141500Z&details=Link%20tham%20gia%20c%C3%B3%20trong%20email%20v%C3%A9%20c%E1%BB%A7a%20NOE.">Thêm buổi 2 vào Google Calendar</a>
  <ol class="steps">
+  <li><strong>Vào nhóm Zalo.</strong> Link tham gia và lời nhắc trước mỗi buổi được gửi trong nhóm.</li>
   <li><strong>Mở email vé.</strong> Nếu chưa thấy sau vài phút, bạn kiểm tra thêm mục Quảng cáo (Promotions) hoặc Thư rác.</li>
   <li><strong>Giữ lịch hai buổi tối.</strong> Link tham gia nằm trong email, dùng chung cho cả 2 buổi.</li>
   <li><strong>Nghĩ trước về một tình huống.</strong> Một lần giao tiếp gần đây trong công việc mà bạn muốn nhìn lại.</li>
@@ -32,6 +39,7 @@
  if(o.orderId) document.getElementById('oid').textContent=o.orderId;
  document.getElementById('zl').href=C.ZALO_URL;
  document.getElementById('zl').textContent='Zalo '+C.ZALO;
+ if(C.ZALO_GROUP) document.getElementById('zg').href=C.ZALO_GROUP;
  var k='noe_purchase_'+o.orderId;
  if(o.orderId && sessionStorage.getItem('noe_paid')===o.orderId && !localStorage.getItem(k) && window.noeTrack){
   noeTrack('Purchase',{value:o.amount||C.PRICE,currency:'VND',content_name:'Webinar Khám phá trải nghiệm giao tiếp',num_items:1},{eventID:'purchase-'+o.orderId});

@@ -16,6 +16,8 @@ window.NOE_PAY = {
   PRICE: 99000,
   ZALO: '0342 580 741',
   ZALO_URL: 'https://zalo.me/0342580741',
+  // Nhóm Zalo dành cho người đã mua vé webinar 9–10/12
+  ZALO_GROUP: 'https://zalo.me/g/yqpqwmptxcjmqfnyyrl1',
   // Meta Pixel "NOE Workshop" (TKQC 2) — ghi nhận lượt xem, đăng ký và mua vé
   PIXEL_ID: '2483114602153995'
 };
